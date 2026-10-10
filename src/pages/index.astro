@@ -57,11 +57,11 @@ const control = [
           <div class="hero-actions">
             <div class="hero-actions__part">
               <p class="hero-actions__label">Shopping?</p>
+              <p class="hero-actions__text">Add Gentifi to the AI agent you already use, then just ask for what you need.</p>
               <div class="hero-actions__buttons">
-                <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
-                <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
+                <a class="btn btn--primary" href="#shoppers">Add to your agent</a>
+                <a class="btn btn--ghost" href="/b/demo-business">Try a demo scan</a>
               </div>
-              <a class="hero-actions__link" href="#shoppers">Or add Gentifi to Claude or ChatGPT</a>
             </div>
             <div class="hero-actions__part">
               <p class="hero-actions__label">Running a business?</p>
@@ -126,7 +126,13 @@ const control = [
           <div class="shop__buttons">
             <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="Claude">Add to Claude</button>
             <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="ChatGPT">Add to ChatGPT</button>
-            <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
+          </div>
+          <div class="shop__noagent">
+            <p>No agent yet? Chat with us instead:</p>
+            <div class="shop__buttons">
+              <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in Telegram">Telegram</button>
+              <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in WhatsApp">WhatsApp</button>
+            </div>
           </div>
           <p class="shop__note">Gentifi isn't live yet, so these buttons show a preview.</p>
         </div>
@@ -245,7 +251,7 @@ const control = [
   .hero-actions__label { font-size: 1.2rem; font-weight: 700; }
   .hero-actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
   .hero-actions .btn { padding: 10px 18px; font-size: 0.95rem; }
-  .hero-actions__link { font-size: 0.92rem; color: var(--white); }
+  .hero-actions__text { color: var(--on-teal-muted); font-size: 0.98rem; line-height: 1.5; margin-top: -4px; }
   @media (max-width: 480px) { .hero-actions { padding: 0 24px; border-radius: 32px; } .hero-actions__part { padding-block: 24px; } }
 
   /* For businesses: setup box, then the steps */
@@ -308,6 +314,8 @@ const control = [
   .asks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .asks li { background: var(--teal-raised); border: 1px solid var(--teal-line); color: var(--white); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
   .shop__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .shop__noagent { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--teal-line); width: 100%; }
+  .shop__noagent p { font-weight: 600; }
   .shop__note { font-size: 0.85rem; color: var(--on-teal-muted); }
 
   /* Control */
