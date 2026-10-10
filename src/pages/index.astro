@@ -97,7 +97,8 @@ const control = [
 
     <!-- Shoppers -->
     <section class="section section--teal" id="shoppers">
-      <div class="container shop">
+      <div class="container">
+        <div class="shop">
         <div class="shop__chat"><ChatMock /></div>
         <div class="shop__copy">
           <span class="eyebrow">For shoppers</span>
@@ -113,6 +114,14 @@ const control = [
             <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
           </div>
           <p class="shop__note">Gentifi isn't live yet, so these buttons show a preview.</p>
+        </div>
+        </div>
+
+        <div class="shop-control" id="privacy">
+          <h3>You're always in control.</h3>
+          <ul class="control">
+            {control.map((c) => <li><Tick size={22} tick="var(--teal)" /><span>{c}</span></li>)}
+          </ul>
         </div>
       </div>
     </section>
@@ -141,19 +150,6 @@ const control = [
           </article>
         </div>
         <p class="more"><a href="/businesses">More for businesses: what you get and examples</a></p>
-      </div>
-    </section>
-
-    <!-- Control -->
-    <section class="section section--grey" id="privacy">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Privacy</span>
-          <h2>You're always in control.</h2>
-        </div>
-        <ul class="control">
-          {control.map((c) => <li><Tick size={22} tick="var(--teal)" /><span>{c}</span></li>)}
-        </ul>
       </div>
     </section>
 
@@ -326,10 +322,16 @@ const control = [
   .more { margin-top: 24px; }
   .more a { font-weight: 600; }
 
-  /* Control */
+  /* Control, inside the shoppers section */
+  .shop-control { margin-top: clamp(48px, 7vw, 72px); padding-top: 40px; border-top: 1px solid var(--teal-line); }
+  .shop-control h3 { font-size: 1.4rem; margin-bottom: 20px; }
   .control { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   @media (min-width: 800px) { .control { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-  .control li { display: flex; gap: 12px; align-items: flex-start; background: var(--white); border-radius: var(--radius); padding: 22px; font-size: 1.05rem; font-weight: 600; line-height: 1.45; }
+  .control li {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--teal-raised); border: 1px solid var(--teal-line); border-radius: var(--radius);
+    padding: 22px; font-size: 1.05rem; font-weight: 600; line-height: 1.45; color: var(--white);
+  }
   .control li :global(svg) { margin-top: 2px; flex-shrink: 0; }
 
   /* Waitlist */
