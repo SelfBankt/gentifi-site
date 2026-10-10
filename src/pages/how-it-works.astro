@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import ScanFlow from '../components/ScanFlow.astro';
+import WindowSticker from '../components/WindowSticker.astro';
+import CounterCard from '../components/CounterCard.astro';
+import WebBadges from '../components/WebBadges.astro';
+---
+<Base
+  title="How it works, in detail · Gentifi"
+  description="What happens behind the Gentifi sticker: how businesses reach any AI agent, what a scan does, and where the open-source toolkit fits."
+>
+  <Header />
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero section--teal">
+      <div class="container">
+        <span class="eyebrow">For businesses and developers</span>
+        <h1>How it works, in detail.</h1>
+        <p class="hero__lede">
+          What happens behind the sticker: how your business reaches any AI agent, what a scan does, and where the
+          open-source toolkit fits.
+        </p>
+        <nav class="jump" aria-label="On this page">
+          <a href="#system">The big picture</a>
+          <a href="#scan">What a scan does</a>
+          <a href="#stickers">The stickers</a>
+          <a href="#developers">For developers</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- System -->
+    <section class="section" id="system">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The big picture</span>
+          <h2>Publish once. Reach every agent.</h2>
+          <p>
+            You publish your business to Gentifi once. Customers connect Gentifi to their own agent, by choice, and
+            their agent can then find, price, book and buy from you.
+          </p>
+        </div>
+        <HowItWorks />
+        <div class="two-up connectors">
+          <div>
+            <h3>Your own connection</h3>
+            <p>Your sticker and link add just your business to a customer's agent.</p>
+          </div>
+          <div>
+            <h3>The Gentifi network</h3>
+            <p>One connection reaches every business on Gentifi, or a group, like one town, one event or one trade body.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scan -->
+    <section class="section section--grey" id="scan">
+      <div class="container scan__wrap">
+        <div class="section-head">
+          <span class="eyebrow">What a scan does</span>
+          <h2>What happens when someone scans.</h2>
+          <p>
+            Your sticker's code is one link for your business. People and agents get different things from it, but
+            nothing is ever added without the customer's approval. The link only says "this business has a
+            connection, here it is". It never tells an agent to install anything.
+          </p>
+        </div>
+        <ScanFlow />
+        <p class="scan__cta"><a class="btn btn--teal" href="/b/demo-business">Try the demo scan page</a></p>
+      </div>
+    </section>
+
+    <!-- Stickers -->
+    <section class="section" id="stickers">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The stickers</span>
+          <h2>One code, wherever your customers are.</h2>
+          <p>Every business gets the same code in a few shapes. Each one says "this business is agent-ready".</p>
+        </div>
+        <div class="badges">
+          <figure class="badges__item">
+            <WindowSticker />
+            <figcaption><strong>Window sticker</strong> for your shop front</figcaption>
+          </figure>
+          <figure class="badges__item">
+            <CounterCard />
+            <figcaption><strong>Counter card</strong> by the till</figcaption>
+          </figure>
+          <figure class="badges__item">
+            <div class="badges__web"><WebBadges /></div>
+            <figcaption><strong>Web button and badge</strong> for your website, booking page and emails</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developers -->
+    <section class="section section--teal" id="developers">
+      <div class="container dev">
+        <div>
+          <span class="eyebrow">For developers</span>
+          <h2>Under the hood, it's all open.</h2>
+          <p>
+            The free, open-source Gentifi Toolkit turns a catalogue into the files and server agents need, using open
+            standards like MCP, Agent Skills, A2A and ai-catalog.json. And we're drafting Collections, an open
+            standard for groups of businesses.
+          </p>
+        </div>
+        <div class="dev__buttons">
+          <a class="btn btn--primary" href="/toolkit">See the toolkit</a>
+          <a class="btn btn--ghost" href="/standards">Open standards</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .hero { padding-block: clamp(48px, 8vw, 88px); }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 38rem; }
+  .jump { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .jump a {
+    padding: 8px 14px;
+    border: 1px solid var(--teal-line);
+    border-radius: 999px;
+    font-size: 0.92rem;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .jump a:hover { border-color: var(--copper); }
+
+  .two-up { display: grid; gap: 20px; }
+  @media (min-width: 720px) { .two-up { grid-template-columns: 1fr 1fr; gap: 24px; } }
+  .connectors { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .connectors h3 { margin-bottom: 6px; }
+  .connectors p { color: var(--ink-muted); }
+
+  .scan__wrap { max-width: calc(960px + var(--gutter) * 2); }
+  .scan__cta { margin-top: 40px; text-align: center; }
+
+  .badges { display: grid; gap: 40px; align-items: start; }
+  @media (min-width: 720px) { .badges { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1040px) { .badges { grid-template-columns: 1.15fr 0.85fr 1fr; } }
+  .badges__item { margin: 0; display: grid; gap: 14px; justify-items: center; }
+  .badges__item > :global(*:first-child) { max-width: 380px; }
+  .badges__item figcaption { font-size: 0.92rem; color: var(--ink-muted); text-align: center; }
+  .badges__item figcaption strong { color: var(--ink); }
+  .badges__web { background: var(--grey); border-radius: var(--radius); padding: 32px 24px; width: 100%; display: grid; place-items: center; }
+
+  .dev { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 900px) { .dev { grid-template-columns: 1fr auto; gap: 48px; } }
+  .dev h2 { margin-bottom: 14px; }
+  .dev p { color: var(--on-teal-muted); max-width: 42rem; }
+  .dev__buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+</style>
