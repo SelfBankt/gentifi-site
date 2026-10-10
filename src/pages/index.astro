@@ -96,9 +96,9 @@ const control = [
     </section>
 
     <!-- Shoppers -->
-    <section class="section section--grey" id="shoppers">
+    <section class="section section--teal" id="shoppers">
       <div class="container shop">
-        <div class="shop__chat"><ChatMock tone="light" /></div>
+        <div class="shop__chat"><ChatMock /></div>
         <div class="shop__copy">
           <span class="eyebrow">For shoppers</span>
           <h2>Just ask your agent.</h2>
@@ -108,9 +108,9 @@ const control = [
           </p>
           <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
           <div class="shop__buttons">
-            <button class="btn btn--teal" type="button" data-approval="approve-network" data-app="Claude">Add to Claude</button>
-            <button class="btn btn--teal" type="button" data-approval="approve-network" data-app="ChatGPT">Add to ChatGPT</button>
-            <button class="btn btn--outline" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
+            <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="Claude">Add to Claude</button>
+            <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="ChatGPT">Add to ChatGPT</button>
+            <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
           </div>
           <p class="shop__note">Gentifi isn't live yet, so these buttons show a preview.</p>
         </div>
@@ -298,11 +298,11 @@ const control = [
   .shop__chat { width: 100%; max-width: 460px; justify-self: center; }
   .shop__copy { display: grid; gap: 16px; justify-items: start; }
   .shop__copy .eyebrow { margin-bottom: 0; }
-  .shop__copy > p { color: var(--ink-muted); font-size: 1.08rem; }
+  .shop__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
   .asks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .asks li { background: var(--white); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
+  .asks li { background: var(--teal-raised); border: 1px solid var(--teal-line); color: var(--white); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
   .shop__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-  .shop__note { font-size: 0.85rem; color: var(--ink-muted); }
+  .shop__note { font-size: 0.85rem; color: var(--on-teal-muted); }
 
   /* Businesses */
   .ways { display: grid; gap: 20px; }
