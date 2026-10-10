@@ -16,7 +16,8 @@ Every push to `main` builds and deploys to GitHub Pages at https://gentifi.com.
 | --- | --- |
 | `/` | Home |
 | `/businesses` | For businesses |
-| `/toolkit` | Gentifi Toolkit |
+| `/how-it-works` | How it works, in detail |
+| `/toolkit` | Open-source toolkit |
 | `/standards` | Collections draft, explorer and validator |
 | `/b/demo-business` | Scan-to-add demo (fictional business) |
 
