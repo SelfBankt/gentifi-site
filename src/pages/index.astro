@@ -95,38 +95,6 @@ const control = [
       </div>
     </section>
 
-    <!-- Open by design -->
-    <section class="section section--teal" id="open">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Open by design</span>
-          <h2>Open source. Open standards. No lock-in.</h2>
-          <p>Anyone can use, check and improve what we build. Your business stays yours, in formats any agent can read.</p>
-        </div>
-        <div class="open">
-          <article class="open__card">
-            <h3>Open-source toolkit</h3>
-            <p>Everything needed to make a business agent-ready. Anyone can use and improve it, under the Apache 2.0 licence.</p>
-            <div class="open__links">
-              <a href="/toolkit">See the toolkit</a>
-              <a href={githubUrl}>GitHub</a>
-            </div>
-          </article>
-          <article class="open__card">
-            <h3>Built on open standards</h3>
-            <p>We use standards that Claude, ChatGPT and other agents already understand, so you're never tied to one company.</p>
-            <p class="open__chips" aria-label="Standards used">MCP · Agent Skills · A2A · ai-catalog.json</p>
-            <div class="open__links"><a href="/standards">Our standards</a></div>
-          </article>
-          <article class="open__card open__card--key">
-            <h3>Adding what's missing</h3>
-            <p>Today's standards describe one business at a time. We're drafting Collections: an open way to describe a whole market, high street or trade show.</p>
-            <div class="open__links"><a href="/standards#draft">Read the draft</a></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- Shoppers -->
     <section class="section section--grey" id="shoppers">
       <div class="container shop">
@@ -189,8 +157,40 @@ const control = [
       </div>
     </section>
 
+    <!-- Open by design -->
+    <section class="section section--teal" id="open">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Open by design</span>
+          <h2>Open source. Open standards. No lock-in.</h2>
+          <p>Anyone can use, check and improve what we build. Your business stays yours, in formats any agent can read.</p>
+        </div>
+        <div class="open">
+          <article class="open__card">
+            <h3>Open-source toolkit</h3>
+            <p>Everything needed to make a business agent-ready. Anyone can use and improve it, under the Apache 2.0 licence.</p>
+            <div class="open__links">
+              <a href="/toolkit">See the toolkit</a>
+              <a href={githubUrl}>GitHub</a>
+            </div>
+          </article>
+          <article class="open__card">
+            <h3>Built on open standards</h3>
+            <p>We use standards that Claude, ChatGPT and other agents already understand, so you're never tied to one company.</p>
+            <p class="open__chips" aria-label="Standards used">MCP · Agent Skills · A2A · ai-catalog.json</p>
+            <div class="open__links"><a href="/standards">Our standards</a></div>
+          </article>
+          <article class="open__card open__card--key">
+            <h3>Adding what's missing</h3>
+            <p>Today's standards describe one business at a time. We're drafting Collections: an open way to describe a whole market, high street or trade show.</p>
+            <div class="open__links"><a href="/standards#draft">Read the draft</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- Waitlist -->
-    <section class="section section--teal" id="waitlist">
+    <section class="section section--teal waitlist" id="waitlist">
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
@@ -333,6 +333,7 @@ const control = [
   .control li :global(svg) { margin-top: 2px; flex-shrink: 0; }
 
   /* Waitlist */
+  .waitlist { border-top: 1px solid var(--teal-line); }
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
   .waitlist__count { font-size: 0.95rem; color: var(--on-teal-muted); }
