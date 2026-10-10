@@ -62,6 +62,11 @@ const control = [
                 <a class="btn btn--primary" href="#shoppers">Add to your agent</a>
                 <a class="btn btn--ghost" href="/b/demo-business">Try a demo scan</a>
               </div>
+              <div class="hero-actions__chat">
+                <span>Or chat with our AI:</span>
+                <button class="chip" type="button" data-concept="open Gentifi's AI assistant in WhatsApp">WhatsApp</button>
+                <button class="chip" type="button" data-concept="open Gentifi's AI assistant in Telegram">Telegram</button>
+              </div>
             </div>
             <div class="hero-actions__part">
               <p class="hero-actions__label">Running a business?</p>
@@ -128,10 +133,10 @@ const control = [
             <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="ChatGPT">Add to ChatGPT</button>
           </div>
           <div class="shop__noagent">
-            <p>No agent yet? Chat with us instead:</p>
+            <p>No agent yet? Chat with our AI instead:</p>
             <div class="shop__buttons">
-              <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in Telegram">Telegram</button>
-              <button class="btn btn--ghost" type="button" data-concept="open the Gentifi assistant in WhatsApp">WhatsApp</button>
+              <button class="btn btn--ghost" type="button" data-concept="open Gentifi's AI assistant in WhatsApp">WhatsApp</button>
+              <button class="btn btn--ghost" type="button" data-concept="open Gentifi's AI assistant in Telegram">Telegram</button>
             </div>
           </div>
           <p class="shop__note">Gentifi isn't live yet, so these buttons show a preview.</p>
@@ -251,6 +256,21 @@ const control = [
   .hero-actions__label { font-size: 1.2rem; font-weight: 700; }
   .hero-actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
   .hero-actions .btn { padding: 10px 18px; font-size: 0.95rem; }
+  .hero-actions__chat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--on-teal-muted); }
+  .chip {
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    min-height: 36px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--teal-line);
+    background: var(--teal-raised);
+    color: var(--white);
+    cursor: pointer;
+  }
+  .chip:hover { border-color: var(--copper); }
+  @media (max-width: 480px) { .hero-actions__chat span { flex-basis: 100%; } }
   .hero-actions__text { color: var(--on-teal-muted); font-size: 0.98rem; line-height: 1.5; margin-top: -4px; }
   @media (max-width: 480px) { .hero-actions { padding: 0 24px; border-radius: 32px; } .hero-actions__part { padding-block: 24px; } }
 
