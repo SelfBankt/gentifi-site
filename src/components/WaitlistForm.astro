@@ -1,0 +1,92 @@
+---
+// Posts to a placeholder endpoint until a form provider is chosen.
+// With JS on, submission is intercepted and nothing is sent.
+const WAITLIST_ENDPOINT = '/api/waitlist-placeholder';
+
+interface Props {
+  role?: 'business' | 'developer' | 'customer' | 'organiser';
+}
+const { role = 'business' } = Astro.props;
+const roles = [
+  { value: 'business', label: 'A business owner' },
+  { value: 'developer', label: 'A developer' },
+  { value: 'customer', label: 'A customer' },
+  { value: 'organiser', label: 'An event organiser or association' },
+];
+---
+<form class="waitlist" action={WAITLIST_ENDPOINT} method="post" data-placeholder-form>
+  <div class="field">
+    <label for="wl-name">Your name</label>
+    <input id="wl-name" name="name" type="text" autocomplete="name" required />
+  </div>
+  <div class="field">
+    <label for="wl-email">Email</label>
+    <input id="wl-email" name="email" type="email" autocomplete="email" required />
+  </div>
+  <div class="field">
+    <label for="wl-role">I'm joining as</label>
+    <select id="wl-role" name="role" required>
+      {roles.map((r) => <option value={r.value} selected={r.value === role}>{r.label}</option>)}
+    </select>
+  </div>
+  <div class="field">
+    <label for="wl-business">Business name <span class="opt">(optional)</span></label>
+    <input id="wl-business" name="business" type="text" autocomplete="organization" />
+  </div>
+  <div class="field field--wide">
+    <label for="wl-postcode">Postcode area <span class="opt">(optional)</span></label>
+    <input id="wl-postcode" name="postcode" type="text" autocomplete="postal-code" maxlength="8" />
+  </div>
+  <div class="field--wide actions">
+    <button class="btn btn--primary" type="submit">Join the waitlist</button>
+    <p class="note">We'll only email you about Gentifi's launch. <span class="placeholder">[PRIVACY POLICY LINK]</span></p>
+  </div>
+  <p class="status field--wide" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-placeholder-form]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const status = form.querySelector('.status');
+      if (status) {
+        status.textContent = 'Thanks. This is a concept site, so nothing was sent: the waitlist provider is not connected yet.';
+      }
+    });
+  });
+</script>
+
+<style>
+  .waitlist {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .waitlist { grid-template-columns: 1fr 1fr; }
+    .field--wide { grid-column: 1 / -1; }
+  }
+  .field { display: grid; gap: 6px; }
+  label { font-size: 0.9rem; font-weight: 600; }
+  .opt { font-weight: 400; color: var(--on-teal-muted); }
+  input, select {
+    font: inherit;
+    min-height: 48px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--teal-line);
+    background: var(--teal-raised);
+    color: var(--white);
+    width: 100%;
+  }
+  input:focus-visible, select:focus-visible { border-color: var(--copper); }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 4px; }
+  .note { font-size: 0.85rem; color: var(--on-teal-muted); }
+  .status:empty { display: none; }
+  .status {
+    padding: 12px 16px;
+    border: 1px solid var(--copper);
+    border-radius: var(--radius-sm);
+    color: var(--white);
+  }
+</style>

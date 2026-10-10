@@ -1,0 +1,50 @@
+---
+// "Add to your agent" web button and small Gentifi pill, from design/badge-canvas/Marks.dc.html.
+import Mark from './Mark.astro';
+import Tick from './Tick.astro';
+
+interface Props {
+  href?: string;
+}
+const { href = '/b/demo-business' } = Astro.props;
+---
+<div class="web-badges">
+  <a class="agent-button" href={href} aria-label="Add this business to your AI agent (demo)">
+    <Mark size={26} stroke={13} />
+    <span>Add to your agent</span>
+  </a>
+  <span class="pill">
+    <span>Gentifi</span>
+    <Tick size={18} label="agent-ready" />
+  </span>
+</div>
+
+<style>
+  .web-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .agent-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 10px 22px 10px 14px;
+    border-radius: 999px;
+    background: var(--teal);
+    color: var(--white);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .agent-button:hover { background: var(--teal-raised); }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--teal);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+</style>

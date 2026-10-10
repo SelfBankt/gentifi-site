@@ -1,0 +1,572 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CopyLine from '../components/CopyLine.astro';
+import CollectionDiagram from '../components/CollectionDiagram.astro';
+import CollectionExplorer from '../components/CollectionExplorer.astro';
+import CollectionValidator from '../components/CollectionValidator.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+import Mark from '../components/Mark.astro';
+import { collectionDoc, memberBacklink } from '../data/demoShow';
+
+const specRepo = 'https://github.com/SelfBankt/collections-spec';
+const specDoc = `${specRepo}/blob/main/spec/collections-0.1.md`;
+const schemaPath = '/standards/collections-0.1.schema.json';
+
+const exampleJson = JSON.stringify(collectionDoc(2), null, 2);
+const backlinkJson = JSON.stringify(memberBacklink, null, 2);
+
+// Stewardship checked October 2026.
+const stack = [
+  {
+    layer: 'Groups of businesses',
+    items: [{ name: 'Collections', who: 'Proposed by Gentifi · draft 0.1', href: '#draft' }],
+    proposed: true,
+  },
+  {
+    layer: 'Discovery',
+    items: [{ name: 'Agentic Resource Discovery (ai-catalog.json)', who: 'Google, on the Linux Foundation AI Catalog data model', href: 'https://developers.googleblog.com/en/announcing-the-agentic-resource-discovery-specification/' }],
+  },
+  {
+    layer: 'Agent instructions',
+    items: [{ name: 'Agent Skills (SKILL.md)', who: 'agentskills.io open standard', href: 'https://agentskills.io' }],
+  },
+  {
+    layer: 'Tools and data',
+    items: [{ name: 'Model Context Protocol (MCP)', who: 'Agentic AI Foundation (Linux Foundation)', href: 'https://modelcontextprotocol.io' }],
+  },
+  {
+    layer: 'Agent to agent',
+    items: [{ name: 'A2A', who: 'Agentic AI Foundation (Linux Foundation)', href: 'https://a2a-protocol.org' }],
+  },
+  {
+    layer: 'Commerce',
+    items: [
+      { name: 'UCP', who: 'Google and Shopify', href: 'https://www.shopify.com/ucp' },
+      { name: 'ACP', who: 'OpenAI and Stripe', href: 'https://www.agenticcommerce.dev/' },
+    ],
+  },
+  {
+    layer: 'Payments',
+    items: [
+      { name: 'x402', who: 'x402 Foundation (Linux Foundation)', href: 'https://www.linuxfoundation.org/press/linux-foundation-is-launching-the-x402-foundation-and-welcoming-the-contribution-of-the-x402-protocol' },
+      { name: 'L402', who: 'Lightning Labs', href: 'https://lightning.engineering/posts/2026-03-11-L402-for-agents/' },
+      { name: 'AP2', who: 'Google, extends A2A' },
+    ],
+  },
+];
+
+const gaps = [
+  {
+    n: '01',
+    title: 'Collections of businesses',
+    body: 'Every spec describes one business at one domain. Nothing describes a group: an event, a high street, a market, a trade body.',
+    status: 'Draft 0.1 below',
+    key: true,
+  },
+  {
+    n: '02',
+    title: 'Services, bookings and quotes',
+    body: 'Commerce specs centre on products and carts. Appointments, table bookings, call-outs and B2B quote requests need their own shape.',
+    status: 'Reviewing UCP extensions first',
+  },
+  {
+    n: '03',
+    title: 'Businesses without a website',
+    body: 'Specs assume you can host files at /.well-known/. Most small businesses can’t.',
+    status: 'Gentifi hosts; the format stays open',
+  },
+  {
+    n: '04',
+    title: 'Local and live data',
+    body: 'Opening hours, service area, today’s availability and stock, in a form agents can trust.',
+    status: 'Exploring',
+  },
+  {
+    n: '05',
+    title: 'Bitcoin payments in commerce',
+    body: 'An L402 and Lightning payment option for agent checkout.',
+    status: 'Exploring',
+  },
+];
+
+const fields = [
+  ['id, name', 'The collection', '"demo-selfbuild-2027", "Demo Self Build Show 2027"'],
+  ['kind', 'Type of group', 'event · place · association · marketplace'],
+  ['publisher', 'Who curates it, with the domain it is served from', 'The event organiser'],
+  ['validFrom, validTo', 'Time window, for events', 'Show dates; members stay reachable after'],
+  ['area', 'Geography, for places', 'Postcode areas or a map boundary'],
+  ['members', 'Member businesses', 'Each points to the member’s own catalogue, or to a nested collection'],
+  ['member.role', 'Place in the collection', 'Stand number, category, sponsor tier'],
+  ['facets', 'What agents can filter by', 'Category, price, stand, distance, availability'],
+];
+
+const questions = [
+  {
+    q: 'Extend ARD, or stand alone?',
+    issue: 1,
+    body: 'ARD’s ai-catalog.json can already list nested catalogues. Should Collections be fields on a nested catalogue entry, a new media type, or both? We lean towards extending ARD.',
+  },
+  {
+    q: 'How should membership be verified?',
+    issue: 2,
+    body: 'A back-link in the member’s own catalogue (as drafted), a signature from the member, or both?',
+  },
+  {
+    q: 'Should a collection run its own search?',
+    issue: 3,
+    body: 'Collections could offer a search endpoint across members, or leave that to ARD registries and the agent.',
+  },
+  {
+    q: 'Which facets should be standard?',
+    issue: 4,
+    body: 'Category, price, distance and availability are obvious. Do we need a shared vocabulary, or should facets point to schema.org properties?',
+  },
+];
+
+const path = [
+  { step: 'Draft 0.1', body: 'Published here and on GitHub, with a JSON Schema, examples and a validator.', now: true },
+  { step: 'Open feedback', body: 'Four open questions are on GitHub now. Every one gets an answer or a change.' },
+  { step: 'Reference implementation', body: 'The Gentifi Toolkit generates and reads collections, so the draft is tested against real catalogues.' },
+  { step: 'Proposal upstream', body: 'Offered as a neutral extension to the ARD and AI Catalog work, with Gentifi as author and first implementation.' },
+];
+---
+<Base
+  title="Collections: an open standard for groups of businesses · Gentifi"
+  description="Every agent standard describes one business at one domain. Collections is Gentifi's open draft for describing a whole event, high street or trade body to AI agents."
+>
+  <Header />
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero section--teal">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow">Open standards · Draft proposal</span>
+          <h1>Agents can find a business. <span class="hl">Collections</span> let them find a whole street.</h1>
+          <p class="hero__lede">
+            Every agent standard today describes one business at one domain. Collections is Gentifi's open draft for
+            describing a group: a trade show, a high street, a market or a trade body. One connector, every member,
+            and each business keeps its own data and checkout.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#draft">Read the draft</a>
+            <a class="btn btn--ghost" href="#explorer">Try the explorer</a>
+          </div>
+          <p class="hero__meta">Draft 0.1 · October 2026 · Apache-2.0 · <a href={specDoc}>Spec on GitHub</a> · <a href={schemaPath} download>JSON Schema</a></p>
+        </div>
+        <div class="hero__visual"><CollectionDiagram /></div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section class="section" id="stack">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The stack</span>
+          <h2>Built on open standards. Adding the missing layer.</h2>
+          <p>Gentifi uses existing open standards for everything they already cover, and proposes new pieces only where there's a gap.</p>
+        </div>
+        <ol class="stack">
+          {stack.map((s) => (
+            <li class:list={['stack__row', { 'stack__row--proposed': s.proposed }]}>
+              <span class="stack__layer">{s.layer}</span>
+              <div class="stack__items">
+                {s.items.map((it) => (
+                  <div class="stack__item">
+                    {it.href ? <a href={it.href} class="stack__name">{it.name}</a> : <span class="stack__name">{it.name}</span>}
+                    <span class="stack__who">{it.who}</span>
+                  </div>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="stack__note">Stewardship as of October 2026.</p>
+      </div>
+    </section>
+
+    <!-- Gaps -->
+    <section class="section section--grey" id="gaps">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The gaps</span>
+          <h2>Five things today's specs don't cover.</h2>
+          <p>Each one matters most to exactly the businesses Gentifi serves: small, local and independent.</p>
+        </div>
+        <ol class="gaps">
+          {gaps.map((g) => (
+            <li class:list={['gap', { 'gap--key': g.key }]}>
+              <span class="gap__n">{g.n}</span>
+              <h3>{g.title}</h3>
+              <p>{g.body}</p>
+              <span class="gap__status">{g.status}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Draft spec -->
+    <section class="section" id="draft">
+      <div class="container spec">
+        <aside class="spec__toc" aria-label="Draft contents">
+          <p class="spec__toc-title">Collections 0.1</p>
+          <ol>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#motivation">Motivation</a></li>
+            <li><a href="#fields">Core fields</a></li>
+            <li><a href="#rules">Rules</a></li>
+            <li><a href="#example">Example</a></li>
+            <li><a href="#ard">Relationship to ARD</a></li>
+            <li><a href="#questions">Open questions</a></li>
+          </ol>
+          <a class="btn btn--teal btn--block" href={schemaPath} download>Download JSON Schema</a>
+          <a class="spec__toc-gh" href={specRepo}>Spec, examples and issues on GitHub</a>
+        </aside>
+
+        <article class="spec__body">
+          <span class="eyebrow">Draft specification</span>
+          <h2>Collections: describing groups of businesses to AI agents</h2>
+          <dl class="spec__status">
+            <div><dt>Version</dt><dd>0.1 (draft)</dd></div>
+            <div><dt>Date</dt><dd>10 October 2026</dd></div>
+            <div><dt>Author</dt><dd>Gentifi</dd></div>
+            <div><dt>Status</dt><dd>Proposal for discussion, not a standard. Field names are illustrative.</dd></div>
+            <div><dt>Licence</dt><dd>Apache-2.0</dd></div>
+          </dl>
+
+          <h3 id="abstract">Abstract</h3>
+          <p>
+            A collection lets one connector describe a group of businesses, so an agent can query a whole event, street
+            or trade body at once. It is written as a neutral extension to discovery catalogues such as ARD's
+            <code>ai-catalog.json</code>. A collection is a directory: it points to each member's own catalogue and
+            never replaces it.
+          </p>
+
+          <h3 id="motivation">Motivation</h3>
+          <ul>
+            <li>An attendee adds one event connector instead of 300 exhibitor connectors.</li>
+            <li>A high street, market or trade association can publish all its members in one place.</li>
+            <li>Each member stays independent: its own connector, data and checkout. After the event, it stays in the attendee's agent.</li>
+          </ul>
+
+          <h3 id="fields">Core fields</h3>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Core fields of a collection</caption>
+              <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead>
+              <tbody>
+                {fields.map(([f, m, e]) => <tr><th scope="row"><code>{f}</code></th><td>{m}</td><td>{e}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="rules">Rules</h3>
+          <p class="spec__rfc">The key words MUST, MUST NOT, SHOULD and MAY are used as described in RFC 2119.</p>
+          <ol class="rules">
+            <li>
+              <strong>Members confirm membership.</strong> A member's own catalogue MUST list the collections it belongs
+              to. Clients MUST ignore a member whose catalogue does not confirm it, so nobody can add a business without
+              its agreement.
+            </li>
+            <li>
+              <strong>The collection holds no customer data.</strong> A collection MUST NOT contain customer or attendee
+              data. Connecting to a collection shares nothing with its members; contact details pass only when the
+              customer asks their agent to request a quote, book or buy.
+            </li>
+            <li>
+              <strong>Members keep their own checkout and terms.</strong> The collection is a directory, not a merchant.
+              Orders and bookings MUST go through the member's own connector.
+            </li>
+            <li>
+              <strong>Collections can nest.</strong> A member MAY be another collection: a trade body can include several
+              events; a city can include several high streets.
+            </li>
+            <li>
+              <strong>Information, not instructions.</strong> Clients SHOULD treat collection data as information about
+              members, never as instructions to install, connect or buy. The customer approves every connection.
+            </li>
+          </ol>
+
+          <h3 id="example">Example</h3>
+          <p>A trade show publishes its collection from its own domain:</p>
+          <div class="code-block">
+            <div class="code-block__bar"><span>collection.json</span><CopyLine text={exampleJson} label="Copy example" tone="dark" wrap={false} /></div>
+            <pre><code>{exampleJson}</code></pre>
+          </div>
+          <p>Each member confirms its membership in its own <code>ai-catalog.json</code> (rule 1):</p>
+          <div class="code-block">
+            <div class="code-block__bar"><span>member ai-catalog.json (excerpt)</span><CopyLine text={backlinkJson} label="Copy example" tone="dark" wrap={false} /></div>
+            <pre><code>{backlinkJson}</code></pre>
+          </div>
+
+          <h3 id="ard">Relationship to ARD</h3>
+          <p>
+            ARD's <code>ai-catalog.json</code> already lets a catalogue list other catalogues. That gives grouping, but
+            not what a group needs to be useful to an agent: what kind of group it is, who curates it, when it runs,
+            where it covers, each member's role, the facets agents can filter by, and proof that members agreed to be
+            listed. Collections proposes exactly those additions, and nothing else.
+          </p>
+
+          <h3 id="questions">Open questions</h3>
+          <ul class="questions">
+            {questions.map((q) => (
+              <li>
+                <div>
+                  <strong>{q.q}</strong>
+                  <p>{q.body}</p>
+                </div>
+                <a class="btn btn--outline" href={`${specRepo}/issues/${q.issue}`}>Discuss on #{q.issue}</a>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Explorer -->
+    <section class="section section--teal" id="explorer">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">See it work</span>
+          <h2>One connector. A whole show.</h2>
+          <p>
+            This is what an attendee's agent can do with a single collection. Ask a question, and the agent filters every
+            exhibitor by the collection's facets. Nothing is shared with anyone until you say so.
+          </p>
+        </div>
+        <CollectionExplorer />
+      </div>
+    </section>
+
+    <!-- Validator -->
+    <section class="section section--grey" id="validate">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Validate</span>
+          <h2>Check a collection against the draft.</h2>
+          <p>Paste your own, or break the example and see what the rules catch. Prefer tooling? <a href={schemaPath} download>Download the JSON Schema</a>.</p>
+        </div>
+        <div class="validator-wrap">
+          <CollectionValidator />
+        </div>
+      </div>
+    </section>
+
+    <!-- Path -->
+    <section class="section" id="path">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">From draft to standard</span>
+          <h2>Neutral by design. Built in the open.</h2>
+          <p>
+            The format carries no brand: no "gentifi" in any field name. Gentifi's part is to write the draft, build the
+            first implementation, and take it to the people who maintain the specs it extends.
+          </p>
+        </div>
+        <ol class="path">
+          {path.map((p, i) => (
+            <li class:list={{ 'path--now': p.now }}>
+              <span class="path__n">{p.now ? 'Now' : `Step ${i + 1}`}</span>
+              <h3>{p.step}</h3>
+              <p>{p.body}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="path__cta">
+          <a class="btn btn--teal" href={`${specRepo}/issues`}>Join the discussion on GitHub</a>
+          <a class="btn btn--outline" href={specRepo}>Spec on GitHub</a>
+          <a class="btn btn--outline" href={schemaPath} download>Download JSON Schema</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Organisers -->
+    <section class="section section--teal" id="waitlist">
+      <div class="container org">
+        <div class="section-head">
+          <span class="eyebrow">Events, high streets and trade bodies</span>
+          <h2>Want the first collection to be yours?</h2>
+          <p>
+            We're looking for one event, market or association to publish the first real collection with us. Your members
+            or exhibitors become reachable from every attendee's agent.
+          </p>
+          <p class="org__mark"><Mark size={22} /> Licensed per event or per year.</p>
+        </div>
+        <WaitlistForm role="organiser" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Hero */
+  .hero { padding-block: clamp(48px, 8vw, 96px); }
+  .hero__grid { display: grid; gap: 56px; align-items: center; }
+  @media (min-width: 1000px) { .hero__grid { grid-template-columns: 1.1fr 1fr; gap: 64px; } }
+  .hero h1 { font-size: clamp(2rem, 5.2vw, 3.3rem); }
+  .hl { color: var(--copper); }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.2rem); color: var(--on-teal-muted); max-width: 38rem; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero__meta { margin-top: 20px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--on-teal-muted); }
+  .hero__meta a { color: var(--copper); }
+  .hero__visual { width: 100%; max-width: 480px; justify-self: center; }
+
+  /* Stack */
+  .stack { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .stack__row {
+    display: grid;
+    gap: 8px 24px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    align-items: center;
+  }
+  @media (min-width: 760px) { .stack__row { grid-template-columns: 13rem 1fr; } }
+  .stack__layer { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .stack__items { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+  .stack__item { display: grid; gap: 2px; }
+  .stack__name { font-weight: 700; color: var(--teal); }
+  a.stack__name { text-decoration-color: var(--border); }
+  a.stack__name:hover { text-decoration-color: currentColor; }
+  .stack__who { font-size: 0.85rem; color: var(--ink-muted); }
+  .stack__row--proposed {
+    background: var(--teal);
+    border: 2px dashed var(--copper);
+    color: var(--white);
+  }
+  .stack__row--proposed .stack__layer { color: var(--copper); }
+  .stack__row--proposed .stack__name { color: var(--white); font-size: 1.15rem; }
+  .stack__row--proposed .stack__who { color: var(--copper); font-family: var(--font-mono); font-size: 0.78rem; }
+  .stack__note { margin-top: 12px; font-size: 0.8rem; color: var(--ink-muted); }
+
+  /* Gaps */
+  .gaps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .gaps { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .gaps { grid-template-columns: 1.3fr 1fr 1fr; } .gap--key { grid-row: span 2; } }
+  .gap { background: var(--white); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .gap__n { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-muted); }
+  .gap h3 { font-size: 1.08rem; }
+  .gap p { color: var(--ink-muted); font-size: 0.95rem; }
+  .gap__status {
+    margin-top: auto;
+    align-self: flex-start;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    padding: 3px 8px; border: 1px dashed var(--ink-muted); border-radius: 6px; color: var(--ink-muted);
+  }
+  .gap--key { background: var(--teal); color: var(--white); }
+  .gap--key h3 { font-size: 1.6rem; }
+  .gap--key p { color: var(--on-teal-muted); font-size: 1.02rem; }
+  .gap--key .gap__n { color: var(--copper); }
+  .gap--key .gap__status { border: 0; background: var(--copper); color: var(--teal); font-weight: 500; }
+
+  /* Spec */
+  .spec { display: grid; gap: 40px; }
+  @media (min-width: 1040px) { .spec { grid-template-columns: 15rem 1fr; gap: 64px; align-items: start; } }
+  .spec__toc { display: none; }
+  @media (min-width: 1040px) {
+    .spec__toc {
+      display: grid;
+      gap: 14px;
+      position: sticky;
+      top: 24px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+  }
+  .spec__toc-title { font-weight: 700; }
+  .spec__toc-gh { font-size: 0.88rem; font-weight: 600; color: var(--teal); }
+  .spec__toc ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: 0.92rem; color: var(--ink-muted); }
+  .spec__toc ol a { color: var(--teal); text-decoration: none; }
+  .spec__toc ol a:hover { text-decoration: underline; }
+
+  .spec__body { min-width: 0; max-width: 46rem; }
+  .spec__body > h2 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); }
+  .spec__body h3 { font-size: 1.3rem; margin: 40px 0 12px; scroll-margin-top: 24px; }
+  .spec__body > p, .spec__body > ul { color: var(--ink-muted); }
+  .spec__body > ul { padding-left: 1.2em; display: grid; gap: 6px; }
+  .spec__body code { font-size: 0.88em; background: var(--grey); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+  .spec__body > p + p, .spec__body > p + .code-block, .spec__body > .code-block + p { margin-top: 12px; }
+
+  .spec__status {
+    margin: 20px 0 0;
+    display: grid;
+    gap: 6px;
+    padding: 16px 18px;
+    border-left: 4px solid var(--copper);
+    background: var(--grey);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.92rem;
+  }
+  .spec__status div { display: grid; grid-template-columns: 5.5rem 1fr; gap: 12px; }
+  .spec__status dt { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-muted); padding-top: 2px; }
+  .spec__status dd { margin: 0; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 0.92rem; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 16px; border-bottom: 1px solid var(--grey); }
+  thead th { background: var(--teal); color: var(--white); }
+  tbody th { white-space: nowrap; font-weight: 500; }
+  td { color: var(--ink-muted); }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+
+  .spec__rfc { font-size: 0.85rem; font-style: italic; }
+  .rules { margin: 12px 0 0; padding-left: 1.4em; display: grid; gap: 14px; color: var(--ink-muted); }
+  .rules strong { color: var(--ink); }
+
+  .code-block { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--teal-line); }
+  .code-block__bar {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 6px 6px 6px 16px;
+    background: var(--teal);
+    color: var(--on-teal-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  /* Only the copy button is shown in the bar; the full text is in the block below */
+  .code-block__bar :global(.copyline) { border: 0; background: transparent; }
+  .code-block__bar :global(.copyline code) { display: none; }
+  .code-block__bar :global(.copyline button) { border-radius: 8px; min-height: 36px; }
+  .code-block pre {
+    margin: 0;
+    padding: 16px 18px;
+    background: #032F38;
+    color: var(--white);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .code-block pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+  .questions { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .questions li {
+    display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .questions li > div { flex: 1 1 22rem; }
+  .questions p { color: var(--ink-muted); font-size: 0.93rem; margin-top: 4px; }
+  .questions .btn { min-height: 40px; padding: 8px 18px; }
+
+  /* Validator */
+  .section-head a { color: inherit; font-weight: 600; }
+
+  /* Path */
+  .path { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  @media (min-width: 720px) { .path { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .path { grid-template-columns: repeat(4, 1fr); } }
+  .path li { border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: grid; gap: 8px; align-content: start; }
+  .path__n { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .path p { color: var(--ink-muted); font-size: 0.93rem; }
+  .path--now { background: var(--teal); border-color: var(--teal) !important; color: var(--white); }
+  .path--now p { color: var(--on-teal-muted); }
+  .path--now .path__n { color: var(--copper); }
+  .path__cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* Organisers */
+  .org { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .org { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
+  .org__mark { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+</style>

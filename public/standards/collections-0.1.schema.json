@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gentifi.com/standards/collections-0.1.schema.json",
+  "title": "Collection (draft 0.1)",
+  "description": "Draft extension to discovery catalogues such as ARD's ai-catalog.json: one document that describes a group of businesses (an event, a place, an association or a marketplace). Proposal for discussion, not a standard. Field names are illustrative and may change.",
+  "type": "object",
+  "required": ["collection"],
+  "properties": {
+    "collection": { "$ref": "#/$defs/collection" }
+  },
+  "$defs": {
+    "collection": {
+      "type": "object",
+      "required": ["id", "name", "kind", "publisher", "members"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "Stable identifier, unique within the publisher's domain."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": ["event", "place", "association", "marketplace"],
+          "description": "Type of group."
+        },
+        "publisher": {
+          "type": "object",
+          "required": ["name", "domain"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "domain": {
+              "type": "string",
+              "format": "hostname",
+              "description": "Domain the publisher controls. Clients verify the collection is served from it."
+            }
+          }
+        },
+        "validFrom": { "type": "string", "format": "date", "description": "Start of the time window, for events." },
+        "validTo": { "type": "string", "format": "date", "description": "End of the time window. Members stay reachable afterwards through their own catalogues." },
+        "area": {
+          "type": "object",
+          "description": "Geography, for places.",
+          "properties": {
+            "postcodeAreas": { "type": "array", "items": { "type": "string" } },
+            "boundary": { "type": "string", "format": "uri", "description": "URL of a GeoJSON boundary." }
+          }
+        },
+        "facets": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Member fields agents can filter by, such as category, priceFrom or stand."
+        },
+        "members": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/member" }
+        }
+      }
+    },
+    "member": {
+      "type": "object",
+      "description": "A member business, pointing to its own catalogue, or a nested collection.",
+      "properties": {
+        "catalog": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "collection": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "role": {
+          "type": "object",
+          "description": "The member's place in the collection, such as stand number, category or sponsor tier.",
+          "additionalProperties": true
+        }
+      },
+      "oneOf": [
+        { "required": ["catalog"] },
+        { "required": ["collection"] }
+      ]
+    }
+  }
+}

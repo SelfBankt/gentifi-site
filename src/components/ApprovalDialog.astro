@@ -1,0 +1,86 @@
+---
+// Demo of the approval step a customer sees in their own agent app.
+// Open it from any button with data-approval="<id>" and data-app="<app name>".
+interface Props {
+  id: string;
+  name: string;
+  initials: string;
+  via: string;
+  abilities: string[];
+}
+const { id, name, initials, via, abilities } = Astro.props;
+---
+<dialog class="approve" id={id} aria-labelledby={`${id}-title`}>
+  <div class="approve__frame">
+    <p class="approve__label">Example: what <span data-app>your agent app</span> shows</p>
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__avatar" aria-hidden="true">{initials}</div>
+        <div>
+          <h2 id={`${id}-title`}>Connect {name}?</h2>
+          <p class="sheet__via">{via}</p>
+        </div>
+      </div>
+      <p class="sheet__body">This connector will be able to:</p>
+      <ul class="sheet__list">{abilities.map((a) => <li>{a}</li>)}</ul>
+      <div class="sheet__buttons">
+        <button class="btn btn--outline" type="button" data-close>Cancel</button>
+        <button class="btn btn--teal" type="button" data-approve>Connect</button>
+      </div>
+    </div>
+    <p class="approve__note" data-note>
+      In the live version, this approval happens inside <span data-app>your agent app</span>, signed in as you. Nothing is added until you tap Connect.
+    </p>
+    <button class="btn btn--ghost btn--block approve__close" type="button" data-close>Close demo</button>
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLDialogElement>('dialog.approve').forEach((dialog) => {
+    const note = dialog.querySelector('[data-note]');
+    const defaultNote = note?.innerHTML ?? '';
+    dialog.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dialog.close()));
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.querySelector('[data-approve]')?.addEventListener('click', () => {
+      if (note) note.textContent = 'Demo only: nothing was connected. Gentifi is not live yet.';
+    });
+    document.querySelectorAll<HTMLButtonElement>(`[data-approval="${dialog.id}"]`).forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (note) note.innerHTML = defaultNote;
+        dialog.querySelectorAll('[data-app]').forEach((el) => (el.textContent = btn.dataset.app ?? 'your agent app'));
+        dialog.showModal();
+      });
+    });
+  });
+</script>
+
+<style>
+  .approve {
+    border: 0;
+    padding: 0;
+    width: min(440px, calc(100% - 2 * var(--gutter)));
+    max-height: calc(100dvh - 32px);
+    border-radius: var(--radius-lg);
+    background: var(--teal);
+    color: var(--white);
+  }
+  .approve::backdrop { background: rgb(3 30 36 / 0.7); }
+  .approve__frame { padding: 24px; display: grid; gap: 16px; }
+  .approve__label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--copper); }
+  .sheet { background: var(--white); color: var(--teal); border-radius: var(--radius); padding: 20px; display: grid; gap: 12px; }
+  .sheet__head { display: flex; gap: 12px; align-items: center; }
+  .sheet__avatar {
+    width: 48px; height: 48px; flex-shrink: 0;
+    border-radius: 14px;
+    background: var(--grey);
+    display: grid; place-items: center;
+    font-weight: 700;
+  }
+  .sheet h2 { font-size: 1.15rem; }
+  .sheet__via { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted); overflow-wrap: anywhere; }
+  .sheet__body { font-size: 0.92rem; }
+  .sheet__list { margin: 0; padding-left: 1.1em; font-size: 0.92rem; color: var(--ink-muted); display: grid; gap: 4px; }
+  .sheet__buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .approve__note { font-size: 0.88rem; color: var(--on-teal-muted); }
+  .approve__close { min-height: 44px; }
+</style>

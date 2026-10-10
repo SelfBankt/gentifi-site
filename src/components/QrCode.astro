@@ -1,0 +1,35 @@
+---
+// A real, scannable QR code rendered to SVG at build time.
+// Defaults to the demo business's badge link.
+import QRCode from 'qrcode';
+
+interface Props {
+  data?: string;
+  label?: string;
+}
+const {
+  data = 'https://gentifi.com/b/demo-business',
+  label = 'QR code linking to the demo business page',
+} = Astro.props;
+
+const svg = await QRCode.toString(data, {
+  type: 'svg',
+  errorCorrectionLevel: 'M',
+  margin: 0,
+  color: { dark: '#05414D', light: '#FFFFFF' },
+});
+---
+<div class="qr" role="img" aria-label={label} title={data}>
+  <Fragment set:html={svg} />
+</div>
+
+<style>
+  .qr {
+    aspect-ratio: 1;
+    width: 100%;
+    background: var(--white);
+    border-radius: 12%;
+    padding: 9%;
+  }
+  .qr :global(svg) { width: 100%; height: 100%; }
+</style>

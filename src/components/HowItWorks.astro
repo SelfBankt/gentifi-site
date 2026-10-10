@@ -1,0 +1,122 @@
+---
+// Rebuild of brand/how-it-works.png: three columns on wide screens,
+// a vertical stack with up/down arrows on phones.
+import Mark from './Mark.astro';
+
+const businesses = ['Shops and brands', 'Bookings and services', 'Local trades', 'B2B suppliers', 'Events and associations'];
+const gentifi = ['MCP connector', 'SKILL.md for agents', 'Checkout and approval', 'Network directory', 'Sales analytics'];
+const agents = ['Claude', 'ChatGPT', 'Self-built or headless', 'Branded chat assistant'];
+---
+<figure class="hiw">
+  <figcaption class="sr-only">
+    How Gentifi works: businesses publish once to Gentifi and receive orders and sales data. Customer agents ask Gentifi to find, price, book and buy, and get live answers.
+  </figcaption>
+
+  <div class="hiw__box">
+    <h3>Businesses</h3>
+    <ul>{businesses.map((b) => <li>{b}</li>)}</ul>
+  </div>
+
+  <div class="hiw__links" aria-hidden="true">
+    <div class="flow flow--fwd"><span class="flow__label">publish once</span><span class="flow__line"></span></div>
+    <div class="flow flow--back"><span class="flow__line"></span><span class="flow__label">orders and sales data</span></div>
+  </div>
+
+  <div class="hiw__box hiw__box--core">
+    <h3><Mark size={26} />Gentifi</h3>
+    <p class="hiw__toolkit">Powered by <strong>Gentifi Toolkit</strong></p>
+    <ul>{gentifi.map((g) => <li>{g}</li>)}</ul>
+  </div>
+
+  <div class="hiw__links" aria-hidden="true">
+    <div class="flow flow--back"><span class="flow__label">find, price, book, buy</span><span class="flow__line"></span></div>
+    <div class="flow flow--fwd"><span class="flow__label">live answers</span><span class="flow__line"></span></div>
+  </div>
+
+  <div class="hiw__box">
+    <h3>Customer agents</h3>
+    <ul>
+      {agents.map((a) => <li>{a}</li>)}
+      <li class="muted">Consumers and firms</li>
+    </ul>
+  </div>
+</figure>
+
+<style>
+  .hiw {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    --arrow: #8FA0AE;
+  }
+  .hiw__box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .hiw__box h3 { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; margin-bottom: 12px; }
+  .hiw__box ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; color: var(--ink-muted); }
+  .hiw__box .muted { color: #5A6779; font-style: italic; }
+  .hiw__box--core { background: var(--teal); border-color: var(--teal); color: var(--white); }
+  .hiw__box--core ul { color: var(--white); }
+  .hiw__toolkit {
+    display: inline-block;
+    margin: -2px 0 14px;
+    padding: 4px 10px;
+    border: 1px solid var(--copper);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--on-teal-muted);
+  }
+  .hiw__toolkit strong { color: var(--copper); font-weight: 500; }
+
+  /* Phone: arrows run vertically, side by side */
+  .hiw__links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 6px 12px;
+  }
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+  .flow__line {
+    position: relative;
+    width: 2px;
+    height: 34px;
+    background: var(--arrow);
+  }
+  .flow__line::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 0; height: 0;
+    border: 6px solid transparent;
+    transform: translateX(-50%);
+  }
+  .flow--fwd .flow__line::after { bottom: -6px; border-top-color: var(--arrow); border-bottom: 0; }
+  .flow--back .flow__line::after { top: -6px; border-bottom-color: var(--arrow); border-top: 0; }
+
+  @media (min-width: 900px) {
+    .hiw { grid-template-columns: 1fr 150px 1.05fr 150px 1fr; align-items: stretch; }
+    .hiw__links { grid-template-columns: 1fr; align-content: center; gap: 22px; padding: 0 10px; }
+    .flow__line { width: 100%; height: 2px; }
+    .flow__line::after { top: 50%; left: auto; bottom: auto; transform: translateY(-50%); }
+    .flow--fwd .flow__line::after {
+      right: -6px; border: 6px solid transparent; border-left-color: var(--arrow); border-right: 0;
+    }
+    .flow--back .flow__line::after {
+      left: -6px; border: 6px solid transparent; border-right-color: var(--arrow); border-left: 0;
+    }
+  }
+</style>

@@ -1,0 +1,120 @@
+---
+// Rebuild of brand/scan-to-add.png. Two-column branches merge and split
+// on wide screens; on phones the branches stack with an "or" between them.
+---
+<figure class="scan">
+  <figcaption class="scan__title">Every scan ends with the customer approving the connection in their own app</figcaption>
+  <ol class="scan__steps">
+    <li class="scan__row scan__row--pair">
+      <div class="node"><strong>Scan with the phone camera</strong><span>Opens the link in a browser</span></div>
+      <span class="or" aria-hidden="true">or</span>
+      <div class="node"><strong>Photograph it in the AI app</strong><span>The agent reads the code itself</span></div>
+    </li>
+    <li class="joint joint--merge" aria-hidden="true"></li>
+    <li class="scan__row">
+      <div class="node node--narrow"><strong>One link per business</strong><span class="mono">gentifi.com/b/your-business</span></div>
+    </li>
+    <li class="joint joint--split" aria-hidden="true"><span class="tip tip--l"></span><span class="tip tip--r"></span></li>
+    <li class="scan__row scan__row--pair">
+      <div class="node"><strong>Browser gets a landing page</strong><span>Add to Claude · Add to ChatGPT<br />Copy connector link for any agent</span></div>
+      <span class="or" aria-hidden="true">or</span>
+      <div class="node"><strong>Agent gets machine-readable files</strong><span>MCP connector, catalogue entry and SKILL.md</span></div>
+    </li>
+    <li class="joint joint--merge" aria-hidden="true"></li>
+    <li class="scan__row">
+      <div class="node node--narrow node--key"><strong>Customer approves in their app</strong><span>Signs in once; nothing installs silently</span></div>
+    </li>
+    <li class="joint" aria-hidden="true"></li>
+    <li class="scan__row">
+      <div class="node node--narrow"><strong>Agent connected</strong><span>Can now find, price, book and buy</span></div>
+    </li>
+  </ol>
+</figure>
+
+<style>
+  .scan { margin: 0; --gap: 24px; --line: #8FA0AE; }
+  .scan__title { font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; margin-bottom: 28px; text-wrap: balance; }
+  .scan__steps { list-style: none; margin: 0; padding: 0; }
+  .scan__row { display: grid; gap: 10px; justify-items: stretch; }
+  .or {
+    justify-self: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+  }
+  .node {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    text-align: center;
+    display: grid;
+    gap: 4px;
+  }
+  .node strong { font-size: 1.02rem; }
+  .node span { color: var(--ink-muted); font-size: 0.93rem; line-height: 1.5; }
+  .node--key { background: var(--teal); border-color: var(--teal); color: var(--white); }
+  .node--key span { color: var(--on-teal-muted); }
+
+  /* Default joint: a single arrow down the middle */
+  .joint {
+    position: relative;
+    height: 36px;
+  }
+  .joint::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 6px;
+    width: 2px;
+    transform: translateX(-50%);
+    background: var(--line);
+  }
+  .joint::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: 0;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--line);
+    border-bottom: 0;
+  }
+
+  .tip { display: none; }
+
+  @media (min-width: 720px) {
+    .tip {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--line);
+      border-bottom: 0;
+    }
+    .tip--l { left: calc((100% - var(--gap)) / 4 + 1px); }
+    .tip--r { right: calc((100% - var(--gap)) / 4 + 1px); transform: translateX(50%); }
+    .scan__row--pair { grid-template-columns: 1fr 1fr; gap: var(--gap); }
+    .scan__row--pair .or { display: none; }
+    .node--narrow { width: 50%; justify-self: center; min-width: 320px; }
+
+    /* Merge: two drops from column centres join, then one arrow down */
+    .joint--merge, .joint--split { height: 48px; }
+    .joint--merge {
+      background:
+        linear-gradient(var(--line), var(--line)) left calc((100% - var(--gap)) / 4) top 0 / 2px 50% no-repeat,
+        linear-gradient(var(--line), var(--line)) right calc((100% - var(--gap)) / 4) top 0 / 2px 50% no-repeat,
+        linear-gradient(var(--line), var(--line)) center top 50% / calc(50% + var(--gap) / 2 + 2px) 2px no-repeat;
+    }
+    .joint--merge::before { top: 50%; }
+
+    /* Split: one line down, then branches to both column centres */
+    .joint--split::before { bottom: 50%; }
+    .joint--split::after { display: none; }
+    .joint--split {
+      background:
+        linear-gradient(var(--line), var(--line)) center top 50% / calc(50% + var(--gap) / 2 + 2px) 2px no-repeat,
+        linear-gradient(var(--line), var(--line)) left calc((100% - var(--gap)) / 4) bottom 6px / 2px calc(50% - 6px) no-repeat,
+        linear-gradient(var(--line), var(--line)) right calc((100% - var(--gap)) / 4) bottom 6px / 2px calc(50% - 6px) no-repeat;
+    }
+  }
+</style>

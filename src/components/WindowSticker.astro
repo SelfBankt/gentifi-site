@@ -1,0 +1,75 @@
+---
+// Window sticker badge, rebuilt from design/badge-canvas/Main.dc.html.
+// Sizes use container units so it scales to whatever column it sits in.
+import Mark from './Mark.astro';
+import Tick from './Tick.astro';
+import QrCode from './QrCode.astro';
+
+interface Props {
+  business?: string;
+}
+const { business = '[YOUR BUSINESS NAME]' } = Astro.props;
+---
+<div class="sticker-wrap">
+  <figure class="sticker" aria-label={`Gentifi window sticker for ${business}`}>
+    <div class="sticker__top">
+      <Mark class="sticker__mark" size="100%" />
+      <div>
+        <div class="sticker__word">
+          <span>Gentifi</span>
+          <Tick size="0.8em" tick="var(--teal)" />
+        </div>
+        <div class="sticker__sub">Agent-ready business</div>
+      </div>
+    </div>
+    <div class="sticker__bottom">
+      <div class="sticker__text">
+        <div class="sticker__cta">Scan to add us to your AI agent</div>
+        <div class="sticker__agents">Claude · ChatGPT · any agent</div>
+        <div class="sticker__biz">{business}</div>
+      </div>
+      <div class="sticker__qr"><QrCode /></div>
+    </div>
+  </figure>
+</div>
+
+<style>
+  .sticker-wrap { container-type: inline-size; width: 100%; }
+  .sticker {
+    margin: 0;
+    aspect-ratio: 1;
+    background: var(--teal);
+    border: 1px solid var(--teal-line);
+    border-radius: 8.7cqi;
+    padding: 8.7cqi 8.7cqi 7.2cqi;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--white);
+  }
+  .sticker__top { display: grid; gap: 3.6cqi; }
+  .sticker__top :global(.sticker__mark) { width: 21cqi; height: 21cqi; }
+  .sticker__word {
+    display: flex;
+    align-items: center;
+    gap: 0.22em;
+    font-size: 15cqi;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .sticker__sub { font-size: max(11px, 4.3cqi); color: var(--on-teal-muted); margin-top: 1.2cqi; }
+  .sticker__bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 4cqi;
+    border-top: 1px solid var(--teal-line);
+    padding-top: 5cqi;
+  }
+  .sticker__text { display: grid; gap: 1.8cqi; max-width: 52cqi; }
+  .sticker__cta { font-size: max(12px, 4cqi); font-weight: 600; line-height: 1.25; }
+  .sticker__agents { font-family: var(--font-mono); font-size: max(10px, 2.8cqi); color: var(--copper); }
+  .sticker__biz { font-family: var(--font-mono); font-size: max(10px, 2.6cqi); color: var(--on-teal-muted); }
+  .sticker__qr { width: 27cqi; flex-shrink: 0; font-size: 2.4cqi; }
+</style>

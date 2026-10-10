@@ -1,0 +1,465 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+import CounterCard from '../components/CounterCard.astro';
+import WebBadges from '../components/WebBadges.astro';
+import Tick from '../components/Tick.astro';
+import CopyLine from '../components/CopyLine.astro';
+
+const toolkitInstall = 'npx github:SelfBankt/gentifi-toolkit init';
+const toolkitZip = 'https://github.com/SelfBankt/gentifi-toolkit/archive/refs/heads/main.zip';
+
+const offer = [
+  { what: 'Turn your catalogue, pricing, booking or ordering into an MCP server', plain: 'Agents can see what you sell and what it costs.' },
+  { what: 'Get you listed in the Claude and ChatGPT connector directories', plain: 'Customers can find and add you in their agent.' },
+  { what: 'Publish a SKILL.md for headless agents', plain: 'Self-built and developer agents can use you too.' },
+  { what: 'Handle sign-in, guest checkout and confirmation', plain: 'Orders are safe and the customer approves them.' },
+  { what: 'Optional branded chat assistant on Telegram, WhatsApp or web', plain: "Customers without an agent still get the experience." },
+  { what: 'Attribution and analytics', plain: 'You see exactly what agents sold for you.' },
+];
+
+const steps = [
+  { title: 'Bring your catalogue', body: 'Connect Shopify, upload a CSV or link your booking system. No website or developer needed.' },
+  { title: 'We build your connector', body: 'Gentifi generates your MCP connector and SKILL.md with search, price, availability and order tools.' },
+  { title: 'Get your badge and link', body: 'A window sticker, counter card and web button, each with a QR code that adds you to a customer’s agent.' },
+  { title: 'Agents find and buy', body: 'Customers ask their agent; it checks your live stock and prices and hands over to your checkout. You see every sale.' },
+];
+
+const examples = [
+  {
+    setting: 'Farm shop',
+    ask: 'Which farm near me has eggs this week? Reserve a dozen.',
+    gets: 'Live stock and reservations, without answering the phone.',
+  },
+  {
+    setting: 'Restaurant',
+    ask: 'Book a table for four on Friday at 7.',
+    gets: 'Bookings handed over to your existing booking page.',
+  },
+  {
+    setting: 'Trades and services',
+    ask: 'Find a plumber free Tuesday and get a price.',
+    gets: 'Quote requests with the details you need, when you’re free.',
+  },
+  {
+    setting: 'Trade show or event',
+    ask: 'Which stands sell triple glazing under £600/m²? Get me three quotes.',
+    gets: 'One event connector covers every exhibitor, and you stay in the attendee’s agent after the show.',
+  },
+];
+
+const b2 = [
+  { row: 'Typical ask', b2c: '“Book a haircut Saturday”', b2b: '“Get three quotes for 200m² of insulation”' },
+  { row: 'Prices', b2c: 'Public list prices', b2b: 'Account-specific and negotiated' },
+  { row: 'Sign-in', b2c: 'Guest or light account', b2b: 'Company account, several users' },
+  { row: 'Approval', b2c: 'Customer confirms', b2b: 'Spending limits, approval chains' },
+  { row: 'Payment', b2c: 'Card, wallet, Lightning', b2b: 'Invoice, purchase order, credit terms' },
+  { row: 'Value to you', b2c: 'More sales', b2b: 'Faster quotes, repeat orders' },
+];
+
+const pricing = [
+  { label: 'Setup and listing', how: 'One-off onboarding fee', price: '[SETUP FEE]', body: 'We import your catalogue, build your connector and get you listed.' },
+  { label: 'Staying live', how: 'Monthly subscription', price: '[MONTHLY FEE]', body: 'Regular sync keeps prices, stock and availability right.' },
+  { label: 'Agent sales', how: 'Small fee per agent order', price: '[PER-ORDER FEE]', body: 'Only on orders agents bring in, measured by our analytics.' },
+];
+
+const faqs = [
+  {
+    q: 'Do I need a website or a developer?',
+    a: 'No. Gentifi hosts your connector and agent files for you. If you do have a developer, they can self-host with the free, open-source Gentifi Toolkit.',
+  },
+  {
+    q: 'Which agents does it work with?',
+    a: 'Claude, ChatGPT, and self-built or headless agents that use MCP or SKILL.md. Customers without an agent can use the optional branded chat assistant.',
+  },
+  {
+    q: 'What if my business isn’t in the Claude or ChatGPT directories?',
+    a: 'You still work. Customers can add you directly from your badge or link, and headless agents use your SKILL.md.',
+  },
+  {
+    q: 'Can an agent place an order my customer didn’t want?',
+    a: 'Every order is confirmed by the customer before it goes through, and you set clear refund rules. Agents can’t connect to you or buy from you silently.',
+  },
+  {
+    q: 'Do I keep my own checkout?',
+    a: 'Yes. Agents hand the customer over to your existing checkout or booking page, on your terms.',
+  },
+];
+---
+<Base
+  title="For businesses · Gentifi"
+  description="Be findable and buyable inside Claude, ChatGPT and any other AI agent, without building it yourself."
+>
+  <Header ctaHref="#waitlist" />
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero section--teal">
+      <div class="container hero__inner">
+        <span class="eyebrow">For businesses</span>
+        <h1>Get found and bought inside your customers' AI agents.</h1>
+        <p class="hero__lede">
+          Be findable and buyable inside Claude, ChatGPT and any other agent, without building it yourself.
+          Gentifi does the technical work once, so your business is ready for every agent.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+          <a class="btn btn--ghost" href={toolkitZip}>Download the toolkit</a>
+        </div>
+        <div class="hero__install">
+          <p>Or run it now, in one line (early preview):</p>
+          <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
+        </div>
+        <ul class="hero__points">
+          <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
+          <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
+          <li><Tick size={18} tick="var(--teal)" />Customers approve every order</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Why -->
+    <section class="section section--grey">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why now</span>
+          <h2>Your customers are starting to ask their agent first.</h2>
+          <p>
+            People shop, book and source suppliers by asking an AI agent. Most businesses are invisible to it, so the
+            agent falls back on web-search guesses: out-of-date prices, no stock, no way to book or buy.
+          </p>
+        </div>
+        <div class="three-up">
+          <article class="panel">
+            <h3>Relevance</h3>
+            <p>Agents get your real stock, prices and availability, and can act on them, not just link to your website.</p>
+          </article>
+          <article class="panel">
+            <h3>Locality</h3>
+            <p>Big chains will build their own agent links. The independent bakery, farm shop or electrician won't. Those are the businesses a local request needs most.</p>
+          </article>
+          <article class="panel">
+            <h3>Density</h3>
+            <p>We cover most relevant businesses in one area before spreading thin, so local requests find you alongside your neighbours.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Offer -->
+    <section class="section" id="offer">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">What Gentifi does</span>
+          <h2>Six things, done once, for every agent.</h2>
+        </div>
+        <ol class="offer">
+          {offer.map((o, i) => (
+            <li>
+              <span class="offer__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{o.what}</h3>
+              <p>{o.plain}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="connector">
+          <div class="connector__copy">
+            <span class="eyebrow">Plus a shareable connector</span>
+            <h3 class="connector__title">Your own link and QR code.</h3>
+            <p>
+              Hand it to customers on a window sticker, a counter card, your website or your emails. They choose to plug
+              you into their own agent, and approve it in their own app.
+            </p>
+            <WebBadges />
+            <p class="connector__more"><a href="/b/demo-business">See what a scan opens</a></p>
+          </div>
+          <div class="connector__card"><CounterCard /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="section section--grey" id="how">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Getting started</span>
+          <h2>From catalogue to agent-ready.</h2>
+        </div>
+        <ol class="steps">
+          {steps.map((s, i) => (
+            <li>
+              <span class="steps__n" aria-hidden="true">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="diy">
+          Prefer to do it yourself? The <a href="/toolkit">Gentifi Toolkit</a> is free and open source.
+        </p>
+      </div>
+    </section>
+
+    <!-- Examples -->
+    <section class="section" id="examples">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Examples</span>
+          <h2>What it looks like for businesses like yours.</h2>
+        </div>
+        <div class="examples">
+          {examples.map((e) => (
+            <article class="example">
+              <span class="example__setting">{e.setting}</span>
+              <p class="example__label">The customer asks their agent</p>
+              <q>{e.ask}</q>
+              <p class="example__label">You get</p>
+              <p>{e.gets}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- B2C / B2B -->
+    <section class="section section--grey">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">B2C and B2B</span>
+          <h2>Sell to consumers and business buyers on the same rails.</h2>
+          <p>Only the checkout rules change. B2C brings scale and visibility; B2B brings higher value per customer.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="b2">
+            <caption class="sr-only">How Gentifi differs for consumers and business buyers</caption>
+            <thead>
+              <tr><th scope="col"><span class="sr-only">Aspect</span></th><th scope="col">B2C (consumers)</th><th scope="col">B2B (business buyers)</th></tr>
+            </thead>
+            <tbody>
+              {b2.map((r) => <tr><th scope="row">{r.row}</th><td>{r.b2c}</td><td>{r.b2b}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Pricing</span>
+          <h2>Businesses pay. Customers use it free.</h2>
+          <p>A low monthly fee plus a small fee per agent order. Final prices are still being set.</p>
+        </div>
+        <div class="pricing">
+          {pricing.map((p) => (
+            <article class="price">
+              <span class="price__how">{p.how}</span>
+              <h3>{p.label}</h3>
+              <p class="price__amount"><span class="placeholder">{p.price}</span></p>
+              <p>{p.body}</p>
+            </article>
+          ))}
+        </div>
+        <article class="organiser">
+          <div>
+            <span class="eyebrow">Events and associations</span>
+            <h3>One connector for every member or exhibitor.</h3>
+            <p>
+              Event organisers, high streets and trade bodies can license a connector that covers all their members.
+              Attendees add it once and can ask about every stand. Licensed per event or per year.
+            </p>
+          </div>
+          <p class="price__amount"><span class="placeholder">[LICENCE FEE]</span></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="section section--grey">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Safe by design</span>
+          <h2>Your customers stay in control. So do you.</h2>
+        </div>
+        <ul class="trust">
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Customers approve the connection</strong> in their own app. Nothing installs silently.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Customers confirm every order</strong> before it goes through, with clear refund rules.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>You keep your checkout and terms.</strong> Agents hand customers over to the page you already use.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Your data stays right.</strong> Easy templates and regular sync keep prices and stock up to date.</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container faq__wrap">
+        <div class="section-head">
+          <span class="eyebrow">Questions</span>
+          <h2>Common questions.</h2>
+        </div>
+        <div class="faq">
+          {faqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section class="section section--teal" id="waitlist">
+      <div class="container waitlist__grid">
+        <div class="section-head">
+          <span class="eyebrow">Waitlist</span>
+          <h2>Make your business agent-ready.</h2>
+          <p>We're starting small, with a handful of local businesses. Join the list and we'll be in touch to get you set up.</p>
+          <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
+        </div>
+        <WaitlistForm role="business" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Hero */
+  .hero { padding-block: clamp(48px, 8vw, 96px); }
+  .hero h1 { max-width: 16em; }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 38rem; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero__install { margin-top: 20px; max-width: 34rem; display: grid; gap: 8px; }
+  .hero__install p { font-size: 0.9rem; color: var(--on-teal-muted); }
+  .hero__points { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 0.95rem; }
+  .hero__points li { display: flex; align-items: center; gap: 8px; }
+
+  /* Shared */
+  .three-up { display: grid; gap: 20px; }
+  @media (min-width: 860px) { .three-up { grid-template-columns: repeat(3, 1fr); } }
+  .panel { background: var(--white); border-radius: var(--radius); padding: 28px; display: grid; gap: 10px; align-content: start; }
+  .panel p { color: var(--ink-muted); }
+
+  /* Offer */
+  .offer { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  @media (min-width: 720px) { .offer { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .offer { grid-template-columns: repeat(3, 1fr); } }
+  .offer li { background: var(--white); padding: 28px; display: grid; gap: 10px; align-content: start; }
+  .offer__n { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; color: var(--ink-muted); }
+  .offer h3 { font-size: 1.08rem; line-height: 1.35; }
+  .offer p { color: var(--ink-muted); }
+
+  .connector {
+    margin-top: 48px;
+    background: var(--grey);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 4vw, 48px);
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 900px) { .connector { grid-template-columns: 1.3fr 1fr; gap: 64px; } }
+  .connector__copy { display: grid; gap: 16px; justify-items: start; }
+  .connector__copy .eyebrow { margin-bottom: 0; }
+  .connector__title { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+  .connector__copy > p { color: var(--ink-muted); max-width: 34rem; }
+  .connector__more a { font-weight: 600; }
+  .connector__card { max-width: 340px; width: 100%; justify-self: center; }
+
+  /* Steps */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; counter-reset: s; }
+  @media (min-width: 720px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+  .steps li { background: var(--white); border-radius: var(--radius); padding: 24px; display: grid; gap: 10px; align-content: start; }
+  .steps p { color: var(--ink-muted); }
+  .steps__n {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--teal); color: var(--copper);
+    display: grid; place-items: center;
+    font-family: var(--font-mono); font-weight: 500;
+  }
+  .diy { margin-top: 28px; color: var(--ink-muted); }
+  .diy a { color: var(--teal); font-weight: 600; }
+
+  /* Examples */
+  .examples { display: grid; gap: 20px; }
+  @media (min-width: 720px) { .examples { grid-template-columns: repeat(2, 1fr); } }
+  .example { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 26px; display: grid; gap: 6px; align-content: start; }
+  .example__setting { font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; }
+  .example__label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-top: 8px; }
+  .example q { font-size: 1.08rem; font-weight: 600; line-height: 1.4; }
+  .example p:not(.example__label) { color: var(--ink-muted); }
+
+  /* B2C / B2B table */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); background: var(--white); }
+  .b2 { width: 100%; border-collapse: collapse; min-width: 520px; }
+  .b2 th, .b2 td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--grey); }
+  .b2 thead th { font-size: 1rem; background: var(--teal); color: var(--white); }
+  .b2 tbody th { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); white-space: nowrap; }
+  .b2 td { color: var(--ink); }
+  .b2 tr:last-child th, .b2 tr:last-child td { border-bottom: 0; }
+
+  /* Pricing */
+  .pricing { display: grid; gap: 20px; }
+  @media (min-width: 860px) { .pricing { grid-template-columns: repeat(3, 1fr); } }
+  .price { border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; display: grid; gap: 10px; align-content: start; }
+  .price__how { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .price p:not(.price__amount) { color: var(--ink-muted); }
+  .price__amount { font-size: 1.2rem; font-weight: 700; margin-block: 4px; }
+  .organiser {
+    margin-top: 20px;
+    background: var(--teal);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: grid;
+    gap: 16px;
+    align-items: center;
+  }
+  @media (min-width: 860px) { .organiser { grid-template-columns: 1fr auto; gap: 48px; } }
+  .organiser .eyebrow { color: var(--copper); }
+  .organiser h3 { margin-bottom: 8px; }
+  .organiser p:not(.price__amount) { color: var(--on-teal-muted); max-width: 44rem; }
+
+  /* Trust */
+  .trust { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 860px) { .trust { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+  .trust li { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border-radius: var(--radius); padding: 22px 24px; color: var(--ink-muted); }
+  .trust li :global(svg) { margin-top: 3px; }
+  .trust strong { color: var(--ink); }
+
+  /* FAQ */
+  .faq__wrap { max-width: calc(820px + var(--gutter) * 2); }
+  .faq { border-top: 1px solid var(--border); }
+  .faq details { border-bottom: 1px solid var(--border); }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 20px 40px 20px 0;
+    font-weight: 600;
+    font-size: 1.05rem;
+    position: relative;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    position: absolute;
+    right: 4px; top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+  }
+  .faq details[open] summary::after { content: '\2212'; }
+  .faq details p { padding: 0 0 20px; color: var(--ink-muted); max-width: 44rem; }
+
+  /* Waitlist */
+  .waitlist__grid { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
+  .waitlist__count { font-size: 0.95rem; color: var(--on-teal-muted); }
+</style>

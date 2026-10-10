@@ -1,0 +1,47 @@
+---
+// Explains that an action isn't live yet. Open it from any button with
+// data-concept="<what will happen>", e.g. "open the Gentifi assistant in Telegram".
+---
+<dialog class="notice" aria-labelledby="notice-title">
+  <div class="notice__frame">
+    <h2 id="notice-title">Coming soon</h2>
+    <p>In the live version, this button will <span data-notice-what>open the Gentifi assistant</span>. Gentifi isn't live yet.</p>
+    <p>Join the waitlist to hear when it launches.</p>
+    <div class="notice__buttons">
+      <a class="btn btn--primary" href="/#waitlist" data-notice-close>Join the waitlist</a>
+      <button class="btn btn--ghost" type="button" data-notice-close>Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.notice');
+  if (dialog) {
+    const what = dialog.querySelector('[data-notice-what]');
+    document.querySelectorAll<HTMLElement>('[data-concept]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (what) what.textContent = el.dataset.concept ?? '';
+        dialog.showModal();
+      });
+    });
+    dialog.querySelectorAll('[data-notice-close]').forEach((b) => b.addEventListener('click', () => dialog.close()));
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  }
+</script>
+
+<style>
+  .notice {
+    border: 0;
+    padding: 0;
+    width: min(420px, calc(100% - 2 * var(--gutter)));
+    border-radius: var(--radius-lg);
+    background: var(--teal);
+    color: var(--white);
+  }
+  .notice::backdrop { background: rgb(3 30 36 / 0.7); }
+  .notice__frame { padding: 28px; display: grid; gap: 14px; }
+  .notice h2 { font-size: 1.3rem; }
+  .notice p { color: var(--on-teal-muted); }
+  .notice__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+</style>

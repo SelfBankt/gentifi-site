@@ -1,0 +1,76 @@
+---
+// A one-line instruction or URL with a copy button.
+interface Props {
+  text: string;
+  prompt?: string; // visual prefix, e.g. "$"; not copied
+  tone?: 'dark' | 'light';
+  label?: string; // accessible name for the copy button
+  wrap?: boolean; // wrap long text after / and : (default) instead of scrolling
+}
+const { text, prompt, tone = 'dark', label = 'Copy', wrap = true } = Astro.props;
+// Split after / and : so wrapped URLs break at natural points.
+const parts = wrap ? text.split(/(?<=[/:])/) : [text];
+---
+<div class:list={['copyline', `copyline--${tone}`, { 'copyline--wrap': wrap }]}>
+  <code>{prompt && <span class="copyline__prompt" aria-hidden="true">{prompt} </span>}{parts.map((p, i) => <>{p}{i < parts.length - 1 && <wbr />}</>)}</code>
+  <button type="button" data-copyline={text} aria-label={`${label}: ${text}`}>
+    <span data-copyline-label>Copy</span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copyline]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const label = btn.querySelector('[data-copyline-label]');
+      let msg = 'Copied';
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copyline ?? '');
+      } catch {
+        msg = 'Select to copy';
+      }
+      if (label) label.textContent = msg;
+      setTimeout(() => { if (label) label.textContent = 'Copy'; }, 2000);
+    });
+  });
+</script>
+
+<style>
+  .copyline {
+    display: flex;
+    align-items: stretch;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    min-width: 0;
+  }
+  .copyline code {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    white-space: nowrap;
+    overflow-x: auto;
+    line-height: 1.45;
+    align-self: center;
+  }
+  .copyline--wrap code { white-space: normal; overflow-x: visible; overflow-wrap: anywhere; }
+  .copyline button {
+    flex-shrink: 0;
+    min-width: 76px;
+    min-height: 44px;
+    border: 0;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .copyline--dark { background: var(--teal-raised); border: 1px solid var(--teal-line); }
+  .copyline--dark code { color: var(--white); }
+  .copyline--dark button { background: var(--teal-line); color: var(--white); }
+  .copyline--dark button:hover { background: var(--copper); color: var(--teal); }
+  .copyline--light { background: var(--grey); border: 1px solid var(--border); }
+  .copyline--light code { color: var(--teal); }
+  .copyline--light button { background: var(--teal); color: var(--white); }
+  .copyline--light button:hover { background: var(--teal-raised); }
+  .copyline__prompt { color: var(--copper); }
+  .copyline--light .copyline__prompt { color: var(--ink-muted); }
+</style>

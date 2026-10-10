@@ -1,0 +1,240 @@
+---
+// Interactive demo: filter a fictional show's members by the collection's facets,
+// the way an agent would, and end with the customer approving any contact.
+import { show, members } from '../data/demoShow';
+
+const categories = [...new Set(members.map((m) => m.category))].sort();
+const rows = [...new Set(members.map((m) => m.stand[0]))].sort();
+const asks = [
+  { label: 'Which stands sell triple glazing under £600/m²?', category: 'glazing', max: 600, row: '' },
+  { label: 'Who can help with heating?', category: 'heating', max: '', row: '' },
+  { label: "What's on row B?", category: '', max: '', row: 'B' },
+];
+---
+<div class="ex" data-explorer>
+  <script type="application/json" data-members set:html={JSON.stringify(members)} />
+
+  <div class="ex__panel ex__panel--ask">
+    <p class="ex__label">Ask as an attendee</p>
+    <div class="ex__asks">
+      {asks.map((a) => (
+        <button type="button" class="ex__ask" data-category={a.category} data-max={a.max} data-row={a.row}>{a.label}</button>
+      ))}
+    </div>
+
+    <p class="ex__label">Or set the facets yourself</p>
+    <div class="ex__facets">
+      <label>
+        <span>Category</span>
+        <select data-f="category">
+          <option value="">Any</option>
+          {categories.map((c) => <option value={c}>{c[0].toUpperCase() + c.slice(1)}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Max price (£)</span>
+        <input data-f="max" type="number" inputmode="numeric" min="0" step="10" placeholder="Any" />
+      </label>
+      <label>
+        <span>Stand row</span>
+        <select data-f="row">
+          <option value="">Any</option>
+          {rows.map((r) => <option value={r}>Row {r}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <p class="ex__label">What the agent sends</p>
+    <pre class="ex__query"><code data-query></code></pre>
+  </div>
+
+  <div class="ex__panel ex__panel--results">
+    <div class="ex__results-head">
+      <p><strong data-count>{members.length}</strong> of {members.length} exhibitors match</p>
+      <span class="ex__fict">Fictional exhibitors</span>
+    </div>
+    <ul class="ex__list" data-list aria-live="polite"></ul>
+    <button class="btn btn--primary ex__quote" type="button" data-quote>Request quotes</button>
+    <div class="ex__approve" data-approve hidden>
+      <p class="ex__approve-label">Your agent asks first</p>
+      <p data-approve-text></p>
+      <div class="ex__approve-buttons">
+        <button class="btn btn--teal" type="button" data-approve-yes>Share and request</button>
+        <button class="btn btn--outline" type="button" data-approve-no>Not now</button>
+      </div>
+      <p class="ex__approve-note" data-approve-note>Nothing is shared with any exhibitor until you say yes.</p>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ collectionId: show.id }}>
+  const root = document.querySelector('[data-explorer]');
+  if (root) {
+    const all = JSON.parse(root.querySelector('[data-members]').textContent);
+    const f = {
+      category: root.querySelector('[data-f="category"]'),
+      max: root.querySelector('[data-f="max"]'),
+      row: root.querySelector('[data-f="row"]'),
+    };
+    const list = root.querySelector('[data-list]');
+    const count = root.querySelector('[data-count]');
+    const query = root.querySelector('[data-query]');
+    const quote = root.querySelector('[data-quote]');
+    const approve = root.querySelector('[data-approve]');
+    const approveText = root.querySelector('[data-approve-text]');
+    const approveNote = root.querySelector('[data-approve-note]');
+    const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
+    let matches = all;
+
+    function render() {
+      const category = f.category.value;
+      const max = f.max.value === '' ? null : Number(f.max.value);
+      const row = f.row.value;
+      matches = all.filter((m) =>
+        (!category || m.category === category) &&
+        (max === null || m.priceFrom <= max) &&
+        (!row || m.stand.startsWith(row)));
+
+      const filter = {};
+      if (category) filter.category = category;
+      if (max !== null) filter.priceFrom = { max };
+      if (row) filter.stand = { prefix: row };
+      query.textContent = JSON.stringify({ collection: collectionId, filter }, null, 2);
+
+      count.textContent = String(matches.length);
+      list.replaceChildren(...matches.map((m) => {
+        const li = document.createElement('li');
+        li.innerHTML = '<span class="ex__stand"></span><span class="ex__name"></span><span class="ex__cat"></span><span class="ex__price"></span>';
+        li.children[0].textContent = m.stand;
+        li.children[1].textContent = m.name;
+        li.children[2].textContent = m.category;
+        li.children[3].textContent = 'from ' + gbp.format(m.priceFrom) + (m.unit === 'installed' ? ' installed' : '/' + m.unit);
+        return li;
+      }));
+      if (!matches.length) {
+        const li = document.createElement('li');
+        li.className = 'ex__empty';
+        li.textContent = 'No exhibitors match. Try a higher price or another category.';
+        list.append(li);
+      }
+      quote.disabled = matches.length === 0;
+      quote.textContent = matches.length ? `Request quotes from ${Math.min(matches.length, 3)}` : 'Request quotes';
+      approve.hidden = true;
+      root.querySelectorAll('.ex__ask').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    }
+
+    root.querySelectorAll('.ex__ask').forEach((b) => b.addEventListener('click', () => {
+      f.category.value = b.dataset.category;
+      f.max.value = b.dataset.max;
+      f.row.value = b.dataset.row;
+      render();
+      b.setAttribute('aria-pressed', 'true');
+    }));
+    Object.values(f).forEach((el) => el.addEventListener('input', render));
+
+    quote.addEventListener('click', () => {
+      const picked = matches.slice(0, 3);
+      approveText.textContent = `Share your name and postcode with ${picked.map((m) => m.name + ' (' + m.stand + ')').join(', ')} to request quotes?`;
+      approveNote.textContent = 'Nothing is shared with any exhibitor until you say yes.';
+      approve.hidden = false;
+    });
+    root.querySelector('[data-approve-yes]').addEventListener('click', () => {
+      approveNote.textContent = 'Demo only: nothing was sent. In the live version, only these exhibitors receive your details.';
+    });
+    root.querySelector('[data-approve-no]').addEventListener('click', () => { approve.hidden = true; });
+
+    render();
+  }
+</script>
+
+<style>
+  .ex { display: grid; gap: 20px; }
+  @media (min-width: 960px) { .ex { grid-template-columns: 1fr 1.1fr; align-items: start; } }
+  .ex__panel { border-radius: var(--radius); padding: 24px; min-width: 0; }
+  .ex__panel--ask { background: var(--teal-raised); border: 1px solid var(--teal-line); color: var(--white); display: grid; gap: 14px; }
+  .ex__panel--results { background: var(--white); color: var(--teal); display: grid; gap: 14px; }
+  .ex__label { font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
+
+  .ex__asks { display: grid; gap: 8px; }
+  .ex__ask {
+    text-align: left;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    padding: 12px 14px;
+    min-height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--teal-line);
+    background: var(--teal);
+    color: var(--white);
+    cursor: pointer;
+  }
+  .ex__ask:hover { border-color: var(--copper); }
+  .ex__ask[aria-pressed='true'] { border-color: var(--copper); background: var(--copper); color: var(--teal); }
+
+  .ex__facets { display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 480px) { .ex__facets { grid-template-columns: 1fr 1fr; } }
+  .ex__facets label { display: grid; gap: 4px; font-size: 0.82rem; color: var(--on-teal-muted); min-width: 0; }
+  .ex__facets select, .ex__facets input {
+    font: inherit;
+    font-size: 0.95rem;
+    min-height: 44px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--teal-line);
+    background: var(--teal);
+    color: var(--white);
+    width: 100%;
+    text-transform: capitalize;
+  }
+  .ex__query {
+    margin: 0;
+    padding: 14px 16px;
+    background: #032F38;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    line-height: 1.55;
+    color: var(--on-teal-muted);
+    overflow-x: auto;
+  }
+
+  .ex__results-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .ex__fict {
+    font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 2px 8px; border: 1px dashed var(--ink-muted); border-radius: 6px; color: var(--ink-muted);
+  }
+  .ex__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ex__list :global(li) {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr auto;
+    grid-template-areas: 'stand name price' 'stand cat price';
+    column-gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .ex__list :global(.ex__stand) {
+    grid-area: stand;
+    font-family: var(--font-mono); font-weight: 500;
+    background: var(--teal); color: var(--copper);
+    border-radius: 8px; padding: 6px 0; text-align: center;
+  }
+  .ex__list :global(.ex__name) { grid-area: name; font-weight: 600; line-height: 1.3; }
+  .ex__list :global(.ex__cat) { grid-area: cat; font-size: 0.82rem; color: var(--ink-muted); text-transform: capitalize; }
+  .ex__list :global(.ex__price) { grid-area: price; font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-muted); text-align: right; }
+  .ex__list :global(.ex__empty) { display: block; color: var(--ink-muted); }
+  @media (max-width: 420px) {
+    .ex__list :global(li) { grid-template-columns: 3rem 1fr; grid-template-areas: 'stand name' 'stand cat' 'stand price'; }
+    .ex__list :global(.ex__price) { text-align: left; }
+  }
+  .ex__quote { justify-self: start; }
+  .ex__quote:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .ex__approve { border: 2px solid var(--teal); border-radius: var(--radius); padding: 16px; display: grid; gap: 10px; }
+  .ex__approve[hidden] { display: none; }
+  .ex__approve-label { font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .ex__approve-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ex__approve-note { font-size: 0.88rem; color: var(--ink-muted); }
+</style>

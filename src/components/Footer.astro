@@ -1,0 +1,49 @@
+---
+import Logo from './Logo.astro';
+---
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <Logo size="sm" />
+      <p>Connecting businesses to their customers' AI agents.</p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/businesses">For businesses</a></li>
+      <li><a href="/toolkit">Gentifi Toolkit</a></li>
+      <li><a href="/standards">Collections standard</a></li>
+      <li><a href="/b/demo-business">Scan-to-add demo</a></li>
+      <li><a href="/#waitlist">Waitlist</a></li>
+      <li><a href="https://github.com/SelfBankt/gentifi-toolkit">Gentifi Toolkit on GitHub</a></li>
+    </ul>
+  </div>
+  <div class="container site-footer__note">
+    <p>Concept site. Connector and agent addresses on <code>gentifi.com</code> are not live yet.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--teal);
+    color: var(--on-teal-muted);
+    border-top: 1px solid var(--teal-line);
+    padding-block: 48px 32px;
+    font-size: 0.92rem;
+  }
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .site-footer__brand { max-width: 26rem; display: grid; gap: 14px; }
+  .site-footer__links { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .site-footer__links a { color: var(--white); }
+  .site-footer__note {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--teal-line);
+    font-size: 0.82rem;
+  }
+  code { color: var(--copper); }
+</style>

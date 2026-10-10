@@ -1,0 +1,442 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CopyLine from '../components/CopyLine.astro';
+import Tick from '../components/Tick.astro';
+
+// All real: the toolkit runs, downloads and sets up straight from GitHub today.
+const githubUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
+const issuesUrl = `${githubUrl}/issues`;
+const toolkitZip = `${githubUrl}/archive/refs/heads/main.zip`;
+const toolkitInstall = 'npx github:SelfBankt/gentifi-toolkit init';
+const toolkitHelp = 'npx github:SelfBankt/gentifi-toolkit --help';
+const toolkitSkill = 'Set up https://raw.githubusercontent.com/SelfBankt/gentifi-toolkit/main/SKILL.md';
+const toolkitSkillPage = `${githubUrl}/blob/main/SKILL.md`;
+const toolkitClone = 'git clone https://github.com/SelfBankt/gentifi-toolkit.git';
+
+// Mirrors the real CLI (src/commands/*.js in the toolkit repo).
+const commands = [
+  {
+    name: 'init',
+    usage: 'gentifi init --from <source> [--file <path>]',
+    summary: 'Import a business catalogue and create a gentifi.json project.',
+    options: [
+      ['--from', 'Catalogue source: shopify, csv, woocommerce, booking'],
+      ['--file', 'Path to the catalogue file (for csv)'],
+    ],
+  },
+  {
+    name: 'build',
+    usage: 'gentifi build [--out <dir>]',
+    summary: 'Generate every agent format from gentifi.json.',
+    options: [['--out', 'Output directory (default: ./dist)']],
+  },
+  {
+    name: 'check',
+    usage: 'gentifi check [--url <url>]',
+    summary: 'Run the Gentified test: can agents find and buy?',
+    options: [['--url', 'Check a published business instead of the local build']],
+  },
+  {
+    name: 'publish',
+    usage: 'gentifi publish [--self-host <dir>]',
+    summary: 'Self-host the output, or publish to the Gentifi network.',
+    options: [['--self-host', 'Copy files for your own server, including /.well-known/']],
+  },
+];
+
+const outputs = [
+  { input: 'Catalogue, prices, stock', output: 'MCP server with search, price, availability and order tools' },
+  { input: 'Bookings or services', output: 'UCP profile and booking or quote tools' },
+  { input: 'Business details', output: 'A2A agent card and ai-catalog.json for discovery' },
+  { input: 'Everything above', output: 'SKILL.md for headless agents' },
+  { input: 'Business identity', output: 'Gentified badge with a scannable “add to your agent” code' },
+];
+
+const standards = [
+  { layer: 'Tools and data', standard: 'Model Context Protocol (MCP)', href: 'https://modelcontextprotocol.io' },
+  { layer: 'Agent instructions', standard: 'Agent Skills (SKILL.md)', href: 'https://agentskills.io' },
+  { layer: 'Agent to agent', standard: 'A2A', href: 'https://a2a-protocol.org' },
+  { layer: 'Discovery', standard: 'Agentic Resource Discovery (ai-catalog.json)' },
+  { layer: 'Commerce', standard: 'UCP and ACP' },
+  { layer: 'Payments', standard: 'x402, L402, AP2' },
+];
+
+const roadmap = [
+  { title: 'Connector generator', body: 'Import a catalogue (Shopify, CSV or booking system) and host an MCP server with search, price, availability and order tools.' },
+  { title: 'Checkout handoff', body: 'Send the customer to the business’s existing checkout or booking page.' },
+  { title: 'SKILL.md', body: 'Generated automatically from the same tools.' },
+  { title: 'Shareable link and QR code', body: 'One badge link per business, ready to print.' },
+  { title: 'Simple dashboard', body: 'Agent queries, orders and revenue.' },
+];
+---
+<Base
+  title="Gentifi Toolkit: make any business agent-ready"
+  description="The free, open-source Gentifi Toolkit turns any business catalogue into an MCP server, UCP profile, SKILL.md, A2A agent card and ai-catalog.json."
+>
+  <Header />
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero section--teal">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow">Open source · Apache-2.0</span>
+          <h1>The Gentifi Toolkit</h1>
+          <p class="hero__lede">
+            One command turns any business catalogue into everything AI agents need to find, price, book and buy:
+            an MCP server, UCP profile, SKILL.md, A2A agent card and ai-catalog.json.
+          </p>
+          <p class="status"><span class="status__dot" aria-hidden="true"></span>Early preview: the CLI is in place and the commands are being built in the open.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href={toolkitZip}>Download .zip</a>
+            <a class="btn btn--ghost" href={githubUrl}>View on GitHub</a>
+          </div>
+          <div class="hero__install">
+            <p>Or run it now, nothing to install:</p>
+            <CopyLine text={toolkitHelp} prompt="$" label="Copy command" />
+          </div>
+        </div>
+
+        <figure class="term" aria-label="Output of gentifi --help">
+          <div class="term__bar" aria-hidden="true"><span></span><span></span><span></span></div>
+          <pre><code><span class="t-prompt">$</span> npx github:SelfBankt/gentifi-toolkit --help
+gentifi 0.0.1: make a business agent-ready
+
+Usage: gentifi &lt;command&gt; [options]
+
+Commands:
+  <span class="t-cmd">init</span>     Import a business catalogue and create a gentifi.json project
+  <span class="t-cmd">build</span>    Generate every agent format from gentifi.json
+  <span class="t-cmd">check</span>    Run the Gentified test: can agents find and buy?
+  <span class="t-cmd">publish</span>  Self-host the output, or publish to the Gentifi network
+
+Run "gentifi &lt;command&gt; --help" for command options.</code></pre>
+          <figcaption>Real output from the current version</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Start -->
+    <section class="section" id="start">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Get started</span>
+          <h2>Three ways to start, all in one line.</h2>
+        </div>
+        <div class="starts">
+          <article class="start">
+            <span class="start__tag">Run it</span>
+            <h3>With npx</h3>
+            <p>Nothing to install. Runs the latest version straight from GitHub. Needs Node.js 20 or later.</p>
+            <CopyLine text={toolkitInstall} prompt="$" tone="light" label="Copy command" />
+          </article>
+          <article class="start start--key">
+            <span class="start__tag">Ask your agent</span>
+            <h3>With a coding agent</h3>
+            <p>Paste this into Claude Code or any coding agent. It follows the toolkit's SKILL.md and asks you before anything goes public.</p>
+            <CopyLine text={toolkitSkill} prompt="$" label="Copy instruction" />
+            <a class="start__link" href={toolkitSkillPage}>Read the skill</a>
+          </article>
+          <article class="start">
+            <span class="start__tag">Clone it</span>
+            <h3>From source</h3>
+            <p>Read the code, run the tests and contribute. No dependencies yet.</p>
+            <CopyLine text={toolkitClone} prompt="$" tone="light" label="Copy command" />
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Commands -->
+    <section class="section section--grey" id="commands">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Commands</span>
+          <h2>Four commands, from catalogue to agent-ready.</h2>
+          <p>Each command already prints its plan. They're marked "planned" until they're built; follow progress on GitHub.</p>
+        </div>
+        <ol class="cmds">
+          {commands.map((c, i) => (
+            <li class="cmd">
+              <div class="cmd__head">
+                <span class="cmd__n" aria-hidden="true">{i + 1}</span>
+                <h3><code>gentifi {c.name}</code></h3>
+                <span class="cmd__status">Planned</span>
+              </div>
+              <p>{c.summary}</p>
+              <code class="cmd__usage">{c.usage}</code>
+              <dl class="cmd__opts">
+                {c.options.map(([flag, desc]) => (
+                  <div><dt><code>{flag}</code></dt><dd>{desc}</dd></div>
+                ))}
+              </dl>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Outputs -->
+    <section class="section" id="outputs">
+      <div class="container two-col">
+        <div class="section-head">
+          <span class="eyebrow">What it generates</span>
+          <h2>One catalogue in. Every agent format out.</h2>
+          <p>Everything the toolkit writes follows the published spec for that format, so it works without Gentifi.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">What the toolkit generates from each input</caption>
+            <thead><tr><th scope="col">Input</th><th scope="col">Output</th></tr></thead>
+            <tbody>
+              {outputs.map((o) => <tr><th scope="row">{o.input}</th><td>{o.output}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standards -->
+    <section class="section section--grey" id="standards">
+      <div class="container two-col">
+        <div class="section-head">
+          <span class="eyebrow">Open standards</span>
+          <h2>Built on standards, not new formats.</h2>
+          <p>The toolkit uses existing open standards and contributes the missing pieces upstream. <a href="/standards">See the Collections draft</a>.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Open standards the toolkit builds on</caption>
+            <thead><tr><th scope="col">Layer</th><th scope="col">Standard</th></tr></thead>
+            <tbody>
+              {standards.map((s) => (
+                <tr>
+                  <th scope="row">{s.layer}</th>
+                  <td>{s.href ? <a href={s.href}>{s.standard}</a> : s.standard}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rules -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Design rules</span>
+          <h2>Built so customers stay in control.</h2>
+        </div>
+        <ul class="rules">
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>The customer always approves.</strong> Connecting an agent to a business, and every order, is confirmed by the customer in their own app.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Information, not instructions.</strong> Generated files say "this business has a connector, here it is". They never tell an agent to install anything.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Real data only.</strong> Prices, stock and hours come from the business's own catalogue. Nothing is invented.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Self-host or not.</strong> Lay out files for your own domain, including <code>/.well-known/</code>, or publish to the Gentifi network.</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="section section--grey" id="roadmap">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Roadmap</span>
+          <h2>What we're building first.</h2>
+          <p>Start small: get a handful of businesses buyable from agents, and prove it.</p>
+        </div>
+        <ol class="roadmap">
+          {roadmap.map((r) => (
+            <li><h3>{r.title}</h3><p>{r.body}</p></li>
+          ))}
+        </ol>
+        <div class="contribute">
+          <div>
+            <h3>Help build it</h3>
+            <p>Tell us which catalogue source, booking system or agent you need, or pick up a command.</p>
+          </div>
+          <div class="contribute__actions">
+            <a class="btn btn--teal" href={issuesUrl}>Open an issue</a>
+            <a class="btn btn--outline" href={githubUrl}>View on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hosted -->
+    <section class="section section--teal">
+      <div class="container hosted">
+        <div>
+          <span class="eyebrow">Rather not run it yourself?</span>
+          <h2>Gentifi can host it for you.</h2>
+          <p>We import your catalogue, run the connector, get you listed and send your badge. No website or developer needed.</p>
+        </div>
+        <div class="hosted__actions">
+          <a class="btn btn--primary" href="/businesses#waitlist">Join the waitlist</a>
+          <a class="btn btn--ghost" href="/businesses">See the hosted offer</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Hero */
+  .hero { padding-block: clamp(48px, 8vw, 96px); }
+  .hero__grid { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 960px) { .hero__grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
+  .hero__copy { min-width: 0; }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 36rem; }
+  .status {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 20px;
+    padding: 6px 12px;
+    border: 1px solid var(--teal-line);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--on-teal-muted);
+  }
+  .status__dot { width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; background: var(--copper); }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero__install { margin-top: 20px; max-width: 34rem; display: grid; gap: 8px; }
+  .hero__install p { font-size: 0.9rem; color: var(--on-teal-muted); }
+
+  .term { margin: 0; min-width: 0; }
+  .term__bar { display: flex; gap: 6px; padding: 12px 16px; background: var(--teal-line); border-radius: var(--radius) var(--radius) 0 0; }
+  .term__bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--teal-raised); }
+  .term pre {
+    margin: 0;
+    padding: 20px;
+    background: #032F38;
+    border: 1px solid var(--teal-line);
+    border-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+    color: var(--white);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .t-prompt, .t-cmd { color: var(--copper); }
+  .term figcaption { margin-top: 10px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--on-teal-muted); text-align: right; }
+
+  /* Starts */
+  .starts { display: grid; gap: 16px; }
+  .start {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .start > p { color: var(--ink-muted); }
+  .start__tag { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .start :global(.copyline) { margin-top: auto; }
+  @media (min-width: 960px) {
+    .start {
+      display: grid;
+      grid-template-columns: 9rem 1fr 1.5fr;
+      grid-template-areas: 'tag title cmd' 'tag text cmd' 'tag link cmd';
+      column-gap: 32px;
+      row-gap: 6px;
+      align-items: center;
+      padding: 24px 28px;
+    }
+    .start__tag { grid-area: tag; align-self: start; padding-top: 4px; }
+    .start h3 { grid-area: title; }
+    .start > p { grid-area: text; }
+    .start__link { grid-area: link; }
+    .start :global(.copyline) { grid-area: cmd; margin-top: 0; }
+  }
+  .start--key { background: var(--teal); border-color: var(--teal); color: var(--white); }
+  .start--key > p { color: var(--on-teal-muted); }
+  .start--key .start__tag { color: var(--copper); }
+  .start__link { color: var(--white); font-size: 0.92rem; }
+
+  /* Commands */
+  .cmds { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  @media (min-width: 860px) { .cmds { grid-template-columns: repeat(2, 1fr); } }
+  .cmd { background: var(--white); border-radius: var(--radius); padding: 24px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+  .cmd__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .cmd__head h3 { font-size: 1.1rem; }
+  .cmd__head h3 code { font-family: var(--font-mono); font-weight: 500; }
+  .cmd__n {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--teal); color: var(--copper);
+    display: grid; place-items: center;
+    font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
+  }
+  .cmd__status {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 2px 8px; border: 1px dashed var(--ink-muted); border-radius: 6px; color: var(--ink-muted);
+  }
+  .cmd > p { color: var(--ink-muted); }
+  .cmd__usage {
+    display: block;
+    padding: 10px 12px;
+    background: var(--grey);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .cmd__opts { margin: 0; display: grid; gap: 8px; font-size: 0.9rem; }
+  .cmd__opts div { display: grid; grid-template-columns: max-content 1fr; gap: 12px; }
+  .cmd__opts dt code { font-size: 0.85rem; font-weight: 500; }
+  .cmd__opts dd { margin: 0; color: var(--ink-muted); }
+  @media (max-width: 420px) { .cmd__opts div { grid-template-columns: 1fr; gap: 0; } }
+
+  /* Tables */
+  .two-col { display: grid; gap: 8px; }
+  @media (min-width: 960px) { .two-col { grid-template-columns: 0.8fr 1.2fr; gap: 56px; align-items: start; } }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--white); }
+  table { width: 100%; border-collapse: collapse; min-width: 440px; }
+  th, td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--grey); }
+  thead th { background: var(--teal); color: var(--white); font-size: 0.95rem; }
+  tbody th { font-weight: 600; width: 38%; }
+  td { color: var(--ink-muted); }
+  td a { color: var(--teal); font-weight: 600; }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+
+  /* Rules */
+  .rules { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 860px) { .rules { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+  .rules li { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; color: var(--ink-muted); }
+  .rules li :global(svg) { margin-top: 3px; }
+  .rules strong { color: var(--ink); }
+  .rules code { font-size: 0.9em; }
+
+  /* Roadmap */
+  .roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: r; }
+  @media (min-width: 720px) { .roadmap { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .roadmap { grid-template-columns: repeat(5, 1fr); } }
+  .roadmap li { background: var(--white); border-radius: var(--radius); padding: 22px; display: grid; gap: 8px; align-content: start; counter-increment: r; }
+  .roadmap li::before { content: counter(r, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-muted); }
+  .roadmap h3 { font-size: 1.02rem; }
+  .roadmap p { color: var(--ink-muted); font-size: 0.93rem; }
+  .contribute {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 20px;
+    align-items: center;
+  }
+  @media (min-width: 860px) { .contribute { grid-template-columns: 1fr auto; } }
+  .contribute h3 { margin-bottom: 6px; }
+  .contribute p { color: var(--ink-muted); }
+  .contribute__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* Hosted */
+  .hosted { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 860px) { .hosted { grid-template-columns: 1fr auto; gap: 48px; } }
+  #standards .section-head a { color: var(--teal); font-weight: 600; }
+  .hosted h2 { margin-bottom: 14px; }
+  .hosted p { color: var(--on-teal-muted); max-width: 40rem; }
+  .hosted__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+</style>

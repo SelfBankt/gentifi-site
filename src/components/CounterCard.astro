@@ -1,0 +1,63 @@
+---
+// Counter card badge, rebuilt from design/badge-canvas/Counter.dc.html.
+import Logo from './Logo.astro';
+import QrCode from './QrCode.astro';
+
+interface Props {
+  business?: string;
+}
+const { business = '[YOUR BUSINESS NAME]' } = Astro.props;
+---
+<div class="card-wrap">
+  <figure class="counter" aria-label={`Gentifi counter card for ${business}`}>
+    <div class="counter__head">
+      <Logo tone="light" size="sm" />
+      <div class="counter__title">Ask your AI agent</div>
+      <p class="counter__body">
+        Scan to add {business} to Claude, ChatGPT or any agent. Then just ask it to check stock, prices or book.
+      </p>
+    </div>
+    <div class="counter__qr"><QrCode /></div>
+    <div class="counter__foot">
+      <div class="counter__say">Or tell your agent: “Add {business} on Gentifi”</div>
+      <div class="counter__meta"><span class="dot"></span>Agent-ready · works with any MCP agent</div>
+    </div>
+  </figure>
+</div>
+
+<style>
+  .card-wrap { container-type: inline-size; width: 100%; }
+  .counter {
+    margin: 0;
+    aspect-ratio: 420 / 594;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 5.7cqi;
+    padding: 8.5cqi 7.6cqi 6.6cqi;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    color: var(--teal);
+  }
+  .counter__head { display: grid; justify-items: center; gap: 3.3cqi; }
+  .counter__head :global(.logo) { font-size: max(13px, 6.5cqi); }
+  .counter__title { font-size: 7.1cqi; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  .counter__body { font-size: max(11px, 3.8cqi); line-height: 1.45; color: var(--ink-muted); max-width: 76cqi; }
+  .counter__qr {
+    width: 52cqi;
+    background: var(--teal);
+    border-radius: 4.8cqi;
+    padding: 3.3cqi;
+    font-size: 3cqi;
+  }
+  .counter__qr :global(.qr) { padding: 7%; border-radius: 2.4cqi; }
+  .counter__foot { display: grid; justify-items: center; gap: 1.9cqi; }
+  .counter__say { font-family: var(--font-mono); font-size: max(10px, 3.2cqi); }
+  .counter__meta {
+    display: flex; align-items: center; gap: 1.9cqi;
+    font-family: var(--font-mono); font-size: max(10px, 2.85cqi); color: var(--ink-muted);
+  }
+  .dot { width: 1.9cqi; height: 1.9cqi; border-radius: 50%; background: var(--copper); }
+</style>

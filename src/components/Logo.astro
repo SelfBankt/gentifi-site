@@ -1,0 +1,36 @@
+---
+import Mark from './Mark.astro';
+import Tick from './Tick.astro';
+
+interface Props {
+  tone?: 'dark' | 'light'; // dark = sits on teal, light = sits on white
+  size?: 'sm' | 'md';
+  href?: string;
+}
+const { tone = 'dark', size = 'md', href } = Astro.props;
+const markColor = tone === 'dark' ? 'var(--copper)' : 'var(--teal)';
+const tickColor = tone === 'dark' ? 'var(--teal)' : 'var(--white)';
+const Tag = href ? 'a' : 'span';
+---
+<Tag class:list={['logo', `logo--${tone}`, `logo--${size}`]} href={href} aria-label={href ? 'Gentifi home' : undefined}>
+  <Mark color={markColor} size="1.6em" />
+  <span class="logo__word">Gentifi</span>
+  <Tick size="0.95em" tick={tickColor} />
+</Tag>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    line-height: 1;
+  }
+  .logo--md { font-size: 1.35rem; }
+  .logo--sm { font-size: 1.05rem; }
+  .logo--dark { color: var(--white); }
+  .logo--light { color: var(--teal); }
+  .logo__word { margin-left: 0.1em; }
+</style>

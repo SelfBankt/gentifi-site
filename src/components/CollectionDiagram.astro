@@ -1,0 +1,125 @@
+---
+// Hero diagram: one agent, one connector, a whole collection of independent members.
+import Mark from './Mark.astro';
+import Tick from './Tick.astro';
+import { show, members } from '../data/demoShow';
+
+const shown = members.slice(0, 6);
+---
+<figure class="cd">
+  <figcaption class="sr-only">
+    An attendee's agent adds one connector for {show.name}. The collection points to each exhibitor's own catalogue.
+    Each member keeps its own connector, data and checkout.
+  </figcaption>
+
+  <div class="cd__agent" aria-hidden="true">
+    <span class="cd__agent-label">Attendee's agent</span>
+    <q>Which stands sell triple glazing under £600/m²?</q>
+  </div>
+
+  <div class="cd__drop" aria-hidden="true"><span>one connector</span></div>
+
+  <div class="cd__collection" aria-hidden="true">
+    <Mark size={28} />
+    <div>
+      <p class="cd__kind">Collection · event</p>
+      <p class="cd__name">{show.name}</p>
+    </div>
+  </div>
+
+  <div class="cd__fan" aria-hidden="true"></div>
+
+  <ul class="cd__members" aria-hidden="true">
+    {shown.map((m) => (
+      <li>
+        <span class="cd__stand">{m.stand}</span>
+        <span class="cd__cat">{m.category}</span>
+        <span class="cd__ok"><Tick size={12} tick="var(--teal)" />own catalogue</span>
+      </li>
+    ))}
+  </ul>
+  <p class="cd__more" aria-hidden="true">+ every other member, each with its own checkout</p>
+</figure>
+
+<style>
+  .cd { margin: 0; display: grid; justify-items: center; width: 100%; --line: var(--teal-line); }
+  .cd__agent {
+    width: min(100%, 360px);
+    background: var(--white);
+    color: var(--teal);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: grid;
+    gap: 4px;
+  }
+  .cd__agent-label { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .cd__agent q { font-weight: 600; line-height: 1.35; }
+
+  .cd__drop {
+    position: relative;
+    height: 56px;
+    width: 2px;
+    background: var(--copper);
+  }
+  .cd__drop span {
+    position: absolute;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--copper);
+  }
+
+  .cd__collection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 2px solid var(--copper);
+    border-radius: var(--radius);
+    background: var(--teal-raised);
+  }
+  .cd__kind { font-family: var(--font-mono); font-size: 0.7rem; color: var(--copper); text-transform: uppercase; letter-spacing: 0.06em; }
+  .cd__name { font-weight: 700; line-height: 1.25; }
+
+  .cd__fan {
+    width: calc(100% - 100% / 3);
+    height: 28px;
+    border: 2px solid var(--line);
+    border-bottom: 0;
+    border-radius: 12px 12px 0 0;
+    margin-top: 26px;
+    position: relative;
+  }
+  .cd__fan::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: -28px;
+    width: 2px; height: 26px;
+    background: var(--line);
+    transform: translateX(-50%);
+  }
+
+  .cd__members {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .cd__members li {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: grid;
+    gap: 2px;
+    background: rgb(255 255 255 / 0.03);
+  }
+  .cd__stand { font-family: var(--font-mono); font-weight: 500; color: var(--white); }
+  .cd__cat { font-size: 0.85rem; color: var(--on-teal-muted); text-transform: capitalize; }
+  .cd__ok { display: flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 0.66rem; color: var(--on-teal-muted); margin-top: 4px; }
+  .cd__more { margin-top: 12px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--on-teal-muted); text-align: center; }
+</style>

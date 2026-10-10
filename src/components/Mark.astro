@@ -1,0 +1,24 @@
+---
+// The Gentifi G: two signal rings, crossbar running into a centre dot.
+interface Props {
+  color?: string;
+  size?: number | string;
+  stroke?: number;
+  label?: string;
+  class?: string;
+}
+const { color = 'var(--copper)', size = 40, stroke = 9, label, class: className } = Astro.props;
+---
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 120 120"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+>
+  <path d="M73 37.48 A26 26 0 1 0 73 82.52" fill="none" stroke={color} stroke-width={stroke} stroke-linecap="round" />
+  <path d="M92.53 27.47 A46 46 0 1 0 106 60 L64 60" fill="none" stroke={color} stroke-width={stroke} stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="60" cy="60" r="10" fill={color} />
+</svg>
