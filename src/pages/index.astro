@@ -95,15 +95,14 @@ const faqs = [
                 <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
                 <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
               </div>
-              <a class="actions__link" href="#add">Or add Gentifi to Claude, ChatGPT or your own agent</a>
+              <a class="actions__link" href="#add">Or add Gentifi to Claude or ChatGPT</a>
             </div>
             <div class="actions__part">
-              <p class="actions__label">Running a business? Get the toolkit (early preview)</p>
+              <p class="actions__label">Running a business? Toolkit preview</p>
               <div class="actions__buttons">
                 <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
                 <a class="btn btn--ghost" href="#for-businesses">Other ways to set up</a>
               </div>
-              <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
             </div>
           </div>
         </div>
@@ -370,33 +369,44 @@ const faqs = [
   .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 40rem; }
   .hero__row {
     width: 100%;
-    max-width: 1040px;
+    max-width: 960px;
     display: grid;
     gap: 28px;
     justify-items: center;
-    align-items: center;
+    align-items: start;
   }
   @media (min-width: 900px) {
-    .hero__row { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 40px; }
+    .hero__row { grid-template-columns: repeat(2, minmax(0, 460px)); justify-content: center; gap: 40px; }
   }
   .hero__sticker { margin: 0; width: min(100%, 460px); display: grid; gap: 14px; }
-  .hero__sticker :global(.sticker) { box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45); text-align: left; }
   .hero__sticker figcaption { font-size: 0.88rem; color: var(--on-teal-muted); }
 
-  .actions {
-    width: 100%;
-    text-align: left;
+  /* The sticker and the action panel share one card style */
+  .hero__sticker :global(.sticker), .actions {
+    background: var(--teal);
     border: 1px solid var(--teal-line);
-    border-radius: var(--radius-lg);
-    background: var(--teal-raised);
-    display: grid;
+    box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45);
+  }
+  .hero__sticker :global(.sticker) { text-align: left; }
+  .actions {
+    container-type: inline-size;
+    width: min(100%, 460px);
+    border-radius: 40px;
+    padding: 0 32px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     min-width: 0;
   }
-  .actions__part { padding: 24px; display: grid; gap: 12px; min-width: 0; }
+  @media (min-width: 900px) { .actions { aspect-ratio: 1; } }
+  .actions__part { padding-block: 28px; display: grid; gap: 14px; min-width: 0; }
+  .actions .btn { padding: 10px 18px; font-size: 0.95rem; }
   .actions__part + .actions__part { border-top: 1px solid var(--teal-line); }
   .actions__label { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
   .actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
   .actions__link { font-size: 0.92rem; color: var(--white); }
+  @media (max-width: 480px) { .actions { padding: 0 24px; border-radius: 32px; } .actions__part { padding-block: 24px; } }
 
   /* Then just ask */
   .justask { display: grid; gap: 32px; align-items: start; }
