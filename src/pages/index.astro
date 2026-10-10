@@ -2,71 +2,37 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import HowItWorks from '../components/HowItWorks.astro';
-import ScanFlow from '../components/ScanFlow.astro';
 import WindowSticker from '../components/WindowSticker.astro';
-import CounterCard from '../components/CounterCard.astro';
-import WebBadges from '../components/WebBadges.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
 import ChatMock from '../components/ChatMock.astro';
-import CopyLine from '../components/CopyLine.astro';
 import ApprovalDialog from '../components/ApprovalDialog.astro';
 import ConceptNotice from '../components/ConceptNotice.astro';
-import Mark from '../components/Mark.astro';
 import Tick from '../components/Tick.astro';
 
-// On gentifi.com but not live yet.
-const networkConnector = 'https://gentifi.com/mcp';
-const networkSkill = 'Set up gentifi.com/agents/SKILL.md';
-
-// Real: the toolkit runs, downloads and sets up straight from GitHub today.
 const githubUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
-const toolkitInstall = 'npx github:SelfBankt/gentifi-toolkit init';
-const toolkitZip = 'https://github.com/SelfBankt/gentifi-toolkit/archive/refs/heads/main.zip';
-const toolkitSkill = 'Set up https://raw.githubusercontent.com/SelfBankt/gentifi-toolkit/main/SKILL.md';
-const toolkitSkillPage = 'https://github.com/SelfBankt/gentifi-toolkit/blob/main/SKILL.md';
+const toolkitZip = `${githubUrl}/archive/refs/heads/main.zip`;
 
-const toolkitCmds = [
-  { cmd: 'gentifi init', args: ' --from shopify', note: 'or csv, a booking system' },
-  { cmd: 'gentifi build', args: '', note: 'every agent format' },
-  { cmd: 'gentifi check', args: '', note: 'can agents find and buy?' },
-  { cmd: 'gentifi publish', args: '', note: 'self-host or the network' },
+const steps = [
+  { title: 'Add your business', body: 'We turn your products, prices and bookings into something AI agents can read and act on.' },
+  { title: 'Put up your sticker', body: 'Customers scan it to add your business to the AI agent they already use.' },
+  { title: 'Customers just ask', body: 'Their agent checks your stock, prices and times, then books or buys once they say yes.' },
 ];
 
 const asks = [
-  'Which farm near me has eggs this week? Reserve a dozen.',
+  'Which farm near me has eggs this week?',
   'Book a table for four on Friday at 7.',
-  'Find a plumber free Tuesday and get a price.',
-  'Which stands sell triple glazing under £600/m²? Get me three quotes.',
-  'Reorder our usual stock and check lead times.',
+  'Find a plumber free on Tuesday.',
 ];
 
-const faqs = [
-  {
-    q: 'How do approval and orders work?',
-    a: 'You approve the Gentifi connection in your own agent app. After that, your agent asks you to confirm every booking or order before it goes through, and hands you over to the business’s own checkout.',
-  },
-  {
-    q: 'Does it cost anything to use?',
-    a: 'No. Customers use Gentifi free. Businesses pay to be on the network.',
-  },
-  {
-    q: 'What do businesses learn about me?',
-    a: 'Connecting shares nothing with them. Your contact details pass to a business only when you ask your agent to request a quote, book or buy.',
-  },
-  {
-    q: 'Can a badge or link make my agent install something?',
-    a: 'No. A Gentifi link only offers information: “this business has a connector, here it is”. It never carries hidden instructions, and adding a connector is always your choice.',
-  },
-  {
-    q: 'How do I disconnect?',
-    a: 'Remove the connector at any time in your agent app’s settings.',
-  },
+const control = [
+  'You approve every connection, in your own app.',
+  'Your agent asks before every booking or order.',
+  'Businesses only get your details when you choose to book or buy.',
 ];
 ---
 <Base
-  title="Gentifi: ask your agent, buy from real businesses"
-  description="Gentifi connects businesses to their customers' AI agents, so anyone can find, price, book and buy from them through the agent they already use."
+  title="Gentifi: agent-ready business"
+  description="Gentifi helps local businesses get found and bought through AI agents like Claude and ChatGPT. Free, open source and built on open standards."
 >
   <Header />
   <main id="main">
@@ -74,11 +40,11 @@ const faqs = [
     <section class="hero section--teal">
       <div class="container hero__inner">
         <div class="hero__head">
-          <span class="eyebrow">Claude · ChatGPT · any agent</span>
+          <span class="eyebrow">Open source · Open standards</span>
           <h1 class="hero__title">Agent-ready <span class="hero__nowrap">business<Tick size="0.72em" tick="var(--teal)" /></span></h1>
           <p class="hero__lede">
-            Gentifi makes local and independent businesses findable and buyable by AI agents. Customers scan the
-            sticker, add the business to the agent they already use, and approve every step.
+            Gentifi helps local businesses get found and bought through AI agents like Claude and ChatGPT.
+            It's free, open source and built on open standards.
           </p>
         </div>
 
@@ -88,135 +54,24 @@ const faqs = [
             <figcaption>Scan the code with your phone: it opens a demo business.</figcaption>
           </figure>
 
-          <div class="actions">
-            <div class="actions__part">
-              <p class="actions__label">Shopping? Start now, no setup</p>
-              <div class="actions__buttons">
+          <div class="hero-actions">
+            <div class="hero-actions__part">
+              <p class="hero-actions__label">Shopping?</p>
+              <div class="hero-actions__buttons">
                 <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
                 <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
               </div>
-              <a class="actions__link" href="#add">Or add Gentifi to Claude or ChatGPT</a>
+              <a class="hero-actions__link" href="#shoppers">Or add Gentifi to Claude or ChatGPT</a>
             </div>
-            <div class="actions__part">
-              <p class="actions__label">Running a business? Toolkit preview</p>
-              <div class="actions__buttons">
-                <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
-                <a class="btn btn--ghost" href="#for-businesses">Other ways to set up</a>
+            <div class="hero-actions__part">
+              <p class="hero-actions__label">Running a business?</p>
+              <div class="hero-actions__buttons">
+                <a class="btn btn--primary" href={toolkitZip}>Download the free toolkit</a>
+                <a class="btn btn--ghost" href="#for-businesses">Or let us set it up</a>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Add to your agent -->
-    <section class="section" id="add">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">For customers</span>
-          <h2>Add Gentifi to your agent.</h2>
-          <p>One connection reaches every business on the Gentifi network. You approve it in your own app, and your agent checks with you before it books or buys.</p>
-          <p class="concept-note">Concept preview: Gentifi isn't live yet. The buttons below show the approval step.</p>
-        </div>
-
-        <div class="clients">
-          <article class="client client--messenger">
-            <div class="client__head"><span class="client__icon client__icon--any" aria-hidden="true"><Mark size={20} color="var(--copper)" stroke={13} /></span><h3>No agent yet? Just chat</h3></div>
-            <p>Message the Gentifi assistant in the app you already use. It can find, price and book for you, and asks before it buys.</p>
-            <div class="client__actions">
-              <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
-              <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
-            </div>
-          </article>
-          <article class="client">
-            <div class="client__head"><span class="client__icon" aria-hidden="true">C</span><h3>Add to Claude</h3></div>
-            <p>Add the Gentifi connector and sign in once. Claude can then search the network and ask you before it books or buys.</p>
-            <button class="btn btn--teal" type="button" data-approval="approve-network" data-app="Claude">Add to Claude</button>
-          </article>
-
-          <article class="client">
-            <div class="client__head"><span class="client__icon" aria-hidden="true">G</span><h3>Set up in ChatGPT</h3></div>
-            <p>Add Gentifi as a connector in ChatGPT using this link. ChatGPT asks you to approve it.</p>
-            <CopyLine text={networkConnector} tone="light" label="Copy connector link" />
-            <button class="btn btn--teal" type="button" data-approval="approve-network" data-app="ChatGPT">Set up ChatGPT</button>
-          </article>
-
-          <article class="client">
-            <div class="client__head"><span class="client__icon client__icon--any" aria-hidden="true"><Mark size={20} color="var(--copper)" stroke={13} /></span><h3>Teach any agent</h3></div>
-            <p>One skill file teaches self-built and headless agents to find, price, book and buy through Gentifi. Paste this into your agent:</p>
-            <CopyLine text={networkSkill} prompt="$" tone="light" label="Copy instruction" />
-            <a class="client__link" href="/b/demo-business">Or add a single business from its badge</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Just ask -->
-    <section class="section section--grey">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Then just ask</span>
-          <h2>Find, price, book and buy, without leaving your agent.</h2>
-        </div>
-        <div class="justask">
-        <div class="justask__chat"><ChatMock tone="light" /></div>
-        <div class="features">
-          <article class="feature feature--wide">
-            <h3>Just ask</h3>
-            <p>Your agent gets real stock, prices and availability it can act on, not stale web pages.</p>
-            <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
-          </article>
-          <article class="feature">
-            <h3>You say yes</h3>
-            <p>Your agent confirms every booking and order with you first, then hands you to the business's own checkout.</p>
-          </article>
-          <article class="feature">
-            <h3>Local first</h3>
-            <p>The independent bakery, farm shop or electrician near you, not just the big chains.</p>
-          </article>
-          <article class="feature">
-            <h3>Consumers and firms</h3>
-            <p>The same rails work for business buyers: account prices, approval chains and invoices.</p>
-          </article>
-        </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- For businesses -->
-    <section class="section section--teal" id="for-businesses">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">For businesses</span>
-          <h2>Make your business agent-ready.</h2>
-          <p>Be findable and buyable inside Claude, ChatGPT and every other agent. Pick the way that suits you.</p>
-        </div>
-        <div class="ways">
-          <article class="way">
-            <span class="way__tag">Done for you</span>
-            <h3>Let Gentifi set you up</h3>
-            <p>We import your catalogue, build your connector, get you listed and send your badge. No website or developer needed.</p>
-            <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
-          </article>
-          <article class="way">
-            <span class="way__tag">With your coding agent</span>
-            <h3>Tell your agent to do it</h3>
-            <p>Paste this into Claude Code or any coding agent. It installs the Gentifi Toolkit and runs <code>gentifi init</code>.</p>
-            <CopyLine text={toolkitSkill} prompt="$" label="Copy instruction" />
-            <a class="way__link" href={toolkitSkillPage}>View the skill on GitHub</a>
-          </article>
-          <article class="way">
-            <span class="way__tag">Do it yourself</span>
-            <h3>Download the toolkit</h3>
-            <p>Free and open source. Run it in one line, or download it and self-host. Early preview: the commands are being built in the open.</p>
-            <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
-            <div class="way__actions">
-              <a class="btn btn--primary" href={toolkitZip}>Download .zip</a>
-              <a class="btn btn--ghost" href={githubUrl}>View on GitHub</a>
-            </div>
-          </article>
-        </div>
-        <p class="ways__more"><a href="/businesses">Everything for businesses: offer, examples and pricing</a></p>
       </div>
     </section>
 
@@ -225,101 +80,111 @@ const faqs = [
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">How it works</span>
-          <h2>Businesses publish once. Any customer agent can find and buy.</h2>
-          <p>A business publishes to Gentifi once, using the open-source <strong>Gentifi Toolkit</strong>. A customer connects Gentifi to their own agent, by choice, and the agent can then find, price, book and buy.</p>
+          <h2>Three simple steps.</h2>
         </div>
-        <HowItWorks />
-        <div class="toolkit" id="toolkit">
-          <div class="toolkit__copy">
-            <span class="eyebrow">At the core</span>
-            <h3 class="toolkit__title">The Gentifi Toolkit</h3>
-            <p>
-              Free and open source. One command turns any business catalogue into everything AI agents need to find,
-              price, book and buy: an MCP server, UCP profile, SKILL.md, A2A agent card and ai-catalog.json.
-            </p>
-            <div class="toolkit__actions">
-              <a class="btn btn--primary" href="/toolkit">Explore the toolkit</a>
-              <a class="btn btn--ghost" href={githubUrl}>View on GitHub</a>
-            </div>
-          </div>
-          <ul class="toolkit__cmds" aria-label="Gentifi Toolkit commands">
-            {toolkitCmds.map((c) => (
-              <li><code><span class="c-cmd">{c.cmd}</span>{c.args}</code><span class="toolkit__note"># {c.note}</span></li>
-            ))}
-          </ul>
-        </div>
-        <div class="two-up connectors">
-          <div>
-            <h3>Own connector</h3>
-            <p>Each business gets a branded link or QR code to hand to its customers.</p>
-          </div>
-          <div>
-            <h3>Network connector</h3>
-            <p>One Gentifi connection reaches every business on the network, or a filtered group: one town, one event, one trade body.</p>
-          </div>
-        </div>
+        <ol class="steps">
+          {steps.map((s, i) => (
+            <li>
+              <span class="steps__n" aria-hidden="true">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
 
-    <!-- Badge -->
-    <section class="section section--grey" id="badge">
+    <!-- Open by design -->
+    <section class="section section--teal" id="open">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">The Gentifi badge</span>
-          <h2>Scan it, and the business is one tap from your agent.</h2>
-          <p>
-            Every badge carries a QR code with one link per business. The link answers people and agents differently,
-            and the customer always approves the final step.
-          </p>
+          <span class="eyebrow">Open by design</span>
+          <h2>Open source. Open standards. No lock-in.</h2>
+          <p>Anyone can use, check and improve what we build. Your business stays yours, in formats any agent can read.</p>
         </div>
-        <div class="badges">
-          <figure class="badges__item">
-            <WindowSticker />
-            <figcaption>Window sticker</figcaption>
-          </figure>
-          <figure class="badges__item">
-            <CounterCard />
-            <figcaption>Counter card</figcaption>
-          </figure>
-          <figure class="badges__item badges__item--web">
-            <div class="badges__web"><WebBadges /></div>
-            <figcaption>Web button and pill, for websites, booking pages and emails</figcaption>
-          </figure>
+        <div class="open">
+          <article class="open__card">
+            <h3>Free, open-source toolkit</h3>
+            <p>Everything you need to make a business agent-ready. Free to use and change, under the Apache 2.0 licence.</p>
+            <div class="open__links">
+              <a href="/toolkit">See the toolkit</a>
+              <a href={githubUrl}>GitHub</a>
+            </div>
+          </article>
+          <article class="open__card">
+            <h3>Built on open standards</h3>
+            <p>We use standards that Claude, ChatGPT and other agents already understand, so you're never tied to one company.</p>
+            <p class="open__chips" aria-label="Standards used">MCP · Agent Skills · A2A · ai-catalog.json</p>
+            <div class="open__links"><a href="/standards">Our standards</a></div>
+          </article>
+          <article class="open__card open__card--key">
+            <h3>Adding what's missing</h3>
+            <p>Today's standards describe one business at a time. We're drafting Collections: an open way to describe a whole market, high street or trade show.</p>
+            <div class="open__links"><a href="/standards#draft">Read the draft</a></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Scan flow -->
-    <section class="section">
-      <div class="container scan__wrap">
+    <!-- Shoppers -->
+    <section class="section section--grey" id="shoppers">
+      <div class="container shop">
+        <div class="shop__chat"><ChatMock tone="light" /></div>
+        <div class="shop__copy">
+          <span class="eyebrow">For shoppers</span>
+          <h2>Just ask your agent.</h2>
+          <p>
+            Ask for what you need in plain English. Your agent checks real stock, prices and opening times, then asks
+            you before it books or buys.
+          </p>
+          <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
+          <div class="shop__buttons">
+            <button class="btn btn--teal" type="button" data-approval="approve-network" data-app="Claude">Add to Claude</button>
+            <button class="btn btn--teal" type="button" data-approval="approve-network" data-app="ChatGPT">Add to ChatGPT</button>
+            <button class="btn btn--outline" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
+          </div>
+          <p class="shop__note">Free for shoppers. Gentifi isn't live yet, so these buttons show a preview.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Businesses -->
+    <section class="section" id="for-businesses">
+      <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Scan to add</span>
-          <h2>Your agent, your choice.</h2>
-          <p>
-            The badge link only offers metadata: "this business has a connector, here it is". It never carries hidden
-            instructions telling an agent to install something.
-          </p>
+          <span class="eyebrow">For businesses</span>
+          <h2>Get your business agent-ready.</h2>
+          <p>No website or developer needed. Keep your own checkout.</p>
         </div>
-        <ScanFlow />
-        <p class="scan__cta"><a class="btn btn--teal" href="/b/demo-business">Open the demo landing page</a></p>
+        <div class="ways">
+          <article class="way way--key">
+            <h3>We set it up for you</h3>
+            <p>We bring in your products and prices, get you listed, and send your sticker.</p>
+            <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+          </article>
+          <article class="way">
+            <h3>Do it yourself, free</h3>
+            <p>Use our open-source toolkit to do it all yourself, on your own terms.</p>
+            <div class="way__buttons">
+              <a class="btn btn--teal" href={toolkitZip}>Download the toolkit</a>
+              <a class="btn btn--outline" href="/toolkit">How it works</a>
+            </div>
+          </article>
+        </div>
+        <p class="more"><a href="/businesses">More for businesses: what you get, examples and pricing</a></p>
       </div>
     </section>
 
-    <!-- Privacy FAQ -->
+    <!-- Control -->
     <section class="section section--grey" id="privacy">
-      <div class="container faq__wrap">
+      <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Privacy and approval</span>
-          <h2>Your agent, your rules.</h2>
+          <span class="eyebrow">Privacy</span>
+          <h2>You're always in control.</h2>
         </div>
-        <div class="faq">
-          {faqs.map((f) => (
-            <details>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
-        </div>
+        <ul class="control">
+          {control.map((c) => <li><Tick size={22} tick="var(--teal)" /><span>{c}</span></li>)}
+        </ul>
       </div>
     </section>
 
@@ -329,10 +194,7 @@ const faqs = [
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
           <h2>Be one of the first agent-ready businesses.</h2>
-          <p>
-            We're starting with a handful of local businesses in one area.
-            Join the list and we'll be in touch.
-          </p>
+          <p>We're starting with a small group of local businesses. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm />
@@ -360,36 +222,23 @@ const faqs = [
   .hero { padding-block: clamp(48px, 8vw, 88px) clamp(56px, 9vw, 104px); }
   .hero__inner { display: grid; justify-items: center; gap: clamp(32px, 5vw, 48px); text-align: center; }
   .hero__head { display: grid; justify-items: center; }
-  .hero__title {
-    font-size: clamp(2.5rem, 8.5vw, 5.4rem);
-    letter-spacing: -0.035em;
-    line-height: 1.02;
-  }
+  .hero__title { font-size: clamp(2.5rem, 8.5vw, 5.4rem); letter-spacing: -0.035em; line-height: 1.02; }
   .hero__nowrap { display: inline-flex; align-items: center; gap: 0.18em; white-space: nowrap; }
-  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 40rem; }
-  .hero__row {
-    width: 100%;
-    max-width: 960px;
-    display: grid;
-    gap: 28px;
-    justify-items: center;
-    align-items: start;
-  }
-  @media (min-width: 900px) {
-    .hero__row { grid-template-columns: repeat(2, minmax(0, 460px)); justify-content: center; gap: 40px; }
-  }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 38rem; }
+
+  .hero__row { width: 100%; max-width: 960px; display: grid; gap: 28px; justify-items: center; align-items: start; }
+  @media (min-width: 900px) { .hero__row { grid-template-columns: repeat(2, minmax(0, 460px)); justify-content: center; gap: 40px; } }
   .hero__sticker { margin: 0; width: min(100%, 460px); display: grid; gap: 14px; }
   .hero__sticker figcaption { font-size: 0.88rem; color: var(--on-teal-muted); }
 
   /* The sticker and the action panel share one card style */
-  .hero__sticker :global(.sticker), .actions {
+  .hero__sticker :global(.sticker), .hero-actions {
     background: var(--teal);
     border: 1px solid var(--teal-line);
     box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45);
   }
   .hero__sticker :global(.sticker) { text-align: left; }
-  .actions {
-    container-type: inline-size;
+  .hero-actions {
     width: min(100%, 460px);
     border-radius: 40px;
     padding: 0 32px;
@@ -399,173 +248,86 @@ const faqs = [
     justify-content: center;
     min-width: 0;
   }
-  @media (min-width: 900px) { .actions { aspect-ratio: 1; } }
-  .actions__part { padding-block: 28px; display: grid; gap: 14px; min-width: 0; }
-  .actions .btn { padding: 10px 18px; font-size: 0.95rem; }
-  .actions__part + .actions__part { border-top: 1px solid var(--teal-line); }
-  .actions__label { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
-  .actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
-  .actions__link { font-size: 0.92rem; color: var(--white); }
-  @media (max-width: 480px) { .actions { padding: 0 24px; border-radius: 32px; } .actions__part { padding-block: 24px; } }
+  @media (min-width: 900px) { .hero-actions { aspect-ratio: 1; } }
+  .hero-actions__part { padding-block: 28px; display: grid; gap: 14px; min-width: 0; }
+  .hero-actions__part + .hero-actions__part { border-top: 1px solid var(--teal-line); }
+  .hero-actions__label { font-size: 1.2rem; font-weight: 700; }
+  .hero-actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero-actions .btn { padding: 10px 18px; font-size: 0.95rem; }
+  .hero-actions__link { font-size: 0.92rem; color: var(--white); }
+  @media (max-width: 480px) { .hero-actions { padding: 0 24px; border-radius: 32px; } .hero-actions__part { padding-block: 24px; } }
 
-  /* Then just ask */
-  .justask { display: grid; gap: 32px; align-items: start; }
-  @media (min-width: 960px) { .justask { grid-template-columns: 1fr 1fr; gap: 48px; } }
-  .justask__chat { width: 100%; max-width: 480px; justify-self: center; }
-
-  .concept-note {
-    display: inline-block;
-    margin-top: 16px !important;
-    padding: 6px 12px;
-    border: 1px dashed var(--ink-muted);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-mono);
-    font-size: 0.8rem !important;
+  /* Steps */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  @media (min-width: 800px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+  .steps li { display: grid; gap: 10px; align-content: start; }
+  .steps__n {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--teal); color: var(--copper);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 1.1rem;
   }
+  .steps h3 { font-size: 1.25rem; margin-top: 4px; }
+  .steps p { color: var(--ink-muted); }
 
-  /* Client cards */
-  .clients { display: grid; gap: 20px; }
-  @media (min-width: 800px) { .clients { grid-template-columns: repeat(2, 1fr); } }
-  .client--messenger { background: var(--teal); border-color: var(--teal); color: var(--white); }
-  .client--messenger > p { color: var(--on-teal-muted) !important; }
-  .client__actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; }
-  .client__actions .btn { margin-top: 0; }
-  .client {
+  /* Open by design */
+  .open { display: grid; gap: 20px; }
+  @media (min-width: 900px) { .open { grid-template-columns: repeat(3, 1fr); } }
+  .open__card {
+    border: 1px solid var(--teal-line);
+    background: var(--teal-raised);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .open__card h3 { font-size: 1.25rem; }
+  .open__card > p { color: var(--on-teal-muted); }
+  .open__chips { font-family: var(--font-mono); font-size: 0.82rem; color: var(--white) !important; }
+  .open__card--key { border: 2px solid var(--copper); }
+  .open__links { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; gap: 18px; }
+  .open__links a { color: var(--copper); font-weight: 600; }
+
+  /* Shoppers */
+  .shop { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 960px) { .shop { grid-template-columns: 1fr 1fr; gap: 64px; } }
+  .shop__chat { width: 100%; max-width: 460px; justify-self: center; }
+  .shop__copy { display: grid; gap: 16px; justify-items: start; }
+  .shop__copy .eyebrow { margin-bottom: 0; }
+  .shop__copy > p { color: var(--ink-muted); font-size: 1.08rem; }
+  .asks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .asks li { background: var(--white); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
+  .shop__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .shop__note { font-size: 0.85rem; color: var(--ink-muted); }
+
+  /* Businesses */
+  .ways { display: grid; gap: 20px; }
+  @media (min-width: 800px) { .ways { grid-template-columns: 1fr 1fr; } }
+  .way {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    min-width: 0;
+    gap: 12px;
+    align-items: flex-start;
   }
-  .client__head { display: flex; align-items: center; gap: 12px; }
-  .client__icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    border-radius: 12px;
-    background: var(--grey);
-    display: grid; place-items: center;
-    font-weight: 700;
-  }
-  .client__icon--any { background: var(--teal); }
-  .client > p { color: var(--ink-muted); }
-  .client .btn { margin-top: auto; align-self: flex-start; }
-  .client__link { margin-top: auto; font-weight: 600; font-size: 0.95rem; }
+  .way h3 { font-size: 1.25rem; }
+  .way p { color: var(--ink-muted); }
+  .way .btn, .way__buttons { margin-top: auto; }
+  .way__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .way__buttons .btn { margin-top: 0; }
+  .way--key { background: var(--teal); border-color: var(--teal); color: var(--white); }
+  .way--key p { color: var(--on-teal-muted); }
+  .more { margin-top: 24px; }
+  .more a { font-weight: 600; }
 
-  /* Features */
-  .features { display: grid; gap: 20px; }
-  @media (min-width: 720px) and (max-width: 959px) { .features { grid-template-columns: repeat(3, 1fr); } .feature--wide { grid-column: 1 / -1; } }
-  .feature { background: var(--white); border-radius: var(--radius); padding: 28px; display: grid; gap: 10px; align-content: start; }
-  .feature > p { color: var(--ink-muted); }
-  .asks { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
-  .asks li { background: var(--grey); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; line-height: 1.35; }
-
-  /* Ways in for businesses */
-  .ways { display: grid; gap: 20px; }
-  @media (min-width: 960px) { .ways { grid-template-columns: repeat(3, 1fr); } }
-  .way {
-    background: var(--teal-raised);
-    border: 1px solid var(--teal-line);
-    border-radius: var(--radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-width: 0;
-  }
-  .way__tag { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
-  .way > p { color: var(--on-teal-muted); }
-  .way code { color: var(--white); font-size: 0.9em; }
-  .way > .btn { margin-top: auto; align-self: flex-start; }
-  .way__link { margin-top: auto; color: var(--white); font-size: 0.92rem; }
-  .way__actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; }
-  .ways__more { margin-top: 28px; }
-  .ways__more a { color: var(--copper); font-weight: 600; }
-
-  /* Toolkit callout */
-  .toolkit {
-    margin-top: 32px;
-    background: var(--teal);
-    color: var(--white);
-    border-radius: var(--radius-lg);
-    padding: clamp(24px, 4vw, 40px);
-    display: grid;
-    gap: 28px;
-    align-items: center;
-    scroll-margin-top: 24px;
-  }
-  @media (min-width: 900px) { .toolkit { grid-template-columns: 1fr 1.1fr; gap: 48px; } }
-  .toolkit .eyebrow { color: var(--copper); margin-bottom: 8px; }
-  .toolkit__title { font-size: clamp(1.6rem, 3.5vw, 2.1rem); }
-  .toolkit__copy { display: grid; gap: 14px; justify-items: start; }
-  .toolkit__copy p { color: var(--on-teal-muted); }
-  .toolkit__actions { display: flex; flex-wrap: wrap; gap: 10px; }
-  .toolkit__cmds {
-    list-style: none;
-    margin: 0;
-    padding: 16px 18px;
-    background: var(--teal-raised);
-    border: 1px solid var(--teal-line);
-    border-radius: var(--radius-sm);
-    display: grid;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 0.88rem;
-    min-width: 0;
-  }
-  .toolkit__cmds li { display: grid; gap: 0 20px; }
-  .toolkit__cmds code { color: var(--white); }
-  .toolkit__note { color: var(--on-teal-muted); }
-  .c-cmd { color: var(--copper); }
-  @media (min-width: 560px) {
-    .toolkit__cmds { grid-template-columns: max-content 1fr; gap: 8px 24px; }
-    .toolkit__cmds li { display: contents; }
-  }
-
-  .two-up { display: grid; gap: 20px; }
-  @media (min-width: 720px) { .two-up { grid-template-columns: 1fr 1fr; gap: 24px; } }
-  .connectors { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
-  .connectors h3 { margin-bottom: 6px; }
-  .connectors p { color: var(--ink-muted); }
-
-  /* Badges */
-  .badges { display: grid; gap: 32px; align-items: start; }
-  @media (min-width: 720px) { .badges { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1040px) { .badges { grid-template-columns: 1.15fr 0.85fr 1fr; } }
-  .badges__item { margin: 0; display: grid; gap: 12px; justify-items: center; }
-  .badges__item > :global(*:first-child) { max-width: 380px; }
-  .badges__item figcaption { font-size: 0.9rem; color: var(--ink-muted); text-align: center; }
-  .badges__web { background: var(--white); border-radius: var(--radius); padding: 32px 24px; width: 100%; display: grid; place-items: center; }
-
-  /* Scan */
-  .scan__wrap { max-width: calc(960px + var(--gutter) * 2); }
-  .scan__cta { margin-top: 40px; text-align: center; }
-
-  /* FAQ */
-  .faq__wrap { max-width: calc(820px + var(--gutter) * 2); }
-  .faq { border-top: 1px solid var(--border); }
-  .faq details { border-bottom: 1px solid var(--border); }
-  .faq summary {
-    cursor: pointer;
-    list-style: none;
-    padding: 20px 40px 20px 0;
-    font-weight: 600;
-    font-size: 1.05rem;
-    position: relative;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after {
-    content: '+';
-    position: absolute;
-    right: 4px; top: 50%;
-    transform: translateY(-50%);
-    font-family: var(--font-mono);
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--ink-muted);
-  }
-  .faq details[open] summary::after { content: '\2212'; }
-  .faq details p { padding: 0 0 20px; color: var(--ink-muted); max-width: 44rem; }
+  /* Control */
+  .control { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 800px) { .control { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+  .control li { display: flex; gap: 12px; align-items: flex-start; background: var(--white); border-radius: var(--radius); padding: 22px; font-size: 1.05rem; font-weight: 600; line-height: 1.45; }
+  .control li :global(svg) { margin-top: 2px; flex-shrink: 0; }
 
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
