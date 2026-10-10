@@ -13,7 +13,7 @@ const benefits = [
   { title: 'Found by AI agents', body: 'Agents can see what you sell, what it costs and when you’re open.' },
   { title: 'Listed where customers look', body: 'We get you into the Claude and ChatGPT connector directories.' },
   { title: 'Works with any agent', body: 'Including the ones people build for themselves.' },
-  { title: 'Safe checkout', body: 'Customers confirm every order, then pay through your own checkout.' },
+  { title: 'Safe checkout', body: 'Customers confirm every order, then finish it through your own checkout.' },
   { title: 'A chat assistant, if you want one', body: 'For customers without an agent, on WhatsApp, Telegram or your website.' },
   { title: 'See what you sell', body: 'A simple view of what agents sold for you.' },
 ];
@@ -27,20 +27,15 @@ const steps = [
 const examples = [
   { setting: 'Farm shop', ask: 'Which farm near me has eggs this week? Reserve a dozen.', gets: 'Reservations without answering the phone.' },
   { setting: 'Restaurant', ask: 'Book a table for four on Friday at 7.', gets: 'Bookings through your usual booking page.' },
-  { setting: 'Trades', ask: 'Find a plumber free on Tuesday and get a price.', gets: 'Quote requests with the details you need.' },
+  { setting: 'Trades', ask: 'Find a plumber available on Tuesday and get a quote.', gets: 'Quote requests with the details you need.' },
   { setting: 'Trade show', ask: 'Which stands sell triple glazing under £600/m²?', gets: 'One connection covers every exhibitor at the show.' },
 ];
 
-const pricing = [
-  { label: 'Setup', price: '[SETUP FEE]', body: 'One-off. We bring in your products and get you listed.' },
-  { label: 'Monthly', price: '[MONTHLY FEE]', body: 'Keeps your prices, stock and times up to date.' },
-  { label: 'Per order', price: '[PER-ORDER FEE]', body: 'A small fee, only on orders that agents bring you.' },
-];
 
 const faqs = [
   {
     q: 'Do I need a website or a developer?',
-    a: 'No. We host everything for you. If you do have a developer, they can use our free, open-source toolkit instead.',
+    a: 'No. We host everything for you. If you do have a developer, they can use our open-source toolkit instead.',
   },
   {
     q: 'Which AI agents does it work with?',
@@ -58,7 +53,7 @@ const faqs = [
 ---
 <Base
   title="For businesses · Gentifi"
-  description="Get found and bought through AI agents like Claude and ChatGPT. No website or developer needed. Free, open-source toolkit."
+  description="Get found and bought through AI agents like Claude and ChatGPT. We set you up and keep you running. Open source and built on open standards."
 >
   <Header ctaHref="#waitlist" />
   <main id="main">
@@ -73,7 +68,7 @@ const faqs = [
         </p>
         <div class="hero__ctas">
           <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
-          <a class="btn btn--ghost" href={toolkitZip}>Download the free toolkit</a>
+          <a class="btn btn--ghost" href={toolkitZip}>Download the toolkit</a>
         </div>
         <ul class="hero__points">
           <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
@@ -134,7 +129,7 @@ const faqs = [
             </li>
           ))}
         </ol>
-        <p class="diy"><a href="/how-it-works">See how it works in detail</a>. Prefer to do it yourself? Our <a href="/toolkit">toolkit</a> is free and open source.</p>
+        <p class="diy"><a href="/how-it-works">See how it works in detail</a>. Prefer to do it yourself? Our <a href="/toolkit">toolkit</a> is open source.</p>
       </div>
     </section>
 
@@ -154,31 +149,8 @@ const faqs = [
             </article>
           ))}
         </div>
-        <p class="b2b">Selling to other businesses? It works the same way, with account prices, approvals and invoices.</p>
-      </div>
-    </section>
-
-    <!-- Pricing -->
-    <section class="section" id="pricing">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Pricing</span>
-          <h2>Simple pricing. Free for customers.</h2>
-          <p>Final prices are still being set.</p>
-        </div>
-        <div class="pricing">
-          {pricing.map((p) => (
-            <article class="price">
-              <h3>{p.label}</h3>
-              <p class="price__amount"><span class="placeholder">{p.price}</span></p>
-              <p>{p.body}</p>
-            </article>
-          ))}
-        </div>
-        <p class="organisers">
-          Running an event, market or trade body? One connection can cover all your members.
-          <a href="/standards">See how</a>
-        </p>
+        <p class="b2b">Selling to other businesses? It works the same way, with account prices and approvals.</p>
+        <p class="b2b">Running an event, market or trade body? One connection can cover all your members. <a href="/standards">See how</a></p>
       </div>
     </section>
 
@@ -188,7 +160,7 @@ const faqs = [
         <div>
           <span class="eyebrow">Open by design</span>
           <h2>Open source, so you're never locked in.</h2>
-          <p>The toolkit behind Gentifi is free and open source, and everything follows open standards, so your setup is never tied to us.</p>
+          <p>The toolkit behind Gentifi is open source, and everything follows open standards, so your setup is never tied to us.</p>
         </div>
         <div class="open-band__buttons">
           <a class="btn btn--primary" href="/toolkit">See the toolkit</a>
@@ -282,15 +254,8 @@ const faqs = [
   .example q { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
   .example p { color: var(--ink-muted); font-size: 0.95rem; }
   .b2b { margin-top: 24px; color: var(--ink-muted); }
-
-  /* Pricing */
-  .pricing { display: grid; gap: 20px; }
-  @media (min-width: 860px) { .pricing { grid-template-columns: repeat(3, 1fr); } }
-  .price { border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; display: grid; gap: 8px; align-content: start; }
-  .price p:not(.price__amount) { color: var(--ink-muted); }
-  .price__amount { font-size: 1.2rem; font-weight: 700; }
-  .organisers { margin-top: 24px; color: var(--ink-muted); }
-  .organisers a { color: var(--teal); font-weight: 600; }
+  .b2b + .b2b { margin-top: 8px; }
+  .b2b a { color: var(--teal); font-weight: 600; }
 
   /* Open band */
   .open-band__inner { display: grid; gap: 28px; align-items: center; }

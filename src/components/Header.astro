@@ -10,6 +10,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
   { href: '/#shoppers', label: 'Shoppers' },
   { href: '/businesses', label: 'Businesses' },
+  { href: '/how-it-works', label: 'How it works' },
   { href: '/toolkit', label: 'Open source' },
   { href: '/standards', label: 'Open standards' },
   { href: '/b/demo-business', label: 'Try a scan' },
@@ -18,17 +19,39 @@ const links = [
 <header class="site-header">
   <div class="container site-header__inner">
     <Logo href="/" />
-    <nav aria-label="Main">
+
+    <!-- Full menu on wide screens -->
+    <nav class="nav-wide" aria-label="Main">
       <ul>
         {links.map((l) => <li><a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
       </ul>
     </nav>
+
     <a class="btn btn--primary site-header__cta" href={ctaHref}>Join the waitlist</a>
+
+    <!-- Compact menu on smaller screens; works without JavaScript -->
+    <details class="nav-menu">
+      <summary aria-label="Menu"><span class="nav-menu__icon" aria-hidden="true"></span>Menu</summary>
+      <nav aria-label="Main">
+        <ul>
+          {links.map((l) => <li><a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
+          <li class="nav-menu__cta"><a class="btn btn--primary" href={ctaHref}>Join the waitlist</a></li>
+        </ul>
+      </nav>
+    </details>
   </div>
 </header>
 
+<script>
+  // Close the compact menu after choosing a link (needed for same-page anchors).
+  document.querySelectorAll<HTMLDetailsElement>('.nav-menu').forEach((menu) => {
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.open = false; }));
+  });
+</script>
+
 <style>
   .site-header {
+    position: relative;
     background: var(--teal);
     color: var(--white);
     border-bottom: 1px solid var(--teal-line);
@@ -36,24 +59,85 @@ const links = [
   .site-header__inner {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 12px;
     min-height: 72px;
   }
-  nav { margin-left: auto; display: none; }
-  ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .site-header__inner > :global(.logo) { flex-shrink: 0; margin-right: auto; }
+
+  ul { list-style: none; margin: 0; padding: 0; }
   nav a {
     display: block;
     padding: 8px 12px;
     border-radius: 999px;
     font-size: 0.92rem;
     text-decoration: none;
+    white-space: nowrap;
     color: var(--on-teal-muted);
   }
   nav a:hover, nav a[aria-current='page'] { color: var(--white); background: var(--teal-raised); }
-  .site-header__cta { margin-left: auto; min-height: 40px; padding: 8px 16px; font-size: 0.9rem; }
+  .site-header__cta { flex-shrink: 0; min-height: 40px; padding: 8px 16px; font-size: 0.9rem; white-space: nowrap; }
 
-  @media (min-width: 960px) {
-    nav { display: block; }
-    .site-header__cta { margin-left: 0; }
+  /* Wide: full menu */
+  .nav-wide { display: none; }
+  .nav-wide ul { display: flex; gap: 2px; }
+
+  /* Narrow: compact menu */
+  .nav-menu summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid var(--teal-line);
+    border-radius: 999px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .nav-menu summary::-webkit-details-marker { display: none; }
+  .nav-menu__icon,
+  .nav-menu__icon::before,
+  .nav-menu__icon::after {
+    display: block;
+    width: 14px;
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+  }
+  .nav-menu__icon { position: relative; }
+  .nav-menu__icon::before, .nav-menu__icon::after { content: ''; position: absolute; left: 0; }
+  .nav-menu__icon::before { top: -5px; }
+  .nav-menu__icon::after { top: 5px; }
+  .nav-menu[open] summary { background: var(--teal-raised); }
+  .nav-menu nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 50;
+    background: var(--teal);
+    border-bottom: 1px solid var(--teal-line);
+    padding: 8px var(--gutter) 16px;
+    box-shadow: 0 16px 32px -16px rgb(0 0 0 / 0.5);
+  }
+  .nav-menu nav ul { display: grid; gap: 2px; max-width: var(--max); margin-inline: auto; }
+  .nav-menu nav a { padding: 12px 14px; font-size: 1rem; border-radius: var(--radius-sm); }
+
+  .nav-menu__cta { display: none; }
+  .nav-menu nav .nav-menu__cta a { color: var(--teal); background: var(--copper); border-radius: 999px; margin-top: 8px; justify-content: center; }
+
+  /* Phones: the waitlist button moves into the menu to make room */
+  @media (max-width: 519px) {
+    .site-header__cta { display: none; }
+    .nav-menu__cta { display: block; }
+  }
+
+  @media (min-width: 1100px) {
+    .nav-wide { display: block; }
+    .nav-menu { display: none; }
+    .site-header__inner { gap: 20px; }
+    .site-header__inner > :global(.logo) { margin-right: 0; }
+    .nav-wide { margin-left: auto; }
   }
 </style>
