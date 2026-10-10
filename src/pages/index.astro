@@ -82,27 +82,29 @@ const faqs = [
           </p>
         </div>
 
-        <figure class="hero__sticker">
-          <WindowSticker />
-          <figcaption>Scan the code with your phone: it opens a demo business.</figcaption>
-        </figure>
+        <div class="hero__row">
+          <figure class="hero__sticker">
+            <WindowSticker />
+            <figcaption>Scan the code with your phone: it opens a demo business.</figcaption>
+          </figure>
 
-        <div class="lanes">
-          <div class="lane">
-            <p class="lane__label">Shopping? Start now, no setup</p>
-            <div class="lane__actions">
-              <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
-              <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
+          <div class="actions">
+            <div class="actions__part">
+              <p class="actions__label">Shopping? Start now, no setup</p>
+              <div class="actions__buttons">
+                <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
+                <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
+              </div>
+              <a class="actions__link" href="#add">Or add Gentifi to Claude, ChatGPT or your own agent</a>
             </div>
-            <a class="lane__link" href="#add">Or add Gentifi to Claude, ChatGPT or your own agent</a>
-          </div>
-          <div class="lane">
-            <p class="lane__label">Running a business? Get the toolkit (early preview)</p>
-            <div class="lane__actions">
-              <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
-              <a class="btn btn--ghost" href="#for-businesses">Other ways to set up</a>
+            <div class="actions__part">
+              <p class="actions__label">Running a business? Get the toolkit (early preview)</p>
+              <div class="actions__buttons">
+                <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
+                <a class="btn btn--ghost" href="#for-businesses">Other ways to set up</a>
+              </div>
+              <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
             </div>
-            <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
           </div>
         </div>
       </div>
@@ -366,24 +368,35 @@ const faqs = [
   }
   .hero__nowrap { display: inline-flex; align-items: center; gap: 0.18em; white-space: nowrap; }
   .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 40rem; }
+  .hero__row {
+    width: 100%;
+    max-width: 1040px;
+    display: grid;
+    gap: 28px;
+    justify-items: center;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .hero__row { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 40px; }
+  }
   .hero__sticker { margin: 0; width: min(100%, 460px); display: grid; gap: 14px; }
   .hero__sticker :global(.sticker) { box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45); text-align: left; }
   .hero__sticker figcaption { font-size: 0.88rem; color: var(--on-teal-muted); }
 
-  .lanes { display: grid; gap: 14px; width: 100%; max-width: 920px; text-align: left; }
-  @media (min-width: 860px) { .lanes { grid-template-columns: 1fr 1fr; } }
-  .lane {
+  .actions {
+    width: 100%;
+    text-align: left;
     border: 1px solid var(--teal-line);
-    border-radius: var(--radius);
-    padding: 18px;
+    border-radius: var(--radius-lg);
+    background: var(--teal-raised);
     display: grid;
-    gap: 12px;
-    align-content: start;
     min-width: 0;
   }
-  .lane__label { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
-  .lane__actions { display: flex; flex-wrap: wrap; gap: 10px; }
-  .lane__link { font-size: 0.92rem; color: var(--white); }
+  .actions__part { padding: 24px; display: grid; gap: 12px; min-width: 0; }
+  .actions__part + .actions__part { border-top: 1px solid var(--teal-line); }
+  .actions__label { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
+  .actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .actions__link { font-size: 0.92rem; color: var(--white); }
 
   /* Then just ask */
   .justask { display: grid; gap: 32px; align-items: start; }
