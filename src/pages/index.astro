@@ -190,7 +190,7 @@ const control = [
     </section>
 
     <!-- Waitlist -->
-    <section class="section section--teal waitlist" id="waitlist">
+    <section class="section waitlist" id="waitlist">
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
@@ -198,7 +198,7 @@ const control = [
           <p>We're starting with a small group of local businesses. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
-        <WaitlistForm />
+        <WaitlistForm tone="light" />
       </div>
     </section>
   </main>
@@ -333,8 +333,7 @@ const control = [
   .control li :global(svg) { margin-top: 2px; flex-shrink: 0; }
 
   /* Waitlist */
-  .waitlist { border-top: 1px solid var(--teal-line); }
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
-  .waitlist__count { font-size: 0.95rem; color: var(--on-teal-muted); }
+  .waitlist__count { font-size: 0.95rem; color: var(--ink-muted); }
 </style>

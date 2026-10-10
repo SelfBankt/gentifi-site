@@ -5,8 +5,9 @@ const WAITLIST_ENDPOINT = '/api/waitlist-placeholder';
 
 interface Props {
   role?: 'business' | 'developer' | 'customer' | 'organiser';
+  tone?: 'dark' | 'light'; // background it sits on
 }
-const { role = 'business' } = Astro.props;
+const { role = 'business', tone = 'dark' } = Astro.props;
 const roles = [
   { value: 'business', label: 'A business owner' },
   { value: 'developer', label: 'A developer' },
@@ -14,7 +15,7 @@ const roles = [
   { value: 'organiser', label: 'An event organiser or association' },
 ];
 ---
-<form class="waitlist" action={WAITLIST_ENDPOINT} method="post" data-placeholder-form>
+<form class:list={['waitlist', `waitlist--${tone}`]} action={WAITLIST_ENDPOINT} method="post" data-placeholder-form>
   <div class="field">
     <label for="wl-name">Your name</label>
     <input id="wl-name" name="name" type="text" autocomplete="name" required />
@@ -38,7 +39,7 @@ const roles = [
     <input id="wl-postcode" name="postcode" type="text" autocomplete="postal-code" maxlength="8" />
   </div>
   <div class="field--wide actions">
-    <button class="btn btn--primary" type="submit">Join the waitlist</button>
+    <button class:list={['btn', tone === 'light' ? 'btn--teal' : 'btn--primary']} type="submit">Join the waitlist</button>
     <p class="note">We'll only email you about Gentifi's launch. <span class="placeholder">[PRIVACY POLICY LINK]</span></p>
   </div>
   <p class="status field--wide" role="status" aria-live="polite"></p>
@@ -89,4 +90,11 @@ const roles = [
     border-radius: var(--radius-sm);
     color: var(--white);
   }
+
+  /* On a white background */
+  .waitlist--light label { color: var(--ink); }
+  .waitlist--light .opt, .waitlist--light .note { color: var(--ink-muted); }
+  .waitlist--light input, .waitlist--light select { background: var(--white); border-color: var(--border); color: var(--ink); }
+  .waitlist--light input:focus-visible, .waitlist--light select:focus-visible { border-color: var(--teal); }
+  .waitlist--light .status { border-color: var(--teal); color: var(--ink); }
 </style>
