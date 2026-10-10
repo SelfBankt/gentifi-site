@@ -2,8 +2,13 @@
 // Illustrative agent conversation for the hero. Generic chat styling (not any
 // real app's UI) and a fictional business. Ends with the customer confirming.
 import Mark from './Mark.astro';
+
+interface Props {
+  tone?: 'dark' | 'light'; // background it sits on
+}
+const { tone = 'dark' } = Astro.props;
 ---
-<figure class="chat">
+<figure class:list={['chat', `chat--${tone}`]}>
   <figcaption class="chat__caption">Illustration · fictional business</figcaption>
   <div class="chat__window">
     <div class="chat__bar"><span class="chat__dot"></span><span class="chat__dot"></span><span class="chat__dot"></span><span class="chat__title">Your agent</span></div>
@@ -44,6 +49,8 @@ import Mark from './Mark.astro';
     margin-bottom: 10px;
     text-align: right;
   }
+  .chat--light .chat__caption { color: var(--ink-muted); }
+  .chat--light .chat__window { border-color: var(--border); }
   .chat__window {
     background: var(--white);
     color: var(--teal);

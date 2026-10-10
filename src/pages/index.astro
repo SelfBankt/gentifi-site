@@ -72,35 +72,38 @@ const faqs = [
   <main id="main">
     <!-- Hero -->
     <section class="hero section--teal">
-      <div class="container hero__grid">
-        <div class="hero__copy">
+      <div class="container hero__inner">
+        <div class="hero__head">
           <span class="eyebrow">Claude · ChatGPT · any agent</span>
-          <h1>Ask your agent. Buy from real businesses.</h1>
+          <h1 class="hero__title">Agent-ready <span class="hero__nowrap">business<Tick size="0.72em" tick="var(--teal)" /></span></h1>
           <p class="hero__lede">
-            Gentifi connects your AI agent to live catalogues, prices and bookings from local and independent
-            businesses, so it can find, price, book and buy for you. You approve every step.
+            Gentifi makes local and independent businesses findable and buyable by AI agents. Customers scan the
+            sticker, add the business to the agent they already use, and approve every step.
           </p>
-          <div class="lanes">
-            <div class="lane">
-              <p class="lane__label">Shopping? Start now, no setup</p>
-              <div class="lane__actions">
-                <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
-                <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
-              </div>
-              <a class="lane__link" href="#add">Or add Gentifi to Claude, ChatGPT or your own agent</a>
-            </div>
-            <div class="lane">
-              <p class="lane__label">Running a business? Get the toolkit (early preview)</p>
-              <div class="lane__actions">
-                <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
-                <a class="btn btn--ghost" href="#for-businesses">Other ways to set up</a>
-              </div>
-              <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
-            </div>
-          </div>
         </div>
-        <div class="hero__visual">
-          <ChatMock />
+
+        <figure class="hero__sticker">
+          <WindowSticker />
+          <figcaption>Scan the code with your phone: it opens a demo business.</figcaption>
+        </figure>
+
+        <div class="lanes">
+          <div class="lane">
+            <p class="lane__label">Shopping? Start now, no setup</p>
+            <div class="lane__actions">
+              <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in Telegram">Chat on Telegram</button>
+              <button class="btn btn--primary" type="button" data-concept="open the Gentifi assistant in WhatsApp">Chat on WhatsApp</button>
+            </div>
+            <a class="lane__link" href="#add">Or add Gentifi to Claude, ChatGPT or your own agent</a>
+          </div>
+          <div class="lane">
+            <p class="lane__label">Running a business? Get the toolkit (early preview)</p>
+            <div class="lane__actions">
+              <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
+              <a class="btn btn--ghost" href="#for-businesses">Other ways to set up</a>
+            </div>
+            <CopyLine text={toolkitInstall} prompt="$" label="Copy install command" />
+          </div>
         </div>
       </div>
     </section>
@@ -154,6 +157,8 @@ const faqs = [
           <span class="eyebrow">Then just ask</span>
           <h2>Find, price, book and buy, without leaving your agent.</h2>
         </div>
+        <div class="justask">
+        <div class="justask__chat"><ChatMock tone="light" /></div>
         <div class="features">
           <article class="feature feature--wide">
             <h3>Just ask</h3>
@@ -172,6 +177,7 @@ const faqs = [
             <h3>Consumers and firms</h3>
             <p>The same rails work for business buyers: account prices, approval chains and invoices.</p>
           </article>
+        </div>
         </div>
       </div>
     </section>
@@ -349,27 +355,40 @@ const faqs = [
 </Base>
 
 <style>
-  /* Hero */
-  .hero { padding-block: clamp(48px, 8vw, 96px) clamp(56px, 9vw, 112px); }
-  .hero__grid { display: grid; gap: 48px; align-items: center; }
-  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 36rem; }
-  .lanes { display: grid; gap: 14px; margin-top: 32px; max-width: 36rem; }
+  /* Hero: sticker front and centre */
+  .hero { padding-block: clamp(48px, 8vw, 88px) clamp(56px, 9vw, 104px); }
+  .hero__inner { display: grid; justify-items: center; gap: clamp(32px, 5vw, 48px); text-align: center; }
+  .hero__head { display: grid; justify-items: center; }
+  .hero__title {
+    font-size: clamp(2.5rem, 8.5vw, 5.4rem);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+  .hero__nowrap { display: inline-flex; align-items: center; gap: 0.18em; white-space: nowrap; }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 40rem; }
+  .hero__sticker { margin: 0; width: min(100%, 460px); display: grid; gap: 14px; }
+  .hero__sticker :global(.sticker) { box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45); text-align: left; }
+  .hero__sticker figcaption { font-size: 0.88rem; color: var(--on-teal-muted); }
+
+  .lanes { display: grid; gap: 14px; width: 100%; max-width: 920px; text-align: left; }
+  @media (min-width: 860px) { .lanes { grid-template-columns: 1fr 1fr; } }
   .lane {
     border: 1px solid var(--teal-line);
     border-radius: var(--radius);
     padding: 18px;
     display: grid;
     gap: 12px;
+    align-content: start;
     min-width: 0;
   }
   .lane__label { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--copper); }
   .lane__actions { display: flex; flex-wrap: wrap; gap: 10px; }
   .lane__link { font-size: 0.92rem; color: var(--white); }
-  .hero__visual { max-width: 460px; width: 100%; justify-self: center; }
-  @media (min-width: 900px) {
-    .hero__grid { grid-template-columns: 1.1fr 1fr; gap: 64px; }
-    .hero__visual { justify-self: end; }
-  }
+
+  /* Then just ask */
+  .justask { display: grid; gap: 32px; align-items: start; }
+  @media (min-width: 960px) { .justask { grid-template-columns: 1fr 1fr; gap: 48px; } }
+  .justask__chat { width: 100%; max-width: 480px; justify-self: center; }
 
   .concept-note {
     display: inline-block;
@@ -412,7 +431,7 @@ const faqs = [
 
   /* Features */
   .features { display: grid; gap: 20px; }
-  @media (min-width: 720px) { .features { grid-template-columns: repeat(3, 1fr); } .feature--wide { grid-column: 1 / -1; } }
+  @media (min-width: 720px) and (max-width: 959px) { .features { grid-template-columns: repeat(3, 1fr); } .feature--wide { grid-column: 1 / -1; } }
   .feature { background: var(--white); border-radius: var(--radius); padding: 28px; display: grid; gap: 10px; align-content: start; }
   .feature > p { color: var(--ink-muted); }
   .asks { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
