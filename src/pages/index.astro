@@ -13,7 +13,7 @@ const githubUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
 const toolkitZip = `${githubUrl}/archive/refs/heads/main.zip`;
 
 const steps = [
-  { title: 'Add your business', body: 'We turn your products, prices and bookings into something AI agents can read and act on.' },
+  { title: 'Add your business', body: 'We turn your products, prices, inventory and services into something AI agents can read and act on.' },
   { title: 'Put up your sticker', body: 'Customers scan it to add your business to the AI agent they already use.' },
   { title: 'Customers just ask', body: 'Their agent checks your stock, prices and times, then books or buys once they say yes.' },
 ];
@@ -75,23 +75,38 @@ const control = [
       </div>
     </section>
 
-    <!-- How it works -->
-    <section class="section" id="how-it-works">
+    <!-- For businesses, with how it works -->
+    <section class="section" id="for-businesses">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">How it works</span>
-          <h2>Three simple steps.</h2>
+          <span class="eyebrow">For businesses</span>
+          <h2>Get your business agent-ready.</h2>
+          <p>No website or developer needed. Keep your own checkout.</p>
         </div>
-        <ol class="steps">
-          {steps.map((s, i) => (
-            <li>
-              <span class="steps__n" aria-hidden="true">{i + 1}</span>
-              <h3>{s.title}</h3>
-              <p>{s.body}</p>
-            </li>
-          ))}
-        </ol>
-        <p class="detail"><a href="/how-it-works">See how it works in detail</a></p>
+        <article class="setup">
+          <div>
+            <h3>We set it up for you</h3>
+            <p>We bring in your products and prices, get you listed, and send your sticker.</p>
+          </div>
+          <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+        </article>
+
+        <div class="how" id="how-it-works">
+          <h3 class="how__title">How it works, in three steps</h3>
+          <ol class="steps">
+            {steps.map((s, i) => (
+              <li>
+                <span class="steps__n" aria-hidden="true">{i + 1}</span>
+                <h4>{s.title}</h4>
+                <p>{s.body}</p>
+              </li>
+            ))}
+          </ol>
+          <p class="detail">
+            <a href="/how-it-works">See how it works in detail</a>
+            <a href="/businesses">More for businesses</a>
+          </p>
+        </div>
       </div>
     </section>
 
@@ -126,35 +141,8 @@ const control = [
       </div>
     </section>
 
-    <!-- Businesses -->
-    <section class="section" id="for-businesses">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">For businesses</span>
-          <h2>Get your business agent-ready.</h2>
-          <p>No website or developer needed. Keep your own checkout.</p>
-        </div>
-        <div class="ways">
-          <article class="way way--key">
-            <h3>We set it up for you</h3>
-            <p>We bring in your products and prices, get you listed, and send your sticker.</p>
-            <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
-          </article>
-          <article class="way">
-            <h3>Do it yourself</h3>
-            <p>Use our open-source toolkit to do it all yourself, on your own terms.</p>
-            <div class="way__buttons">
-              <a class="btn btn--teal" href={toolkitZip}>Download the toolkit</a>
-              <a class="btn btn--outline" href="/toolkit">How it works</a>
-            </div>
-          </article>
-        </div>
-        <p class="more"><a href="/businesses">More for businesses: what you get and examples</a></p>
-      </div>
-    </section>
-
     <!-- Open by design -->
-    <section class="section section--teal" id="open">
+    <section class="section section--teal open-section" id="open">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Open by design</span>
@@ -254,7 +242,23 @@ const control = [
   .hero-actions__link { font-size: 0.92rem; color: var(--white); }
   @media (max-width: 480px) { .hero-actions { padding: 0 24px; border-radius: 32px; } .hero-actions__part { padding-block: 24px; } }
 
-  /* Steps */
+  /* For businesses: setup box, then the steps */
+  .setup {
+    display: grid;
+    gap: 20px;
+    align-items: center;
+    background: var(--teal);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  @media (min-width: 760px) { .setup { grid-template-columns: 1fr auto; gap: 40px; padding: 32px 36px; } }
+  .setup h3 { font-size: 1.35rem; margin-bottom: 6px; }
+  .setup p { color: var(--on-teal-muted); }
+  .setup .btn { justify-self: start; }
+
+  .how { margin-top: clamp(48px, 7vw, 72px); scroll-margin-top: 24px; }
+  .how__title { font-size: 1.4rem; margin-bottom: 24px; }
   .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
   @media (min-width: 800px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
   .steps li { display: grid; gap: 10px; align-content: start; }
@@ -264,12 +268,13 @@ const control = [
     display: grid; place-items: center;
     font-weight: 700; font-size: 1.1rem;
   }
-  .steps h3 { font-size: 1.25rem; margin-top: 4px; }
+  .steps h4 { font-size: 1.2rem; margin: 4px 0 0; letter-spacing: -0.01em; }
   .steps p { color: var(--ink-muted); }
-  .detail { margin-top: 32px; }
+  .detail { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px 28px; }
   .detail a { font-weight: 600; color: var(--teal); }
 
   /* Open by design */
+  .open-section { border-top: 1px solid var(--teal-line); }
   .open { display: grid; gap: 20px; }
   @media (min-width: 900px) { .open { grid-template-columns: repeat(3, 1fr); } }
   .open__card {
@@ -299,28 +304,6 @@ const control = [
   .asks li { background: var(--teal-raised); border: 1px solid var(--teal-line); color: var(--white); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
   .shop__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
   .shop__note { font-size: 0.85rem; color: var(--on-teal-muted); }
-
-  /* Businesses */
-  .ways { display: grid; gap: 20px; }
-  @media (min-width: 800px) { .ways { grid-template-columns: 1fr 1fr; } }
-  .way {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .way h3 { font-size: 1.25rem; }
-  .way p { color: var(--ink-muted); }
-  .way .btn, .way__buttons { margin-top: auto; }
-  .way__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
-  .way__buttons .btn { margin-top: 0; }
-  .way--key { background: var(--teal); border-color: var(--teal); color: var(--white); }
-  .way--key p { color: var(--on-teal-muted); }
-  .more { margin-top: 24px; }
-  .more a { font-weight: 600; }
 
   /* Control, inside the shoppers section */
   .shop-control { margin-top: clamp(48px, 7vw, 72px); padding-top: 40px; border-top: 1px solid var(--teal-line); }
