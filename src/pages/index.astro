@@ -25,9 +25,9 @@ const asks = [
 ];
 
 const control = [
-  'You approve every connection, in your own app.',
-  'Your agent asks before every booking or order.',
-  'Businesses only get your details when you choose to book or buy.',
+  'Customers approve every connection, in their own app.',
+  'Their agent asks before every booking or order.',
+  'Businesses only get their details when they choose to book or buy.',
 ];
 ---
 <Base
@@ -131,18 +131,24 @@ const control = [
           <p class="shop__note">Gentifi isn't live yet, so these buttons show a preview.</p>
         </div>
         </div>
+      </div>
+    </section>
 
-        <div class="shop-control" id="privacy">
-          <h3>You're always in control.</h3>
-          <ul class="control">
-            {control.map((c) => <li><Tick size={22} tick="var(--teal)" /><span>{c}</span></li>)}
-          </ul>
+    <!-- Control -->
+    <section class="section" id="privacy">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Privacy</span>
+          <h2>Customers are always in control.</h2>
         </div>
+        <ul class="control">
+          {control.map((c) => <li><Tick size={22} tick="var(--white)" /><span>{c}</span></li>)}
+        </ul>
       </div>
     </section>
 
     <!-- Open by design -->
-    <section class="section section--teal open-section" id="open">
+    <section class="section section--teal" id="open">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Open by design</span>
@@ -274,7 +280,6 @@ const control = [
   .detail a { font-weight: 600; color: var(--teal); }
 
   /* Open by design */
-  .open-section { border-top: 1px solid var(--teal-line); }
   .open { display: grid; gap: 20px; }
   @media (min-width: 900px) { .open { grid-template-columns: repeat(3, 1fr); } }
   .open__card {
@@ -305,15 +310,13 @@ const control = [
   .shop__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
   .shop__note { font-size: 0.85rem; color: var(--on-teal-muted); }
 
-  /* Control, inside the shoppers section */
-  .shop-control { margin-top: clamp(48px, 7vw, 72px); padding-top: 40px; border-top: 1px solid var(--teal-line); }
-  .shop-control h3 { font-size: 1.4rem; margin-bottom: 20px; }
+  /* Control */
   .control { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   @media (min-width: 800px) { .control { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
   .control li {
     display: flex; gap: 12px; align-items: flex-start;
-    background: var(--teal-raised); border: 1px solid var(--teal-line); border-radius: var(--radius);
-    padding: 22px; font-size: 1.05rem; font-weight: 600; line-height: 1.45; color: var(--white);
+    background: var(--grey); border-radius: var(--radius);
+    padding: 22px; font-size: 1.05rem; font-weight: 600; line-height: 1.45; color: var(--ink);
   }
   .control li :global(svg) { margin-top: 2px; flex-shrink: 0; }
 
