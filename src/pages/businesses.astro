@@ -25,7 +25,7 @@ const steps = [
 const examples = [
   { setting: 'Bakery', ask: 'Order a birthday cake for Saturday collection.', gets: 'Pre-orders without the phone ringing.' },
   { setting: 'Makers’ market', ask: 'Which stalls on Saturday sell handmade ceramics?', gets: 'One connection covers every trader at the market.' },
-  { setting: 'Restaurant', ask: 'Book a table for four on Friday at 7.', gets: 'Bookings through your usual booking page.' },
+  { setting: 'Farm shop', ask: 'Which farm near me has eggs this week? Reserve a dozen.', gets: 'Reservations without answering the phone.' },
   { setting: 'Trade show', ask: 'Which stands sell triple glazing under £600/m²?', gets: 'One connection covers every exhibitor at the show.' },
 ];
 
@@ -61,6 +61,11 @@ const faqs = [
   {
     q: 'I already sell on Shopify. Is this for me?',
     a: 'Shopify can show your online products in some AI assistants. Gentifi adds what that leaves out: your opening hours and local stock, reservations and bookings, and the events and markets you take part in, alongside the other shops near you.',
+  },
+  {
+    q: 'I run a farm shop. Can agents see what’s in today?',
+    a: 'We’re building that now: stock marked in or sold out from your phone, with the time you checked. Pre-orders for collection work already.',
+    link: { href: '/farm-shops', label: 'What we’re building for farm shops' },
   },
   {
     q: 'Am I locked in?',
