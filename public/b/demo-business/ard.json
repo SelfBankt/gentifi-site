@@ -1,0 +1,43 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:gentifi.com:mcp:demo-business",
+      "displayName": "Hollow Lane Farm Shop",
+      "type": "application/mcp-server-card+json",
+      "url": "https://gentifi.com/b/demo-business/mcp/server-card.json",
+      "description": "A fictional farm shop that demonstrates Gentifi. Its products, prices and contact details are made up.",
+      "representativeQueries": [
+        "Does Hollow Lane Farm Shop have Free-range eggs (dozen) in stock?",
+        "How much is Sourdough loaf at Hollow Lane Farm Shop?",
+        "When is Hollow Lane Farm Shop open?",
+        "Reserve Seasonal veg box from Hollow Lane Farm Shop"
+      ],
+      "capabilities": [
+        "get_business_info",
+        "search_catalogue",
+        "check_availability",
+        "prepare_order"
+      ],
+      "tags": [
+        "Farm shop",
+        "Demo area"
+      ],
+      "version": "0.1.0",
+      "updatedAt": "2026-10-11T09:00:00.000Z"
+    },
+    {
+      "identifier": "urn:air:gentifi.com:skill:demo-business",
+      "displayName": "Hollow Lane Farm Shop (Agent Skill)",
+      "type": "application/ai-skill+md",
+      "url": "https://gentifi.com/b/demo-business/SKILL.md",
+      "description": "How an agent can look up Hollow Lane Farm Shop's catalogue and prepare orders for the customer to confirm.",
+      "representativeQueries": [
+        "Does Hollow Lane Farm Shop have Free-range eggs (dozen) in stock?",
+        "How much is Sourdough loaf at Hollow Lane Farm Shop?",
+        "When is Hollow Lane Farm Shop open?",
+        "Reserve Seasonal veg box from Hollow Lane Farm Shop"
+      ],
+      "updatedAt": "2026-10-11T09:00:00.000Z"
+    }
+  ]
+}

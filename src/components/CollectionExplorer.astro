@@ -44,7 +44,7 @@ const asks = [
       </label>
     </div>
 
-    <p class="ex__label">What the agent sends</p>
+    <p class="ex__label">What the agent filters, using the collection's facets</p>
     <pre class="ex__query"><code data-query></code></pre>
   </div>
 
@@ -96,9 +96,9 @@ const asks = [
         (!row || m.stand.startsWith(row)));
 
       const filter = {};
-      if (category) filter.category = category;
-      if (max !== null) filter.priceFrom = { max };
-      if (row) filter.stand = { prefix: row };
+      if (category) filter['col:category'] = category;
+      if (max !== null) filter['col:priceFrom'] = { max, currency: 'GBP' };
+      if (row) filter['col:stand'] = { startsWith: row };
       query.textContent = JSON.stringify({ collection: collectionId, filter }, null, 2);
 
       count.textContent = String(matches.length);

@@ -10,22 +10,26 @@ import WaitlistForm from '../components/WaitlistForm.astro';
 import { collectionDoc, memberBacklink } from '../data/demoShow';
 
 const specRepo = 'https://github.com/SelfBankt/collections-spec';
-const specDoc = `${specRepo}/blob/main/spec/collections-0.1.md`;
-const schemaPath = '/standards/collections-0.1.schema.json';
+const specDoc = `${specRepo}/blob/main/spec/collections-0.2.md`;
+const schemaPath = '/standards/collections-0.2.schema.json';
+const ardSpec = 'https://agenticresourcediscovery.org/spec';
 
 const exampleJson = JSON.stringify(collectionDoc(2), null, 2);
 const backlinkJson = JSON.stringify(memberBacklink, null, 2);
 
-// Stewardship checked October 2026.
+// Versions and stewardship checked 11 October 2026.
 const stack = [
   {
     layer: 'Groups of businesses',
-    items: [{ name: 'Collections', who: 'Proposed by Gentifi · draft 0.1', href: '#draft' }],
+    items: [{ name: 'Business Collections', who: 'Proposed by Gentifi · draft 0.2, on ARD', href: '#draft' }],
     proposed: true,
   },
   {
     layer: 'Discovery',
-    items: [{ name: 'Agentic Resource Discovery (ai-catalog.json)', who: 'Google, on the Linux Foundation AI Catalog data model', href: 'https://developers.googleblog.com/en/announcing-the-agentic-resource-discovery-specification/' }],
+    items: [
+      { name: 'Agentic Resource Discovery (ard.json)', who: 'Proposal v0.91, August 2026 · replaces ai-catalog.json', href: 'https://agenticresourcediscovery.org/spec' },
+      { name: 'MCP Server Cards', who: 'MCP extension, SEP-2127', href: 'https://modelcontextprotocol.io/seps/2127-mcp-server-cards' },
+    ],
   },
   {
     layer: 'Agent instructions',
@@ -33,11 +37,15 @@ const stack = [
   },
   {
     layer: 'Tools and data',
-    items: [{ name: 'Model Context Protocol (MCP)', who: 'Agentic AI Foundation (Linux Foundation)', href: 'https://modelcontextprotocol.io' }],
+    items: [{ name: 'Model Context Protocol (MCP)', who: 'Agentic AI Foundation (Linux Foundation) · spec 2026-07-28', href: 'https://modelcontextprotocol.io' }],
   },
   {
     layer: 'Agent to agent',
-    items: [{ name: 'A2A', who: 'Agentic AI Foundation (Linux Foundation)', href: 'https://a2a-protocol.org' }],
+    items: [{ name: 'A2A', who: 'Agentic AI Foundation (Linux Foundation) · v1.0', href: 'https://a2a-protocol.org' }],
+  },
+  {
+    layer: 'Search engines and AI search',
+    items: [{ name: 'schema.org', who: 'LocalBusiness, Product and Offer', href: 'https://schema.org/LocalBusiness' }],
   },
   {
     layer: 'Commerce',
@@ -59,9 +67,9 @@ const stack = [
 const gaps = [
   {
     n: '01',
-    title: 'Collections of businesses',
+    title: 'Groups of businesses',
     body: 'Every spec describes one business at one domain. Nothing describes a group: an event, a high street, a market, a trade body.',
-    status: 'Draft 0.1 below',
+    status: 'Draft 0.2 below',
     key: true,
   },
   {
@@ -91,49 +99,65 @@ const gaps = [
 ];
 
 const fields = [
-  ['id, name', 'The collection', '"demo-selfbuild-2027", "Demo Self Build Show 2027"'],
+  ['id', 'The collection, as an ARD identifier', '"urn:air:shows.example:collection:demo-selfbuild-2027"'],
+  ['name', 'Display name', '"Demo Self Build Show 2027"'],
   ['kind', 'Type of group', 'event · place · association · marketplace'],
-  ['publisher', 'Who curates it, with the domain it is served from', 'The event organiser'],
+  ['publisher', 'Who curates it, and the domain it is served from', 'The event organiser'],
   ['validFrom, validTo', 'Time window, for events', 'Show dates; members stay reachable after'],
-  ['area', 'Geography, for places', 'Postcode areas or a map boundary'],
-  ['members', 'Member businesses', 'Each points to the member’s own catalogue, or to a nested collection'],
-  ['member.role', 'Place in the collection', 'Stand number, category, sponsor tier'],
-  ['facets', 'What agents can filter by', 'Category, price, stand, distance, availability'],
+  ['area', 'Geography, for places', 'Country, postal code prefixes or a boundary'],
+  ['facets', 'Terms on the entries agents can filter by', '"col:category", "col:priceFrom", "col:stand"'],
+  ['memberOf', 'For a nested collection: the parents it agrees to join', 'A trade body that includes the show'],
+];
+
+const terms = [
+  ['col:category', 'The member\u2019s category in this collection', '"glazing"'],
+  ['col:stand', 'Stand, pitch or unit', '"B12"'],
+  ['col:tier', 'Sponsor or membership tier', '"gold"'],
+  ['col:priceFrom', 'Lowest price, for filtering', '{ "amount": 540, "currency": "GBP", "unit": "m\u00b2" }'],
+  ['col:manifest', 'Where a hosted member\u2019s own manifest is', 'Its host\u2019s page for the business'],
+  ['col:memberOf', 'In the member\u2019s own manifest: collections it belongs to', 'Rule 1'],
+];
+
+const changes = [
+  'A collection is now an ARD manifest: its entries are the members, so any ARD client can read it.',
+  'Members point to their own resources, such as their MCP server card, with ARD identifiers.',
+  'Roles and facets are namespaced terms, which ARD registries can already filter on.',
+  'Businesses without a website can be members through the platform that hosts them.',
 ];
 
 const questions = [
   {
     q: 'Extend ARD, or stand alone?',
     issue: 1,
-    body: 'ARD’s ai-catalog.json can already list nested catalogues. Should Collections be fields on a nested catalogue entry, a new media type, or both? We lean towards extending ARD.',
+    body: 'Proposed: extend ARD through its namespace mechanism, as draft 0.2 does. Still open: should the col terms and the collection media type move into ARD\u2019s own context?',
   },
   {
     q: 'How should membership be verified?',
     issue: 2,
-    body: 'A back-link in the member’s own catalogue (as drafted), a signature from the member, or both?',
+    body: 'Proposed: the back-link in the member\u2019s own manifest, required. Still open: should members also be able to sign their entry, so registries can cache proof?',
   },
   {
     q: 'Should a collection run its own search?',
     issue: 3,
-    body: 'Collections could offer a search endpoint across members, or leave that to ARD registries and the agent.',
+    body: 'Proposed: no new API. Agents filter the document, or the publisher runs an ARD registry, which already filters on namespaced terms.',
   },
   {
     q: 'Which facets should be standard?',
     issue: 4,
-    body: 'Category, price, distance and availability are obvious. Do we need a shared vocabulary, or should facets point to schema.org properties?',
+    body: 'Proposed: a small core (category, stand, tier, price from) plus the publisher\u2019s own terms. Still open: a shared category vocabulary, and mapping to schema.org.',
   },
 ];
 
 const path = [
-  { step: 'Draft 0.1', body: 'Published here and on GitHub, with a JSON Schema, examples and a validator.', now: true },
-  { step: 'Open feedback', body: 'Four open questions are on GitHub now. Every one gets an answer or a change.' },
-  { step: 'Reference implementation', body: 'The Gentifi Toolkit generates and reads collections, so the draft is tested against real catalogues.' },
-  { step: 'Proposal upstream', body: 'Offered as a neutral extension to the ARD and AI Catalog work, with Gentifi as author and first implementation.' },
+  { step: 'Draft 0.1', body: 'First proposal, with a JSON Schema, examples and a validator.', done: true },
+  { step: 'Draft 0.2', body: 'Rebuilt on ARD v0.91, with proposed answers to every open question.', now: true },
+  { step: 'Reference implementation', body: 'The Gentifi Toolkit publishes back-links for businesses and checks collections, membership included.', now: true },
+  { step: 'Proposal upstream', body: 'Offered to the ARD maintainers as a neutral extension, with Gentifi as author and first implementation.' },
 ];
 ---
 <Base
-  title="Collections: an open standard for groups of businesses · Gentifi"
-  description="Every agent standard describes one business at one domain. Collections is Gentifi's open draft for describing a whole event, high street or trade body to AI agents."
+  title="Business Collections: an open standard for groups of businesses · Gentifi"
+  description="Every agent standard describes one business at one domain. Business Collections is Gentifi's open draft for describing a whole show, market, high street or trade body to AI agents."
 >
   <Header />
   <main id="main">
@@ -142,9 +166,9 @@ const path = [
       <div class="container hero__grid">
         <div class="hero__copy">
           <span class="eyebrow">Open standards · Draft proposal</span>
-          <h1>Agents can find a business. <span class="hl">Collections</span> let them find a whole street.</h1>
+          <h1>Agents can find a business. <span class="hl">Business Collections</span> let them find a whole street.</h1>
           <p class="hero__lede">
-            Today's agent standards describe one business at a time. Collections is our open draft for describing a
+            Today's agent standards describe one business at a time. Business Collections is our open draft for describing a
             whole group, like a trade show, high street or market, so one connection covers every member. Each
             business keeps its own data and checkout.
           </p>
@@ -152,7 +176,7 @@ const path = [
             <a class="btn btn--primary" href="#draft">Read the draft</a>
             <a class="btn btn--ghost" href="#explorer">Try the explorer</a>
           </div>
-          <p class="hero__meta">Draft 0.1 · October 2026 · Apache-2.0 · <a href={specDoc}>Spec on GitHub</a> · <a href={schemaPath} download>JSON Schema</a></p>
+          <p class="hero__meta">Draft 0.2 · 11 October 2026 · Builds on ARD v0.91 · Apache-2.0 · <a href={specDoc}>Spec on GitHub</a> · <a href={schemaPath} download>JSON Schema</a></p>
         </div>
         <div class="hero__visual"><CollectionDiagram /></div>
       </div>
@@ -164,7 +188,7 @@ const path = [
         <div class="section-head">
           <span class="eyebrow">The stack</span>
           <h2>Built on open standards. Adding the missing layer.</h2>
-          <p>Gentifi uses existing open standards for everything they already cover, and proposes new pieces only where there's a gap.</p>
+          <p>Gentifi uses existing open standards for everything they already cover, and proposes new pieces only where there's a gap. The <a href="/toolkit">toolkit</a> generates every format in this list except commerce and payments.</p>
         </div>
         <ol class="stack">
           {stack.map((s) => (
@@ -181,7 +205,7 @@ const path = [
             </li>
           ))}
         </ol>
-        <p class="stack__note">Stewardship as of October 2026.</p>
+        <p class="stack__note">Versions and stewardship as of 11 October 2026.</p>
       </div>
     </section>
 
@@ -210,13 +234,15 @@ const path = [
     <section class="section" id="draft">
       <div class="container spec">
         <aside class="spec__toc" aria-label="Draft contents">
-          <p class="spec__toc-title">Collections 0.1</p>
+          <p class="spec__toc-title">Business Collections 0.2</p>
           <ol>
             <li><a href="#abstract">Abstract</a></li>
-            <li><a href="#motivation">Motivation</a></li>
-            <li><a href="#fields">Core fields</a></li>
+            <li><a href="#changes">What changed in 0.2</a></li>
+            <li><a href="#fields">The collection</a></li>
+            <li><a href="#terms">Member terms</a></li>
             <li><a href="#rules">Rules</a></li>
             <li><a href="#example">Example</a></li>
+            <li><a href="#hosted">Hosted members</a></li>
             <li><a href="#ard">Relationship to ARD</a></li>
             <li><a href="#questions">Open questions</a></li>
           </ol>
@@ -226,21 +252,22 @@ const path = [
 
         <article class="spec__body">
           <span class="eyebrow">Draft specification</span>
-          <h2>Collections: describing groups of businesses to AI agents</h2>
+          <h2>Business Collections: describing groups of businesses to AI agents</h2>
           <dl class="spec__status">
-            <div><dt>Version</dt><dd>0.1 (draft)</dd></div>
-            <div><dt>Date</dt><dd>10 October 2026</dd></div>
+            <div><dt>Version</dt><dd>0.2 (draft), superseding 0.1</dd></div>
+            <div><dt>Date</dt><dd>11 October 2026</dd></div>
             <div><dt>Author</dt><dd>Gentifi</dd></div>
-            <div><dt>Status</dt><dd>Proposal for discussion, not a standard. Field names are illustrative.</dd></div>
+            <div><dt>Builds on</dt><dd><a href={ardSpec}>Agentic Resource Discovery (ARD) v0.91</a></dd></div>
+            <div><dt>Status</dt><dd>Proposal for discussion, not a standard.</dd></div>
             <div><dt>Licence</dt><dd>Apache-2.0</dd></div>
           </dl>
 
           <h3 id="abstract">Abstract</h3>
           <p>
-            A collection lets one connector describe a group of businesses, so an agent can query a whole event, street
-            or trade body at once. It is written as a neutral extension to discovery catalogues such as ARD's
-            <code>ai-catalog.json</code>. A collection is a directory: it points to each member's own catalogue and
-            never replaces it.
+            A collection describes a group of businesses, so one connection lets an agent work with every member. In
+            draft 0.2 a collection is an ARD manifest: its <code>entries</code> are the members, and a
+            <code>collection</code> object says what the group is. An ARD client that knows nothing about collections
+            still sees a usable list of resources. Each member keeps its own connector, data and checkout.
           </p>
 
           <h3 id="motivation">Motivation</h3>
@@ -250,13 +277,34 @@ const path = [
             <li>Each member stays independent: its own connector, data and checkout. After the event, it stays in the attendee's agent.</li>
           </ul>
 
-          <h3 id="fields">Core fields</h3>
+          <h3 id="changes">What changed in 0.2</h3>
+          <p>
+            In August 2026, ARD v0.91 moved discovery to <code>/.well-known/ard.json</code> (it was
+            <code>ai-catalog.json</code>) and added identifiers, namespaced terms and registry search. Draft 0.2 uses
+            them instead of defining its own:
+          </p>
+          <ul>{changes.map((c) => <li>{c}</li>)}</ul>
+
+          <h3 id="fields">The collection</h3>
           <div class="table-wrap">
             <table>
-              <caption class="sr-only">Core fields of a collection</caption>
+              <caption class="sr-only">Fields of the collection object</caption>
               <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead>
               <tbody>
                 {fields.map(([f, m, e]) => <tr><th scope="row"><code>{f}</code></th><td>{m}</td><td>{e}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+          <p class="spec__after-table"><code>id</code>, <code>name</code>, <code>kind</code> and <code>publisher</code> are required, with at least one entry. The <a href={schemaPath} download>JSON Schema</a> is the precise definition.</p>
+
+          <h3 id="terms">Member terms</h3>
+          <p>Each member is an ordinary ARD entry (identifier, name, type and a link to its own resource), plus these terms in the <code>col</code> namespace:</p>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Business Collections terms on member entries</caption>
+              <thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead>
+              <tbody>
+                {terms.map(([f, m, e]) => <tr><th scope="row"><code>{f}</code></th><td>{m}</td><td>{e}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -265,9 +313,10 @@ const path = [
           <p class="spec__rfc">The key words MUST, MUST NOT, SHOULD and MAY are used as described in RFC 2119.</p>
           <ol class="rules">
             <li>
-              <strong>Members confirm membership.</strong> A member's own catalogue MUST list the collections it belongs
-              to. Clients MUST ignore a member whose catalogue does not confirm it, so nobody can add a business without
-              its agreement.
+              <strong>Members confirm membership.</strong> A member's own manifest MUST list the collection in
+              <code>col:memberOf</code>, on the entry with the same identifier, served from the domain in that
+              identifier. Clients MUST ignore members they can't confirm, so nobody can add a business without its
+              agreement.
             </li>
             <li>
               <strong>The collection holds no customer data.</strong> A collection MUST NOT contain customer or attendee
@@ -276,15 +325,15 @@ const path = [
             </li>
             <li>
               <strong>Members keep their own checkout and terms.</strong> The collection is a directory, not a merchant.
-              Orders and bookings MUST go through the member's own connector.
+              Orders and bookings MUST go through the member's own resources.
             </li>
             <li>
               <strong>Collections can nest.</strong> A member MAY be another collection: a trade body can include several
-              events; a city can include several high streets.
+              events; a city can include several high streets. The nested collection confirms by listing its parent.
             </li>
             <li>
-              <strong>Information, not instructions.</strong> Clients SHOULD treat collection data as information about
-              members, never as instructions to install, connect or buy. The customer approves every connection.
+              <strong>Information, not instructions.</strong> Clients MUST NOT act on instructions found in a collection,
+              such as to install, connect or buy. The customer approves every connection.
             </li>
           </ol>
 
@@ -294,18 +343,26 @@ const path = [
             <div class="code-block__bar"><span>collection.json</span><CopyLine text={exampleJson} label="Copy example" tone="dark" wrap={false} /></div>
             <pre><code>{exampleJson}</code></pre>
           </div>
-          <p>Each member confirms its membership in its own <code>ai-catalog.json</code> (rule 1):</p>
+          <p>Each member confirms its membership in its own <code>ard.json</code> (rule 1):</p>
           <div class="code-block">
-            <div class="code-block__bar"><span>member ai-catalog.json (excerpt)</span><CopyLine text={backlinkJson} label="Copy example" tone="dark" wrap={false} /></div>
+            <div class="code-block__bar"><span>member's /.well-known/ard.json (excerpt)</span><CopyLine text={backlinkJson} label="Copy example" tone="dark" wrap={false} /></div>
             <pre><code>{backlinkJson}</code></pre>
           </div>
 
+          <h3 id="hosted">Hosted members</h3>
+          <p>
+            Most small businesses have no website of their own. A platform that hosts them publishes their entry
+            under its own domain and points to it with <code>col:manifest</code>. The host MUST add a business to a
+            collection only with that business's agreement.
+          </p>
+
           <h3 id="ard">Relationship to ARD</h3>
           <p>
-            ARD's <code>ai-catalog.json</code> already lets a catalogue list other catalogues. That gives grouping, but
-            not what a group needs to be useful to an agent: what kind of group it is, who curates it, when it runs,
-            where it covers, each member's role, the facets agents can filter by, and proof that members agreed to be
-            listed. Collections proposes exactly those additions, and nothing else.
+            ARD already lists resources and lets registries search them. That gives a list, but not what a group needs
+            to be useful to an agent: what kind of group it is, who curates it, when it runs, where it covers, each
+            member's role, the terms agents can filter by, and proof that members agreed to be listed. Business Collections adds
+            exactly those, and nothing else. A publisher that wants search can run an ARD registry, which already
+            filters on namespaced terms such as <code>col:category</code>.
           </p>
 
           <h3 id="questions">Open questions</h3>
@@ -320,6 +377,7 @@ const path = [
               </li>
             ))}
           </ul>
+          <p class="spec__after-table">Draft 0.2 also asks how hosts should show a business's agreement, and what happens to an event's collection after it ends. <a href={specDoc}>Read the full draft on GitHub</a>.</p>
         </article>
       </div>
     </section>
@@ -365,9 +423,9 @@ const path = [
           </p>
         </div>
         <ol class="path">
-          {path.map((p, i) => (
+          {path.map((p) => (
             <li class:list={{ 'path--now': p.now }}>
-              <span class="path__n">{p.now ? 'Now' : `Step ${i + 1}`}</span>
+              <span class="path__n">{p.now ? 'Now' : p.done ? 'Done' : 'Next'}</span>
               <h3>{p.step}</h3>
               <p>{p.body}</p>
             </li>
@@ -385,11 +443,11 @@ const path = [
     <section class="section section--teal" id="waitlist">
       <div class="container org">
         <div class="section-head">
-          <span class="eyebrow">Events, high streets and trade bodies</span>
-          <h2>Want the first collection to be yours?</h2>
+          <span class="eyebrow">Your show, your market, your high street</span>
+          <h2>Want the first Business Collection to be yours?</h2>
           <p>
-            We're looking for one event, market or association to publish the first real collection with us. Your members
-            or exhibitors become reachable from every attendee's agent.
+            We're looking for one show, market, high street or trade body to publish the first real Business Collection
+            with us. Your traders, exhibitors or members become reachable from every visitor's agent.
           </p>
         </div>
         <WaitlistForm role="organiser" />
@@ -512,6 +570,9 @@ const path = [
   tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 
   .spec__rfc { font-size: 0.85rem; font-style: italic; }
+  .spec__after-table { margin-top: 12px; color: var(--ink-muted); font-size: 0.92rem; }
+  .spec__body a:not(.btn), .spec__status a { color: var(--teal); font-weight: 600; }
+  #stack .section-head a { color: var(--teal); font-weight: 600; }
   .rules { margin: 12px 0 0; padding-left: 1.4em; display: grid; gap: 14px; color: var(--ink-muted); }
   .rules strong { color: var(--ink); }
 

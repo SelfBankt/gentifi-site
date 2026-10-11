@@ -1,12 +1,13 @@
 ---
-// Checks a pasted collection against the draft 0.1 rules, entirely in the browser.
-import { collectionDoc } from '../data/demoShow';
+// Checks a pasted collection against the draft 0.2 rules, entirely in the browser.
+// Same rules as "gentifi collection check" in the toolkit.
+import { collectionDoc, COLLECTIONS_NS } from '../data/demoShow';
 
 const sample = JSON.stringify(collectionDoc(3), null, 2);
 ---
-<div class="val" data-validator>
+<div class="val" data-validator data-ns={COLLECTIONS_NS}>
   <div class="val__input">
-    <label for="val-json">Collection JSON</label>
+    <label for="val-json">Collection JSON (draft 0.2)</label>
     <textarea id="val-json" spellcheck="false" autocomplete="off" rows="18">{sample}</textarea>
     <div class="val__buttons">
       <button class="btn btn--teal" type="button" data-validate>Validate</button>
@@ -17,7 +18,7 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
   <div class="val__output">
     <p class="val__summary" data-summary role="status" aria-live="polite">Press Validate to check the example.</p>
     <ul class="val__checks" data-checks></ul>
-    <p class="val__note">Checks run in your browser; nothing is uploaded. Membership confirmation (rule 1) needs each member's live catalogue, so it's listed but not checked here.</p>
+    <p class="val__note">Checks run in your browser; nothing is uploaded. Membership (rule 1) needs each member's live manifest: check it with <code>gentifi collection check &lt;url&gt; --verify</code>.</p>
   </div>
   <script type="application/json" data-sample set:html={JSON.stringify(sample)} />
 </div>
@@ -26,21 +27,23 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
   type Result = { level: 'pass' | 'fail' | 'warn' | 'info'; text: string };
 
   const KINDS = ['event', 'place', 'association', 'marketplace'];
-  const PERSONAL = /^(email|e-?mail|phone|telephone|mobile|customers?|attendees?|visitors?|address|postcode|contacts?)$/i;
+  const URN = /^urn:air:([a-z0-9.-]+):([^:\s]+):(\S+)$/i;
+  const PERSONAL = /^([a-z][\w-]*:)?(e-?mails?|phones?|telephone|mobile|customers?|attendees?|visitors?|guests?|delegates?|contacts?)$/i;
   const DATE = /^\d{4}-\d{2}-\d{2}$/;
   const isHttps = (v: unknown) => { try { return typeof v === 'string' && new URL(v).protocol === 'https:'; } catch { return false; } };
 
-  function findPersonalKeys(value: unknown, path = 'collection', out: string[] = []) {
+  function personalKeys(value: unknown, path = '', out: string[] = []) {
     if (value && typeof value === 'object') {
       for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-        if (PERSONAL.test(k)) out.push(`${path}.${k}`);
-        findPersonalKeys(v, `${path}.${k}`, out);
+        const here = Array.isArray(value) ? `${path}[${k}]` : path ? `${path}.${k}` : k;
+        if (PERSONAL.test(k)) out.push(here);
+        personalKeys(v, here, out);
       }
     }
     return out;
   }
 
-  function validate(text: string): Result[] {
+  function validate(text: string, ns: string): Result[] {
     const r: Result[] = [];
     let doc: any;
     try { doc = JSON.parse(text); } catch (e) {
@@ -49,22 +52,31 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
     r.push({ level: 'pass', text: 'Valid JSON' });
     const c = doc?.collection;
     if (!c || typeof c !== 'object' || Array.isArray(c)) {
-      r.push({ level: 'fail', text: 'Top level needs a "collection" object' });
+      r.push({ level: 'fail', text: 'Top level needs a "collection" object and an "entries" list' });
+      return r;
+    }
+    if (Array.isArray(c.members)) {
+      r.push({ level: 'fail', text: 'This is a draft 0.1 collection. In 0.2 the members move to an "entries" list of ARD entries, next to "collection"' });
       return r;
     }
 
-    r.push(typeof c.id === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(c.id)
-      ? { level: 'pass', text: `id "${c.id}"` }
-      : { level: 'fail', text: 'id is required: lower-case letters, numbers and hyphens' });
+    const idDomain = URN.exec(c.id ?? '')?.[1]?.toLowerCase();
+    r.push(idDomain && /:collection:/.test(c.id)
+      ? { level: 'pass', text: `id ${c.id}` }
+      : { level: 'fail', text: 'id must be a URN like urn:air:<publisher domain>:collection:<name>' });
     r.push(typeof c.name === 'string' && c.name.trim()
       ? { level: 'pass', text: `name "${c.name}"` }
       : { level: 'fail', text: 'name is required' });
     r.push(KINDS.includes(c.kind)
       ? { level: 'pass', text: `kind "${c.kind}"` }
       : { level: 'fail', text: `kind must be one of: ${KINDS.join(', ')}` });
-    r.push(c.publisher?.name && typeof c.publisher?.domain === 'string' && c.publisher.domain.includes('.')
-      ? { level: 'pass', text: `publisher ${c.publisher.name} (${c.publisher.domain})` }
-      : { level: 'fail', text: 'publisher needs a name and the domain it publishes from' });
+    const domain = typeof c.publisher?.domain === 'string' ? c.publisher.domain.toLowerCase() : '';
+    if (c.publisher?.name && domain.includes('.')) {
+      r.push({ level: 'pass', text: `publisher ${c.publisher.name} (${domain})` });
+      if (idDomain && idDomain !== domain) r.push({ level: 'fail', text: `id names ${idDomain}, but the publisher's domain is ${domain}` });
+    } else {
+      r.push({ level: 'fail', text: 'publisher needs a name and the domain it publishes from' });
+    }
 
     for (const k of ['validFrom', 'validTo']) {
       if (c[k] !== undefined && !(typeof c[k] === 'string' && DATE.test(c[k]) && !Number.isNaN(Date.parse(c[k])))) {
@@ -72,41 +84,52 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
       }
     }
     if (c.kind === 'event' && (!c.validFrom || !c.validTo)) {
-      r.push({ level: 'warn', text: 'Events should set validFrom and validTo' });
-    } else if (c.validFrom && c.validTo && DATE.test(c.validFrom) && DATE.test(c.validTo)) {
+      r.push({ level: 'warn', text: 'Events should give validFrom and validTo' });
+    } else if (DATE.test(c.validFrom ?? '') && DATE.test(c.validTo ?? '')) {
       r.push(c.validFrom <= c.validTo
-        ? { level: 'pass', text: `Time window ${c.validFrom} to ${c.validTo}` }
+        ? { level: 'pass', text: `Runs ${c.validFrom} to ${c.validTo}` }
         : { level: 'fail', text: 'validFrom must be on or before validTo' });
     }
+    if (c.facets !== undefined && !(Array.isArray(c.facets) && c.facets.every((f: unknown) => typeof f === 'string' && /^([A-Za-z][\w-]*:[A-Za-z][\w-]*|capabilities|tags)$/.test(f)))) {
+      r.push({ level: 'fail', text: 'facets must be namespaced terms such as "col:category"' });
+    }
 
-    if (!Array.isArray(c.members) || c.members.length === 0) {
-      r.push({ level: 'fail', text: 'members must list at least one member' });
+    const entries = doc.entries;
+    if (!Array.isArray(entries) || !entries.length) {
+      r.push({ level: 'fail', text: 'entries must list at least one member' });
     } else {
-      const bad = c.members
-        .map((m: any, i: number) => (isHttps(m?.catalog) || isHttps(m?.collection) ? null : i + 1))
-        .filter(Boolean);
-      r.push(bad.length
-        ? { level: 'fail', text: `Member ${bad.join(', ')}: needs an https "catalog" (or nested "collection") URL` }
-        : { level: 'pass', text: `${c.members.length} member${c.members.length === 1 ? '' : 's'}, each pointing to its own catalogue` });
-      const nested = c.members.filter((m: any) => isHttps(m?.collection)).length;
+      const problems: string[] = [];
+      entries.forEach((e: any, i: number) => {
+        const label = e?.displayName ?? `Entry ${i + 1}`;
+        if (!URN.test(e?.identifier ?? '')) problems.push(`${label}: identifier must be urn:air:<domain>:<namespace>:<name>`);
+        if (!e?.displayName) problems.push(`Entry ${i + 1}: displayName is required`);
+        if (!e?.type) problems.push(`${label}: type (a media type) is required`);
+        if ((typeof e?.url === 'string') === (e?.data !== undefined)) problems.push(`${label}: needs exactly one of url or data`);
+        else if (e?.url !== undefined && !isHttps(e.url)) problems.push(`${label}: url must be https`);
+        const usesCol = Object.keys(e ?? {}).some((k) => k.startsWith('col:'));
+        if (usesCol && !JSON.stringify(e['@context'] ?? '').includes(ns)) problems.push(`${label}: uses col: terms, so its @context must bind col`);
+        const p = e?.['col:priceFrom'];
+        if (p !== undefined && !(typeof p?.amount === 'number' && p.amount >= 0 && /^[A-Z]{3}$/.test(p?.currency ?? ''))) {
+          problems.push(`${label}: col:priceFrom needs an amount and a currency code`);
+        }
+      });
+      if (problems.length) problems.forEach((t) => r.push({ level: 'fail', text: t }));
+      else r.push({ level: 'pass', text: `${entries.length} member${entries.length === 1 ? '' : 's'}, each pointing to its own resources` });
+      const nested = entries.filter((e: any) => e?.type === 'application/ai-collection+json').length;
       if (nested) r.push({ level: 'info', text: `${nested} nested collection${nested === 1 ? '' : 's'} (rule 4)` });
     }
 
-    if (c.facets !== undefined && !(Array.isArray(c.facets) && c.facets.every((f: unknown) => typeof f === 'string'))) {
-      r.push({ level: 'fail', text: 'facets must be a list of field names' });
-    }
-
-    const personal = findPersonalKeys(c);
+    const personal = personalKeys(doc);
     r.push(personal.length
       ? { level: 'fail', text: `Rule 2: a collection holds no customer data. Remove ${personal.join(', ')}` }
       : { level: 'pass', text: 'Rule 2: no customer data' });
-
-    r.push({ level: 'info', text: 'Rule 1: clients confirm each member lists this collection in its own catalogue' });
+    r.push({ level: 'info', text: 'Rule 1: clients confirm each member links back to this collection in its own manifest' });
     return r;
   }
 
   const root = document.querySelector<HTMLElement>('[data-validator]');
   if (root) {
+    const ns = root.dataset.ns ?? '';
     const input = root.querySelector<HTMLTextAreaElement>('textarea')!;
     const checks = root.querySelector<HTMLUListElement>('[data-checks]')!;
     const summary = root.querySelector<HTMLElement>('[data-summary]')!;
@@ -114,7 +137,7 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
     const icon = { pass: '✓', fail: '✕', warn: '!', info: 'i' };
 
     const run = () => {
-      const results = validate(input.value);
+      const results = validate(input.value, ns);
       checks.replaceChildren(...results.map((res) => {
         const li = document.createElement('li');
         li.className = `val__check val__check--${res.level}`;
@@ -132,8 +155,8 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
       }));
       const fails = results.filter((x) => x.level === 'fail').length;
       summary.textContent = fails
-        ? `${fails} problem${fails === 1 ? '' : 's'} to fix against draft 0.1.`
-        : 'Valid against draft 0.1.';
+        ? `${fails} problem${fails === 1 ? '' : 's'} to fix against draft 0.2.`
+        : 'Valid against draft 0.2.';
       summary.dataset.state = fails ? 'fail' : 'pass';
     };
 
@@ -144,7 +167,8 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
       doc.collection.kind = 'festival';
       doc.collection.validTo = '2027-05-01';
       doc.collection.attendees = [{ email: 'someone@example.com' }];
-      doc.collection.members[1] = { role: { stand: 'B20' } };
+      doc.entries[1].url = 'http://sash.example/mcp/server-card.json';
+      delete doc.entries[2].identifier;
       input.value = JSON.stringify(doc, null, 2);
       run();
     });
@@ -198,4 +222,5 @@ const sample = JSON.stringify(collectionDoc(3), null, 2);
   .val__checks :global(.val__check--warn .val__icon) { background: var(--copper); color: var(--teal); }
   .val__checks :global(.val__check--info .val__icon) { background: var(--grey); color: var(--teal); }
   .val__note { font-size: 0.82rem; color: var(--ink-muted); border-top: 1px solid var(--grey); padding-top: 12px; }
+  .val__note code { font-size: 0.9em; }
 </style>

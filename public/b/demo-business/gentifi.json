@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "business": {
+    "name": "Hollow Lane Farm Shop",
+    "slug": "demo-business",
+    "kind": "Farm shop",
+    "description": "A fictional farm shop that demonstrates Gentifi. Its products, prices and contact details are made up.",
+    "website": "",
+    "telephone": "",
+    "email": "orders@hollowlane.example",
+    "address": {
+      "street": "",
+      "locality": "",
+      "postcode": ""
+    },
+    "area": "Demo area",
+    "openingHours": [
+      "Tu-Fr 09:00-17:00",
+      "Sa 09:00-16:00"
+    ],
+    "currency": "GBP"
+  },
+  "ordering": {
+    "method": "reserve",
+    "checkoutUrl": "",
+    "bookingUrl": "",
+    "notes": ""
+  },
+  "catalogue": {
+    "source": {
+      "type": "csv",
+      "file": "examples/demo-farm-shop.csv"
+    },
+    "updatedAt": "2026-10-11T09:00:00.000Z",
+    "items": [
+      {
+        "sku": "EGG-12",
+        "name": "Free-range eggs (dozen)",
+        "kind": "product",
+        "category": "Eggs and dairy",
+        "description": "",
+        "price": 3.2,
+        "priceFrom": null,
+        "currency": "GBP",
+        "unit": "box",
+        "stock": 40,
+        "inStock": true,
+        "availability": "In stock",
+        "url": ""
+      },
+      {
+        "sku": "BRD-SD",
+        "name": "Sourdough loaf",
+        "kind": "product",
+        "category": "Bakery",
+        "description": "",
+        "price": 4.5,
+        "priceFrom": null,
+        "currency": "GBP",
+        "unit": "loaf",
+        "stock": 12,
+        "inStock": true,
+        "availability": "Baked Fri and Sat",
+        "url": ""
+      },
+      {
+        "sku": "VEG-BOX",
+        "name": "Seasonal veg box",
+        "kind": "product",
+        "category": "Fruit and veg",
+        "description": "",
+        "price": 18,
+        "priceFrom": null,
+        "currency": "GBP",
+        "unit": "box",
+        "stock": 15,
+        "inStock": true,
+        "availability": "Order by Thursday",
+        "url": ""
+      }
+    ]
+  },
+  "publish": {
+    "baseUrl": "https://gentifi.com/b/demo-business",
+    "mcpUrl": ""
+  },
+  "memberOf": [],
+  "a2a": null
+}
