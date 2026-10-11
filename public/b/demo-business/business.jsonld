@@ -1,0 +1,56 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://gentifi.com/b/demo-business/#business",
+  "name": "Hollow Lane Farm Shop",
+  "description": "A fictional farm shop that demonstrates Gentifi. Its products, prices and contact details are made up.",
+  "url": "https://gentifi.com/b/demo-business",
+  "email": "orders@hollowlane.example",
+  "areaServed": "Demo area",
+  "openingHours": [
+    "Tu-Fr 09:00-17:00",
+    "Sa 09:00-16:00"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Hollow Lane Farm Shop catalogue",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Free-range eggs (dozen)",
+          "sku": "EGG-12",
+          "category": "Eggs and dairy"
+        },
+        "price": "3.20",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Sourdough loaf",
+          "sku": "BRD-SD",
+          "category": "Bakery"
+        },
+        "price": "4.50",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Seasonal veg box",
+          "sku": "VEG-BOX",
+          "category": "Fruit and veg"
+        },
+        "price": "18.00",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      }
+    ]
+  }
+}
