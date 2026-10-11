@@ -46,6 +46,12 @@ const roles = [
 </form>
 
 <script>
+  // A link such as /?role=organiser#waitlist chooses the role in advance.
+  const askedRole = new URLSearchParams(location.search).get('role');
+  document.querySelectorAll<HTMLSelectElement>('form[data-placeholder-form] select[name="role"]').forEach((select) => {
+    if (askedRole && [...select.options].some((o) => o.value === askedRole)) select.value = askedRole;
+  });
+
   document.querySelectorAll<HTMLFormElement>('form[data-placeholder-form]').forEach((form) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();

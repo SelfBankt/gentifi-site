@@ -7,11 +7,9 @@ import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
 import Tick from '../components/Tick.astro';
 
-const toolkitZip = 'https://github.com/SelfBankt/gentifi-toolkit/archive/refs/heads/main.zip';
-
 const benefits = [
   { title: 'Found by AI agents', body: 'Agents can see what you sell, what it costs and when you’re open.' },
-  { title: 'Listed where customers look', body: 'We get you into the Claude and ChatGPT connector directories.' },
+  { title: 'Found where customers look', body: 'Through the Gentifi connector in Claude, ChatGPT and other agents, and in AI search through your own structured data.' },
   { title: 'Works with any agent', body: 'Including the ones people build for themselves.' },
   { title: 'Safe checkout', body: 'Customers confirm every order, then finish it through your own checkout.' },
   { title: 'A chat assistant, if you want one', body: 'For customers without an agent, on WhatsApp, Telegram or your website.' },
@@ -20,7 +18,7 @@ const benefits = [
 
 const steps = [
   { title: 'Join the waitlist', body: 'Tell us about your business. We’re starting with a small group.' },
-  { title: 'We set you up', body: 'We bring in your products, prices or bookings from Shopify, a spreadsheet or your booking system.' },
+  { title: 'We set you up', body: 'We bring in your products, prices or bookings from a spreadsheet, your shop or your booking system, and check that agents can use them.' },
   { title: 'Put up your sticker', body: 'Customers scan it, add you to their agent, and start asking.' },
 ];
 
@@ -32,7 +30,18 @@ const examples = [
 ];
 
 
+const needs = [
+  'Your products or services (a spreadsheet is fine)',
+  'Prices, and stock if you keep it',
+  'Your opening hours',
+  'How you take orders today: phone, email, website or booking system',
+];
+
 const faqs = [
+  {
+    q: 'What do you need from me?',
+    a: 'A list of what you sell with prices (a spreadsheet is fine), stock if you keep it, your opening hours, and how you take orders today. You can keep the list in a Google Sheet and update it there.',
+  },
   {
     q: 'Do I need a website or a developer?',
     a: 'No. We host everything for you. If you do have a developer, they can use our open-source toolkit instead.',
@@ -46,6 +55,10 @@ const faqs = [
     a: 'No. Customers confirm every order before it goes through, and agents can’t connect to you or buy without their approval.',
   },
   {
+    q: 'I already sell on Shopify. Is this for me?',
+    a: 'Shopify can show your online products in some AI assistants. Gentifi adds what that leaves out: your opening hours and local stock, reservations and bookings, and the events and markets you take part in, alongside the other shops near you.',
+  },
+  {
     q: 'Am I locked in?',
     a: 'No. Everything we make is open source and uses open standards, so your setup is never tied to us.',
   },
@@ -53,7 +66,7 @@ const faqs = [
 ---
 <Base
   title="For businesses · Gentifi"
-  description="Get found and bought through AI agents like Claude and ChatGPT. We set you up and keep you running. Open source and built on open standards."
+  description="Let AI agents like Claude and ChatGPT find your business, check your prices and stock, and book or order, with customers approving every step. We set you up. Open source and built on open standards."
 >
   <Header ctaHref="#waitlist" />
   <main id="main">
@@ -61,14 +74,14 @@ const faqs = [
     <section class="hero section--teal">
       <div class="container">
         <span class="eyebrow">For businesses</span>
-        <h1>Get found and bought through AI agents.</h1>
+        <h1>Let AI agents find you, book you and buy from you.</h1>
         <p class="hero__lede">
           When customers ask Claude, ChatGPT or another AI agent for something you sell, Gentifi makes sure it can
           find you, check your prices, and book or buy.
         </p>
         <div class="hero__ctas">
           <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
-          <a class="btn btn--ghost" href={toolkitZip}>Download the toolkit</a>
+          <a class="btn btn--ghost" href="/b/demo-business">See a demo scan</a>
         </div>
         <ul class="hero__points">
           <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
@@ -129,7 +142,11 @@ const faqs = [
             </li>
           ))}
         </ol>
-        <p class="diy"><a href="/how-it-works">See how it works in detail</a>. Prefer to do it yourself? Our <a href="/toolkit">toolkit</a> is open source.</p>
+        <div class="needs">
+          <h3>What we need from you</h3>
+          <ul>{needs.map((n) => <li><Tick size={18} tick="var(--white)" /><span>{n}</span></li>)}</ul>
+        </div>
+        <p class="diy"><a href="/how-it-works">See how it works in detail</a>. Prefer to do it yourself, or have a developer? Our <a href="/toolkit">toolkit</a> is open source.</p>
       </div>
     </section>
 
@@ -150,7 +167,7 @@ const faqs = [
           ))}
         </div>
         <p class="b2b">Selling to other businesses? It works the same way, with account prices and approvals.</p>
-        <p class="b2b">Running an event, market or trade body? One connection can cover all your members. <a href="/standards">See how</a></p>
+        <p class="b2b">Running an event, market or trade body? One connection can cover all your members. <a href="/#events">See how</a></p>
       </div>
     </section>
 
@@ -242,7 +259,13 @@ const faqs = [
   }
   .steps h3 { font-size: 1.2rem; margin-top: 4px; }
   .steps p { color: var(--ink-muted); }
-  .diy { margin-top: 32px; color: var(--ink-muted); }
+  .needs { margin-top: 36px; padding: 24px 28px; border-radius: var(--radius); background: var(--grey); }
+  .needs h3 { font-size: 1.1rem; margin-bottom: 12px; }
+  .needs ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  @media (min-width: 720px) { .needs ul { grid-template-columns: 1fr 1fr; column-gap: 32px; } }
+  .needs li { display: flex; gap: 10px; align-items: flex-start; }
+  .needs li :global(svg) { margin-top: 3px; }
+  .diy { margin-top: 24px; color: var(--ink-muted); }
   .diy a { color: var(--teal); font-weight: 600; }
 
   /* Examples */

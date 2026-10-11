@@ -7,15 +7,24 @@ import WaitlistForm from '../components/WaitlistForm.astro';
 import ChatMock from '../components/ChatMock.astro';
 import ApprovalDialog from '../components/ApprovalDialog.astro';
 import ConceptNotice from '../components/ConceptNotice.astro';
+import CollectionDiagram from '../components/CollectionDiagram.astro';
+import QrCode from '../components/QrCode.astro';
+import Mark from '../components/Mark.astro';
 import Tick from '../components/Tick.astro';
 
 const githubUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
-const toolkitZip = `${githubUrl}/archive/refs/heads/main.zip`;
 
 const steps = [
-  { title: 'Add your business', body: 'We turn your products, prices, inventory and services into something AI agents can read and act on.' },
-  { title: 'Put up your sticker', body: 'Customers scan it to add your business to the AI agent they already use.' },
-  { title: 'Customers just ask', body: 'Their agent checks your stock, prices and times, then books or buys once they say yes.' },
+  { title: 'Send us your products', body: 'A spreadsheet is fine. We turn your products, prices, stock and services into something AI agents can read and act on.' },
+  { title: 'Put up your sticker', body: 'Customers scan it to add your business to the AI agent they already use, and approve it in their own app.' },
+  { title: 'Customers just ask', body: 'Their agent checks your stock, prices and times, then books or orders once they say yes.' },
+];
+
+const needs = [
+  'Your products or services (a spreadsheet is fine)',
+  'Prices, and stock if you keep it',
+  'Your opening hours',
+  'How you take orders today: phone, email, website or booking system',
 ];
 
 const asks = [
@@ -32,51 +41,38 @@ const control = [
 ---
 <Base
   title="Gentifi: agent-ready business"
-  description="Gentifi helps local businesses get found and bought through AI agents like Claude and ChatGPT. Open source and built on open standards."
+  description="Gentifi makes local businesses findable, bookable and buyable through AI agents like Claude and ChatGPT, with the customer approving every step. Open source and built on open standards."
 >
   <Header />
   <main id="main">
     <!-- Hero -->
     <section class="hero section--teal">
-      <div class="container hero__inner">
-        <div class="hero__head">
+      <div class="container hero__grid">
+        <div class="hero__copy">
           <span class="eyebrow">Claude · ChatGPT · Hermes · any agent</span>
-          <h1 class="hero__title">Agent-ready <span class="hero__nowrap">business<Tick size="0.72em" tick="var(--teal)" /></span></h1>
+          <h1 class="hero__title">Open for business in every AI agent.</h1>
           <p class="hero__lede">
-            Gentifi helps local businesses get found and bought through AI agents like Claude and ChatGPT.
-            It's open source and built on open standards.
+            When people ask their AI agent for something local, Gentifi lets it find your products, check your prices
+            and stock, and book or order, with the customer approving every step.
           </p>
-        </div>
-
-        <div class="hero__row">
-          <figure class="hero__sticker">
-            <WindowSticker />
-            <figcaption>Scan the code with your phone: it opens a demo business.</figcaption>
-          </figure>
-
-          <div class="hero-actions">
-            <div class="hero-actions__part">
-              <p class="hero-actions__label">Shopping?</p>
-              <p class="hero-actions__text">Add Gentifi to the AI agent you already use, then just ask for what you need.</p>
-              <div class="hero-actions__buttons">
-                <a class="btn btn--primary" href="#shoppers">Add to your agent</a>
-                <a class="btn btn--ghost" href="/b/demo-business">Try a demo scan</a>
-              </div>
-              <div class="hero-actions__chat">
-                <span>Or chat with our AI:</span>
-                <button class="chip" type="button" data-concept="open Gentifi's AI assistant in WhatsApp">WhatsApp</button>
-                <button class="chip" type="button" data-concept="open Gentifi's AI assistant in Telegram">Telegram</button>
-              </div>
-            </div>
-            <div class="hero-actions__part">
-              <p class="hero-actions__label">Running a business?</p>
-              <div class="hero-actions__buttons">
-                <a class="btn btn--primary" href={toolkitZip}>Download the toolkit</a>
-                <a class="btn btn--ghost" href="#for-businesses">Or let us set it up</a>
-              </div>
-            </div>
+          <p class="hero__open"><Tick size={18} tick="var(--teal)" />Open source and built on open standards</p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#waitlist">Get your business agent-ready</a>
+            <a class="btn btn--ghost" href="/b/demo-business">Try a demo scan</a>
           </div>
+          <ul class="hero__alt" aria-label="Not a business owner?">
+            <li><a href="#shoppers">Shopping? See what your agent can do</a></li>
+            <li><a href="#events">Running an event or market?</a></li>
+            <li><a href="/toolkit">Developer? Get the toolkit</a></li>
+          </ul>
         </div>
+
+        <figure class="hero__sticker">
+          <a href="/b/demo-business" class="hero__sticker-link" aria-label="Open the demo business page">
+            <WindowSticker />
+          </a>
+          <figcaption>Scan the code with your phone, or tap it: it opens a demo business.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -88,30 +84,62 @@ const control = [
           <h2>Get your business agent-ready.</h2>
           <p>No website or developer needed. Keep your own checkout.</p>
         </div>
+
+        <ol class="strip" id="how-it-works">
+          <li class="strip__step">
+            <div class="strip__visual" aria-hidden="true">
+              <div class="mini-sheet">
+                <div class="mini-sheet__row mini-sheet__row--head"><span>Item</span><span>Price</span><span>Stock</span></div>
+                <div class="mini-sheet__row"><span>Free-range eggs</span><span>£3.20</span><span>40</span></div>
+                <div class="mini-sheet__row"><span>Sourdough loaf</span><span>£4.50</span><span>12</span></div>
+                <div class="mini-sheet__row"><span>Veg box</span><span>£18.00</span><span>15</span></div>
+              </div>
+            </div>
+            <span class="strip__n">1</span>
+            <h3>{steps[0].title}</h3>
+            <p>{steps[0].body}</p>
+          </li>
+          <li class="strip__step">
+            <div class="strip__visual" aria-hidden="true">
+              <div class="mini-sticker">
+                <div class="mini-sticker__brand"><Mark size={26} /><span>Gentifi</span><Tick size={14} tick="var(--teal)" /></div>
+                <div class="mini-sticker__bottom">
+                  <p>Scan to add us to your AI agent</p>
+                  <div class="mini-sticker__qr"><QrCode label="" /></div>
+                </div>
+              </div>
+            </div>
+            <span class="strip__n">2</span>
+            <h3>{steps[1].title}</h3>
+            <p>{steps[1].body}</p>
+          </li>
+          <li class="strip__step">
+            <div class="strip__visual" aria-hidden="true">
+              <div class="mini-chat">
+                <p class="mini-chat__you">Reserve a dozen eggs for Saturday?</p>
+                <p class="mini-chat__agent">1 x Free-range eggs, £3.20. Collect Saturday.</p>
+                <span class="mini-chat__confirm">Confirm reservation</span>
+              </div>
+            </div>
+            <span class="strip__n">3</span>
+            <h3>{steps[2].title}</h3>
+            <p>{steps[2].body}</p>
+          </li>
+        </ol>
+
         <article class="setup">
           <div>
             <h3>We set it up for you</h3>
-            <p>We bring in your products and prices, get you listed, and send your sticker.</p>
+            <p>We bring in your products and prices, get you on the Gentifi network, and send your sticker. All we need:</p>
+            <ul class="setup__needs">
+              {needs.map((n) => <li><Tick size={18} tick="var(--teal)" /><span>{n}</span></li>)}
+            </ul>
           </div>
-          <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+          <div class="setup__actions">
+            <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+            <a class="setup__link" href="/how-it-works">How it works, in detail</a>
+          </div>
         </article>
-
-        <div class="how" id="how-it-works">
-          <h3 class="how__title">How it works, in three steps</h3>
-          <ol class="steps">
-            {steps.map((s, i) => (
-              <li>
-                <span class="steps__n" aria-hidden="true">{i + 1}</span>
-                <h4>{s.title}</h4>
-                <p>{s.body}</p>
-              </li>
-            ))}
-          </ol>
-          <p class="detail">
-            <a href="/how-it-works">See how it works in detail</a>
-            <a href="/businesses">More for businesses</a>
-          </p>
-        </div>
       </div>
     </section>
 
@@ -158,8 +186,32 @@ const control = [
       </div>
     </section>
 
+    <!-- Events, markets and high streets -->
+    <section class="section section--teal" id="events">
+      <div class="container events">
+        <div class="events__copy">
+          <span class="eyebrow">Events, markets and high streets</span>
+          <h2>One connection for a whole show, market or high street.</h2>
+          <p>
+            Visitors add your event or street to their agent once, then ask across every exhibitor or trader:
+            <q>Which stands sell triple glazing under £600/m²? Get me three quotes.</q>
+          </p>
+          <ul class="events__points">
+            <li><Tick size={20} tick="var(--teal)" /><span>Every member keeps its own data, prices and checkout.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Nobody is listed without agreeing to it.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Exhibitors stay in visitors' agents after the event.</span></li>
+          </ul>
+          <div class="events__ctas">
+            <a class="btn btn--primary" href="?role=organiser#waitlist">Talk to us about your event</a>
+            <a class="btn btn--ghost" href="/standards">How Collections work</a>
+          </div>
+        </div>
+        <div class="events__visual"><CollectionDiagram /></div>
+      </div>
+    </section>
+
     <!-- Open by design -->
-    <section class="section section--teal" id="open">
+    <section class="section section--grey" id="open">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Open by design</span>
@@ -169,7 +221,7 @@ const control = [
         <div class="open">
           <article class="open__card">
             <h3>Open-source toolkit</h3>
-            <p>Everything needed to make a business agent-ready. Anyone can use and improve it, under the Apache 2.0 licence.</p>
+            <p>Turns a product list into everything agents need, and tests it like an agent would. Anyone can use and improve it, under the Apache 2.0 licence.</p>
             <div class="open__links">
               <a href="/toolkit">See the toolkit</a>
               <a href={githubUrl}>GitHub</a>
@@ -177,8 +229,7 @@ const control = [
           </article>
           <article class="open__card">
             <h3>Built on open standards</h3>
-            <p>We use standards that Claude, ChatGPT and other agents already understand, so you're never tied to one company.</p>
-            <p class="open__chips" aria-label="Standards used">MCP · Agent Skills · A2A · ai-catalog.json</p>
+            <p>We use the standards Claude, ChatGPT and other agents already understand, so you're never tied to one company.</p>
             <div class="open__links"><a href="/standards">Our standards</a></div>
           </article>
           <article class="open__card open__card--key">
@@ -196,7 +247,7 @@ const control = [
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
           <h2>Be one of the first agent-ready businesses.</h2>
-          <p>We're starting with a small group of local businesses. Join the list and we'll be in touch.</p>
+          <p>We're starting with a small group of local businesses and events. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm tone="light" />
@@ -220,109 +271,90 @@ const control = [
 </Base>
 
 <style>
-  /* Hero: sticker front and centre */
-  .hero { padding-block: clamp(48px, 8vw, 88px) clamp(56px, 9vw, 104px); }
-  .hero__inner { display: grid; justify-items: center; gap: clamp(32px, 5vw, 48px); text-align: center; }
-  .hero__head { display: grid; justify-items: center; }
-  .hero__title { font-size: clamp(2.5rem, 8.5vw, 5.4rem); letter-spacing: -0.035em; line-height: 1.02; }
-  .hero__nowrap { display: inline-flex; align-items: center; gap: 0.18em; white-space: nowrap; }
-  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 38rem; }
+  /* Hero: the promise on the left, the sticker as proof on the right */
+  .hero { padding-block: clamp(40px, 7vw, 88px) clamp(56px, 9vw, 104px); }
+  .hero__grid { display: grid; gap: clamp(32px, 5vw, 56px); align-items: center; }
+  @media (min-width: 960px) { .hero__grid { grid-template-columns: 1.15fr minmax(0, 0.85fr); } }
+  .hero__copy { min-width: 0; }
+  .hero__title { font-size: clamp(2.4rem, 6.4vw, 4.4rem); letter-spacing: -0.035em; line-height: 1.02; max-width: 12em; }
+  .hero__lede { margin-top: 22px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 36rem; }
+  .hero__open { margin-top: 16px; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 600; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero__alt { list-style: none; margin: 28px 0 0; padding: 18px 0 0; border-top: 1px solid var(--teal-line); display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 0.92rem; }
+  .hero__alt a { color: var(--white); text-decoration-color: var(--teal-line); }
+  .hero__alt a:hover { text-decoration-color: var(--copper); }
+  .hero__alt a::after { content: ' \2192'; color: var(--copper); }
 
-  .hero__row { width: 100%; max-width: 960px; display: grid; gap: 28px; justify-items: center; align-items: start; }
-  @media (min-width: 900px) { .hero__row { grid-template-columns: repeat(2, minmax(0, 460px)); justify-content: center; gap: 40px; } }
-  .hero__sticker { margin: 0; width: min(100%, 460px); display: grid; gap: 14px; }
-  .hero__sticker figcaption { font-size: 0.88rem; color: var(--on-teal-muted); }
+  .hero__sticker { margin: 0; width: min(100%, 440px); justify-self: center; display: grid; gap: 14px; }
+  .hero__sticker-link { display: block; border-radius: 40px; text-decoration: none; transition: transform 0.2s; }
+  .hero__sticker-link:hover { transform: rotate(-1deg) translateY(-2px); }
+  .hero__sticker :global(.sticker) { box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45); }
+  .hero__sticker figcaption { font-size: 0.88rem; color: var(--on-teal-muted); text-align: center; }
+  @media (max-width: 959px) { .hero__sticker { width: min(100%, 360px); } }
+  @media (prefers-reduced-motion: reduce) { .hero__sticker-link, .hero__sticker-link:hover { transition: none; transform: none; } }
 
-  /* The sticker and the action panel share one card style */
-  .hero__sticker :global(.sticker), .hero-actions {
-    background: var(--teal);
-    border: 1px solid var(--teal-line);
-    box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.45);
-  }
-  .hero__sticker :global(.sticker) { text-align: left; }
-  .hero-actions {
-    width: min(100%, 460px);
-    border-radius: 40px;
-    padding: 0 32px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 0;
-  }
-  @media (min-width: 900px) { .hero-actions { aspect-ratio: 1; } }
-  .hero-actions__part { padding-block: 28px; display: grid; gap: 14px; min-width: 0; }
-  .hero-actions__part + .hero-actions__part { border-top: 1px solid var(--teal-line); }
-  .hero-actions__label { font-size: 1.2rem; font-weight: 700; }
-  .hero-actions__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
-  .hero-actions .btn { padding: 10px 18px; font-size: 0.95rem; }
-  .hero-actions__chat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--on-teal-muted); }
-  .chip {
-    font: inherit;
-    font-size: 0.88rem;
-    font-weight: 600;
-    min-height: 36px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--teal-line);
-    background: var(--teal-raised);
-    color: var(--white);
-    cursor: pointer;
-  }
-  .chip:hover { border-color: var(--copper); }
-  @media (max-width: 480px) { .hero-actions__chat span { flex-basis: 100%; } }
-  .hero-actions__text { color: var(--on-teal-muted); font-size: 0.98rem; line-height: 1.5; margin-top: -4px; }
-  @media (max-width: 480px) { .hero-actions { padding: 0 24px; border-radius: 32px; } .hero-actions__part { padding-block: 24px; } }
-
-  /* For businesses: setup box, then the steps */
-  .setup {
+  /* How it works: three steps, each with a small picture of what happens */
+  .strip { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
+  @media (min-width: 860px) { .strip { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+  .strip__step { display: grid; gap: 10px; align-content: start; }
+  .strip__visual {
+    height: 196px;
+    border-radius: var(--radius);
+    background: var(--grey);
     display: grid;
-    gap: 20px;
+    place-items: center;
+    padding: 20px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .strip__n {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--teal); color: var(--copper);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 0.95rem;
+  }
+  .strip h3 { font-size: 1.2rem; margin-top: 2px; }
+  .strip__step > p { color: var(--ink-muted); }
+
+  .mini-sheet { width: 100%; max-width: 280px; background: var(--white); border: 1px solid var(--border); border-radius: 12px; font-size: 0.8rem; overflow: hidden; }
+  .mini-sheet__row { display: grid; grid-template-columns: 1.7fr 1fr 0.7fr; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--grey); }
+  .mini-sheet__row--head { border-top: 0; background: var(--teal); color: var(--white); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .mini-sheet__row span:nth-child(2), .mini-sheet__row span:nth-child(3) { font-family: var(--font-mono); }
+
+  .mini-sticker { width: 156px; aspect-ratio: 1; background: var(--teal); color: var(--white); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-3deg); box-shadow: 0 14px 30px -14px rgb(0 0 0 / 0.5); }
+  .mini-sticker__brand { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.85rem; }
+  .mini-sticker__bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; border-top: 1px solid var(--teal-line); padding-top: 8px; }
+  .mini-sticker p { font-size: 0.64rem; font-weight: 600; line-height: 1.25; }
+  .mini-sticker__qr { width: 54px; flex-shrink: 0; }
+  .mini-sticker__qr :global(.qr) { padding: 6%; border-radius: 8px; }
+
+  .mini-chat { width: 100%; max-width: 280px; display: grid; gap: 8px; font-size: 0.8rem; line-height: 1.4; }
+  .mini-chat p { margin: 0; padding: 8px 12px; border-radius: 14px; }
+  .mini-chat__you { justify-self: end; background: var(--teal); color: var(--white); border-bottom-right-radius: 4px; }
+  .mini-chat__agent { background: var(--white); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .mini-chat__confirm { justify-self: start; background: var(--copper); color: var(--teal); font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+
+  /* We set it up */
+  .setup {
+    margin-top: clamp(40px, 6vw, 56px);
+    display: grid;
+    gap: 24px;
     align-items: center;
     background: var(--teal);
     color: var(--white);
     border-radius: var(--radius);
     padding: 28px;
   }
-  @media (min-width: 760px) { .setup { grid-template-columns: 1fr auto; gap: 40px; padding: 32px 36px; } }
+  @media (min-width: 860px) { .setup { grid-template-columns: 1fr auto; gap: 48px; padding: 36px 40px; } }
   .setup h3 { font-size: 1.35rem; margin-bottom: 6px; }
   .setup p { color: var(--on-teal-muted); }
-  .setup .btn { justify-self: start; }
-
-  .how { margin-top: clamp(48px, 7vw, 72px); scroll-margin-top: 24px; }
-  .how__title { font-size: 1.4rem; margin-bottom: 24px; }
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
-  @media (min-width: 800px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
-  .steps li { display: grid; gap: 10px; align-content: start; }
-  .steps__n {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--teal); color: var(--copper);
-    display: grid; place-items: center;
-    font-weight: 700; font-size: 1.1rem;
-  }
-  .steps h4 { font-size: 1.2rem; margin: 4px 0 0; letter-spacing: -0.01em; }
-  .steps p { color: var(--ink-muted); }
-  .detail { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px 28px; }
-  .detail a { font-weight: 600; color: var(--teal); }
-
-  /* Open by design */
-  .open { display: grid; gap: 20px; }
-  @media (min-width: 900px) { .open { grid-template-columns: repeat(3, 1fr); } }
-  .open__card {
-    border: 1px solid var(--teal-line);
-    background: var(--teal-raised);
-    border-radius: var(--radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .open__card h3 { font-size: 1.25rem; }
-  .open__card > p { color: var(--on-teal-muted); }
-  .open__chips { font-family: var(--font-mono); font-size: 0.82rem; color: var(--white) !important; }
-  .open__card--key { border: 2px solid var(--copper); }
-  .open__links { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; gap: 18px; }
-  .open__links a { color: var(--copper); font-weight: 600; }
+  .setup__needs { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  @media (min-width: 640px) { .setup__needs { grid-template-columns: 1fr 1fr; column-gap: 24px; } }
+  .setup__needs li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.95rem; }
+  .setup__needs li :global(svg) { margin-top: 3px; }
+  .setup__actions { display: grid; gap: 14px; justify-items: start; }
+  @media (min-width: 860px) { .setup__actions { justify-items: center; } }
+  .setup__link { color: var(--white); font-weight: 600; font-size: 0.95rem; }
 
   /* Shoppers */
   .shop { display: grid; gap: 40px; align-items: center; }
@@ -347,6 +379,36 @@ const control = [
     padding: 22px; font-size: 1.05rem; font-weight: 600; line-height: 1.45; color: var(--ink);
   }
   .control li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+
+  /* Events, markets and high streets */
+  .events { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 1000px) { .events { grid-template-columns: 1.05fr 1fr; gap: 64px; } }
+  .events__copy { display: grid; gap: 18px; justify-items: start; min-width: 0; }
+  .events__copy .eyebrow { margin-bottom: 0; }
+  .events__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
+  .events__copy q { display: block; margin-top: 10px; color: var(--white); font-weight: 600; }
+  .events__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .events__points li { display: flex; gap: 10px; align-items: flex-start; }
+  .events__points li :global(svg) { margin-top: 3px; }
+  .events__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .events__visual { width: 100%; max-width: 480px; justify-self: center; }
+
+  /* Open by design */
+  .open { display: grid; gap: 20px; }
+  @media (min-width: 900px) { .open { grid-template-columns: repeat(3, 1fr); } }
+  .open__card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .open__card h3 { font-size: 1.25rem; }
+  .open__card > p { color: var(--ink-muted); }
+  .open__card--key { box-shadow: inset 0 0 0 2px var(--copper); }
+  .open__links { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; gap: 18px; }
+  .open__links a { color: var(--teal); font-weight: 600; }
 
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
