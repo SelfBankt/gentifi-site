@@ -24,8 +24,8 @@ const steps = [
 
 const examples = [
   { setting: 'Farm shop', ask: 'Which farm near me has eggs this week? Reserve a dozen.', gets: 'Reservations without answering the phone.' },
+  { setting: 'Farmers’ market', ask: 'Which stalls on Saturday have sourdough? Save me a loaf.', gets: 'One connection covers every trader at the market.' },
   { setting: 'Restaurant', ask: 'Book a table for four on Friday at 7.', gets: 'Bookings through your usual booking page.' },
-  { setting: 'Trades', ask: 'Find a plumber available on Tuesday and get a quote.', gets: 'Quote requests with the details you need.' },
   { setting: 'Trade show', ask: 'Which stands sell triple glazing under £600/m²?', gets: 'One connection covers every exhibitor at the show.' },
 ];
 
@@ -38,6 +38,11 @@ const needs = [
 ];
 
 const faqs = [
+  {
+    q: 'I run a farm shop, a farm or a farmers’ market. Is this for me?',
+    a: 'Yes. That’s where we’re starting, in Bristol and South Gloucestershire: what’s in today, pre-orders for collection, and whole markets at once.',
+    link: { href: '/farm-shops', label: 'How it works for farm shops and markets' },
+  },
   {
     q: 'What do you need from me?',
     a: 'A list of what you sell with prices (a spreadsheet is fine), stock if you keep it, your opening hours, and how you take orders today. You can keep the list in a Google Sheet and update it there.',
@@ -83,6 +88,7 @@ const faqs = [
           <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
           <a class="btn btn--ghost" href="/b/demo-business">See a demo scan</a>
         </div>
+        <p class="hero__farm"><a href="/farm-shops">Run a farm shop, farm or market? We’re starting with you</a></p>
         <ul class="hero__points">
           <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
           <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
@@ -197,7 +203,7 @@ const faqs = [
           {faqs.map((f) => (
             <details>
               <summary>{f.q}</summary>
-              <p>{f.a}</p>
+              <p>{f.a}{f.link && <> <a href={f.link.href}>{f.link.label}</a></>}</p>
             </details>
           ))}
         </div>
@@ -210,7 +216,7 @@ const faqs = [
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
           <h2>Make your business agent-ready.</h2>
-          <p>We're starting with a small group of local businesses. Join the list and we'll be in touch.</p>
+          <p>We're starting with farm shops, local farms and farmers' markets, then other local businesses. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm role="business" />
@@ -228,6 +234,9 @@ const faqs = [
   .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   .hero__points { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 0.95rem; }
   .hero__points li { display: flex; align-items: center; gap: 8px; }
+  .hero__farm { margin-top: 24px; font-weight: 600; }
+  .hero__farm a { color: var(--white); text-decoration-color: var(--copper); }
+  .hero__farm a::after { content: ' \2192'; color: var(--copper); }
 
   /* Benefits */
   .benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px 40px; }
@@ -312,6 +321,7 @@ const faqs = [
   }
   .faq details[open] summary::after { content: '\2212'; }
   .faq details p { padding: 0 0 20px; color: var(--ink-muted); max-width: 44rem; }
+  .faq details a { color: var(--teal); font-weight: 600; }
 
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }

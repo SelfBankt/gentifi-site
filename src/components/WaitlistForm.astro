@@ -4,12 +4,13 @@
 const WAITLIST_ENDPOINT = '/api/waitlist-placeholder';
 
 interface Props {
-  role?: 'business' | 'developer' | 'customer' | 'organiser';
+  role?: 'business' | 'farm' | 'developer' | 'customer' | 'organiser';
   tone?: 'dark' | 'light'; // background it sits on
 }
 const { role = 'business', tone = 'dark' } = Astro.props;
 const roles = [
   { value: 'business', label: 'A business owner' },
+  { value: 'farm', label: 'A farm shop, farm or food producer' },
   { value: 'developer', label: 'A developer' },
   { value: 'customer', label: 'A customer' },
   { value: 'organiser', label: 'Organising a show, market, high street or trade body' },
