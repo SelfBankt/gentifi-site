@@ -28,15 +28,15 @@ const needs = [
 ];
 
 const asks = [
-  'Which farm near me has eggs this week?',
-  'Reserve a veg box for Saturday collection.',
-  'Find a plumber available on Tuesday.',
+  'Order a birthday cake from a local bakery for Saturday.',
+  'Find a bike shop that can service my bike this week.',
+  'Book a table for four on Friday at 7.',
 ];
 
 const mission = [
-  { title: 'What’s in today', body: 'Stock marked in or sold out from a phone, with the time it was checked.' },
-  { title: 'Pre-orders for collection', body: 'Veg boxes, bread and Christmas orders, confirmed by the customer.' },
-  { title: 'Whole markets at once', body: 'One connection for every stall at a farmers’ market or food festival.' },
+  { title: 'From the list you already keep', body: 'Products, prices, services and opening hours, from a spreadsheet.' },
+  { title: 'Your own checkout and bookings', body: 'Orders, bookings and quote requests go to you, the way they do now.' },
+  { title: 'Whole streets and markets at once', body: 'One connection for every trader on a high street, at a market or at a show.' },
 ];
 
 const control = [
@@ -47,7 +47,7 @@ const control = [
 ---
 <Base
   title="Gentifi: agent-ready business"
-  description="Gentifi makes local businesses findable, bookable and buyable through AI agents like Claude and ChatGPT, starting with farm shops and local food in Bristol and South Gloucestershire. Customers approve every step. Open source and built on open standards."
+  description="Gentifi makes local businesses findable, bookable and buyable through AI agents like Claude and ChatGPT, starting with independent businesses in Bristol and South Gloucestershire. Customers approve every step. Open source and built on open standards."
 >
   <Header />
   <main id="main">
@@ -67,10 +67,10 @@ const control = [
             <a class="btn btn--ghost" href="/b/demo-business">Try a demo scan</a>
           </div>
           <ul class="hero__alt" aria-label="Find your way">
-            <li><a href="/farm-shops">Farm shop, farm or market? Start here</a></li>
             <li><a href="#shoppers">Shopping? See what your agent can do</a></li>
             <li><a href="#events">Running a show, market or high street?</a></li>
             <li><a href="/toolkit">Developer? Get the toolkit</a></li>
+            <li><a href="/farm-shops">Farm shop? See what we’re building</a></li>
           </ul>
         </div>
 
@@ -83,15 +83,15 @@ const control = [
       </div>
     </section>
 
-    <!-- First mission: local food -->
-    <section class="section mission-band" id="local-food">
+    <!-- Mission: independents first -->
+    <section class="section mission-band" id="independents">
       <div class="container mission">
         <div class="mission__copy">
-          <span class="eyebrow">Our first mission: a local food revival</span>
-          <h2>Local food, found by AI.</h2>
-          <p>A farm shop’s stock changes every day: the eggs sell out, the bread comes out at twelve, the Christmas orders open. Most of that never reaches a website, so AI agents can’t see it.</p>
-          <p>We’re starting with farm shops, local farms and farmers’ markets in Bristol and South Gloucestershire, so the farm down the road is as easy for an agent to find as the supermarket.</p>
-          <a class="btn btn--teal" href="/farm-shops">For farm shops and markets</a>
+          <span class="eyebrow">Our mission: independents first</span>
+          <h2>Keep independents in the answer.</h2>
+          <p>When someone asks an AI agent where to buy, book or eat, the big chains already have their data ready. The independent bakery, bike shop, farm shop or maker down the road usually doesn’t, so the agent can’t see them.</p>
+          <p>We’re starting with independent businesses in Bristol and South Gloucestershire, and the markets, shows and high streets that bring them together.</p>
+          <a class="btn btn--teal" href="/businesses">For independent businesses</a>
         </div>
         <ul class="mission__points">
           {mission.map((m) => <li><Tick size={22} tick="var(--white)" /><div><h3>{m.title}</h3><p>{m.body}</p></div></li>)}
@@ -214,7 +214,7 @@ const control = [
       <div class="container events">
         <div class="events__copy">
           <span class="eyebrow">Markets, shows and gatherings</span>
-          <h2>One connection for a whole farmers’ market, show or high street.</h2>
+          <h2>One connection for a whole market, show or high street.</h2>
           <p>
             Visitors add your market, event or street to their agent once, then ask across every trader or exhibitor:
             <q>Which stalls on Saturday have sourdough? Save me a loaf.</q>
@@ -271,7 +271,7 @@ const control = [
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
           <h2>Join the Genesis cohort.</h2>
-          <p>Our first group of agent-ready businesses. We're starting with farm shops, local farms and farmers' markets in Bristol and South Gloucestershire, then other local businesses and events. Join the list and we'll be in touch.</p>
+          <p>Our first group of agent-ready businesses. We're starting with independent businesses in Bristol and South Gloucestershire, and the markets, shows and high streets that bring them together. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm tone="light" />
@@ -317,7 +317,7 @@ const control = [
   @media (max-width: 959px) { .hero__sticker { width: min(100%, 360px); } }
   @media (prefers-reduced-motion: reduce) { .hero__sticker-link, .hero__sticker-link:hover { transition: none; transform: none; } }
 
-  /* First mission: local food */
+  /* Mission: independents first */
   .mission-band { background: var(--grey); }
   .mission { display: grid; gap: 40px; align-items: center; }
   @media (min-width: 960px) { .mission { grid-template-columns: 1.1fr 1fr; gap: 64px; } }
