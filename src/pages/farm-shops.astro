@@ -1,0 +1,339 @@
+---
+// Gentifi's first mission: farm shops, local farms and farmers' markets.
+// The board, chat and prices below are fictional demo data.
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+import CollectionDiagram from '../components/CollectionDiagram.astro';
+import Tick from '../components/Tick.astro';
+
+const board = [
+  { item: 'Free-range eggs', status: 'In', tone: 'in' },
+  { item: 'Duck eggs', status: 'Running low', tone: 'low' },
+  { item: 'Sourdough loaf', status: 'In from noon', tone: 'in' },
+  { item: 'Pork sausages', status: 'Sold out', tone: 'out' },
+  { item: 'Seasonal veg box', status: 'Order by Thursday', tone: 'note' },
+];
+
+const problems = [
+  { title: 'It sells out, then it’s back', body: 'The eggs are gone by eleven and the bread comes out at twelve. A website can’t keep up, so an agent guesses, or sends people somewhere it can see.' },
+  { title: 'Posted, not published', body: 'Today’s stock lives on the chalkboard, in a Facebook post or in a WhatsApp group. Agents can’t read any of those.' },
+  { title: 'No barcodes, no listing', body: 'Loose veg, meat from the counter and your own jam rarely have barcodes, and the tools that put shop stock on Google need them.' },
+];
+
+const asks = [
+  'What’s in this week’s veg box? Reserve one for Saturday.',
+  'Is the pick-your-own open this weekend?',
+  'Order a Christmas turkey to collect on the 23rd.',
+  'Which farm shops near me sell their own lamb?',
+];
+
+const steps = [
+  { title: 'Start with what you have', body: 'Your Google Sheet, your till’s product list or your online shop. We bring it in and check that agents read it correctly.' },
+  { title: 'Mark what’s in, from your phone', body: 'In, running low or sold out, in a few taps. Agents see when you last updated each item, so they say “in this morning” rather than promise.' },
+  { title: 'Customers ask, you confirm', body: 'Agents prepare reservations and orders, and the customer confirms them in their own app. They reach you by email or through your own checkout, as orders do now.' },
+];
+
+const features = [
+  { title: 'What’s in today', body: 'In, low or sold out, with the time you last checked.' },
+  { title: 'Pre-orders and collection', body: 'Order-by days, collection slots and Christmas orders.' },
+  { title: 'By weight, by item or by the box', body: 'Prices per kilo, per item or per box. Nothing needs a barcode.' },
+  { title: 'Where it’s from', body: 'Grown or reared here, or from a named neighbour, so agents can answer “is it local?”' },
+  { title: 'In season', body: 'Items come and go with the seasons, so agents stop offering asparagus when it ends.' },
+  { title: 'More than the shop', body: 'Separate hours for honesty boxes, vending machines, pick-your-own and the café.' },
+];
+
+const faqs = [
+  {
+    q: 'My stock changes every day. Won’t agents get it wrong?',
+    a: 'Each item shows when you last updated it, and agents pass that on: “duck eggs were in at 9.10”. Mark things in or sold out from your phone in a few taps, or keep updating the Google Sheet you already use.',
+  },
+  {
+    q: 'I sell by weight and most things have no barcode.',
+    a: 'That’s fine. Prices can be per kilo, per item or per box, and nothing needs a barcode.',
+  },
+  {
+    q: 'Can customers pre-order, like Christmas meat or a weekly veg box?',
+    a: 'Yes. Agents can reserve things for a collection day you choose and tell customers your order-by dates. You confirm orders as you do now.',
+  },
+  {
+    q: 'Do customers pay through the agent?',
+    a: 'Not to start with. Customers confirm the order in their own app and pay you as they do now, at collection or through your own checkout.',
+  },
+  {
+    q: 'We already post our stock on Facebook. Why this as well?',
+    a: 'Agents can’t read Facebook posts or WhatsApp groups. Gentifi puts the same news somewhere every agent can read, with your prices and opening times alongside.',
+  },
+  {
+    q: 'Is this just for Bristol?',
+    a: 'We’re starting in Bristol and South Gloucestershire, so customers there find most of the farm shops and markets near them in one place. Elsewhere in the UK? Join the list and tell us where you are.',
+  },
+];
+---
+<Base
+  title="Farm shops and local food · Gentifi"
+  description="Gentifi lets AI agents like Claude and ChatGPT see what's in at your farm shop today, check prices and opening times, and reserve things for collection, with customers confirming every order. Starting in Bristol and South Gloucestershire."
+>
+  <Header ctaHref="#waitlist" />
+  <main id="main">
+    <!-- Hero: the promise, and today's board as proof -->
+    <section class="hero section--teal">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow">For farm shops, farms and markets</span>
+          <h1>Tell every AI agent what’s in today.</h1>
+          <p class="hero__lede">
+            When people ask Claude, ChatGPT or their own agent where to buy local food, Gentifi lets it see your stock,
+            prices and opening times, and reserve things for collection, with the customer confirming every order.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#waitlist">Join the farm shop waitlist</a>
+            <a class="btn btn--ghost" href="/b/demo-business">See a demo farm shop</a>
+          </div>
+          <ul class="hero__points">
+            <li><Tick size={18} tick="var(--teal)" />Start from a spreadsheet or your till</li>
+            <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
+            <li><Tick size={18} tick="var(--teal)" />Starting in Bristol and South Gloucestershire</li>
+          </ul>
+        </div>
+        <figure class="board">
+          <div class="board__head">
+            <span>What’s in today</span>
+            <span class="board__time">Updated 9.10am</span>
+          </div>
+          <ul class="board__list">
+            {board.map((b) => (
+              <li><span>{b.item}</span><span class:list={['status', `status--${b.tone}`]}>{b.status}</span></li>
+            ))}
+          </ul>
+          <figcaption>A demo farm shop’s board. Agents read it, with the time it was last updated.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Why farm shops first -->
+    <section class="section" id="why">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why we start with farms</span>
+          <h2>Your stock changes every day. The web doesn’t.</h2>
+          <p>AI agents can only recommend what they can read. Big retailers publish product feeds; the farm shop down the road has a chalkboard. We want the farm to be as easy for an agent to find as the supermarket.</p>
+        </div>
+        <ul class="problems">
+          {problems.map((p) => <li><h3>{p.title}</h3><p>{p.body}</p></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- What customers ask -->
+    <section class="section section--grey" id="ask">
+      <div class="container ask">
+        <div class="chat" aria-label="Example conversation with an AI agent">
+          <p class="chat__you">Which farm shop near me has duck eggs today?</p>
+          <p class="chat__agent">Hollow Lane Farm Shop, 2 miles away, marked duck eggs as running low at 9.10am. £3.60 for six. Shall I reserve some?</p>
+          <p class="chat__you">Yes, six, and I’ll collect after 2.</p>
+          <div class="chat__confirm">
+            <p>Reserve 6 duck eggs, £3.60, to collect today after 2pm?</p>
+            <span class="chat__btn">Confirm reservation</span>
+          </div>
+        </div>
+        <div class="ask__copy">
+          <span class="eyebrow">What customers ask</span>
+          <h2>Their agent checks. They confirm.</h2>
+          <p>Customers ask in plain English. The agent checks what you marked as in, tells them when you checked, and asks before it reserves anything.</p>
+          <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works for a farm shop -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>A few taps a day, from your phone.</h2>
+        </div>
+        <ol class="steps">
+          {steps.map((s, i) => (
+            <li>
+              <span class="steps__n" aria-hidden="true">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="tools">Already keep stock in a till system or an online shop, or sell through a local food hub? Tell us which when you join, and we’ll bring your stock in from there.</p>
+      </div>
+    </section>
+
+    <!-- Built for how farms sell -->
+    <section class="section section--grey" id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Built for farms</span>
+          <h2>Made for how farms actually sell.</h2>
+        </div>
+        <ul class="features">
+          {features.map((f) => (
+            <li>
+              <Tick size={22} tick="var(--white)" />
+              <div><h3>{f.title}</h3><p>{f.body}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Markets and local food networks -->
+    <section class="section section--teal" id="markets">
+      <div class="container markets">
+        <div class="markets__copy">
+          <span class="eyebrow">Farmers’ markets and local food networks</span>
+          <h2>Put every stall on at once.</h2>
+          <p>
+            Shoppers add your market or network to their agent once, then ask across every trader:
+            <q>Which stalls on Saturday have sourdough? Save me a loaf.</q>
+          </p>
+          <ul class="markets__points">
+            <li><Tick size={20} tick="var(--teal)" /><span>Each trader keeps their own stock, prices and payments.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Nobody is listed without agreeing to it.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Councils and food partnerships can turn their local produce lists into one that agents can search.</span></li>
+          </ul>
+          <div class="markets__ctas">
+            <a class="btn btn--primary" href="?role=organiser#waitlist">Put your market on Gentifi</a>
+            <a class="btn btn--ghost" href="/standards">How Business Collections work</a>
+          </div>
+        </div>
+        <div class="markets__visual"><CollectionDiagram /></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container faq__wrap">
+        <div class="section-head">
+          <span class="eyebrow">Questions</span>
+          <h2>Farm shop questions.</h2>
+        </div>
+        <div class="faq">
+          {faqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section class="section section--teal" id="waitlist">
+      <div class="container waitlist__grid">
+        <div class="section-head">
+          <span class="eyebrow">Waitlist</span>
+          <h2>Be one of the first agent-ready farm shops.</h2>
+          <p>We’re starting with farm shops, local farms and farmers’ markets in Bristol and South Gloucestershire. Join the list and we’ll be in touch.</p>
+          <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
+        </div>
+        <WaitlistForm role="farm" />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  /* Hero: the promise on the left, today's board on the right */
+  .hero { padding-block: clamp(48px, 8vw, 96px); }
+  .hero__grid { display: grid; gap: clamp(32px, 5vw, 56px); align-items: center; }
+  @media (min-width: 960px) { .hero__grid { grid-template-columns: 1.15fr minmax(0, 0.85fr); } }
+  .hero__copy { min-width: 0; }
+  .hero h1 { max-width: 13em; }
+  .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 38rem; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero__points { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 0.95rem; }
+  .hero__points li { display: flex; align-items: center; gap: 8px; }
+
+  .board { margin: 0; width: min(100%, 420px); justify-self: center; background: var(--white); color: var(--ink); border-radius: var(--radius-lg); padding: 22px; box-shadow: 0 28px 60px -24px rgb(0 0 0 / 0.5); display: grid; gap: 14px; }
+  .board__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--teal); font-weight: 700; font-size: 1.15rem; }
+  .board__time { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--ink-muted); white-space: nowrap; }
+  .board__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .board__list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--grey); font-weight: 600; }
+  .board__list li:last-child { border-bottom: 0; }
+  .status { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .status--in { background: var(--teal); color: var(--white); }
+  .status--low { background: var(--copper); color: var(--teal); }
+  .status--out { background: var(--grey); color: var(--ink-muted); text-decoration: line-through; }
+  .status--note { background: var(--white); color: var(--teal); box-shadow: inset 0 0 0 1px var(--border); }
+  .board figcaption { font-size: 0.82rem; color: var(--ink-muted); }
+
+  /* Why */
+  .problems { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  @media (min-width: 860px) { .problems { grid-template-columns: repeat(3, 1fr); } }
+  .problems li { border-top: 3px solid var(--teal); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+  .problems p { color: var(--ink-muted); }
+
+  /* What customers ask */
+  .ask { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 960px) { .ask { grid-template-columns: 1fr 1fr; gap: 64px; } }
+  .chat { width: 100%; max-width: 460px; justify-self: center; display: grid; gap: 10px; font-size: 0.95rem; line-height: 1.45; }
+  .chat p { margin: 0; }
+  .chat__you, .chat__agent { padding: 10px 14px; border-radius: 16px; max-width: 88%; }
+  .chat__you { justify-self: end; background: var(--teal); color: var(--white); border-bottom-right-radius: 4px; }
+  .chat__agent { background: var(--white); border-bottom-left-radius: 4px; }
+  .chat__confirm { background: var(--white); border-radius: var(--radius); padding: 16px; display: grid; gap: 12px; justify-items: start; box-shadow: inset 0 0 0 2px var(--copper); }
+  .chat__confirm p { font-weight: 600; }
+  .chat__btn { background: var(--copper); color: var(--teal); font-weight: 700; padding: 8px 16px; border-radius: 999px; font-size: 0.9rem; }
+  .ask__copy { display: grid; gap: 16px; justify-items: start; min-width: 0; }
+  .ask__copy .eyebrow { margin-bottom: 0; }
+  .ask__copy > p { color: var(--ink-muted); font-size: 1.08rem; }
+  .asks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .asks li { background: var(--white); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
+
+  /* Steps */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px; }
+  @media (min-width: 800px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+  .steps li { display: grid; gap: 10px; align-content: start; }
+  .steps__n { width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; font-size: 1.1rem; }
+  .steps h3 { margin-top: 4px; }
+  .steps p { color: var(--ink-muted); }
+  .tools { margin-top: 32px; padding: 20px 24px; border-radius: var(--radius); background: var(--grey); max-width: 52rem; }
+
+  /* Features */
+  .features { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px 40px; }
+  @media (min-width: 720px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .features { grid-template-columns: repeat(3, 1fr); } }
+  .features li { display: flex; gap: 14px; align-items: flex-start; }
+  .features li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+  .features h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .features p { color: var(--ink-muted); }
+
+  /* Markets */
+  .markets { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 1000px) { .markets { grid-template-columns: 1.05fr 1fr; gap: 64px; } }
+  .markets__copy { display: grid; gap: 18px; justify-items: start; min-width: 0; }
+  .markets__copy .eyebrow { margin-bottom: 0; }
+  .markets__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
+  .markets__copy q { display: block; margin-top: 10px; color: var(--white); font-weight: 600; }
+  .markets__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .markets__points li { display: flex; gap: 10px; align-items: flex-start; }
+  .markets__points li :global(svg) { margin-top: 3px; flex-shrink: 0; }
+  .markets__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .markets__visual { width: 100%; max-width: 480px; justify-self: center; }
+
+  /* FAQ */
+  .faq__wrap { max-width: calc(820px + var(--gutter) * 2); }
+  .faq { border-top: 1px solid var(--border); }
+  .faq details { border-bottom: 1px solid var(--border); }
+  .faq summary { cursor: pointer; list-style: none; padding: 20px 40px 20px 0; font-weight: 600; font-size: 1.05rem; position: relative; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: 1.4rem; font-weight: 400; color: var(--ink-muted); }
+  .faq details[open] summary::after { content: '\2212'; }
+  .faq details p { padding: 0 0 20px; color: var(--ink-muted); max-width: 44rem; }
+
+  /* Waitlist */
+  .waitlist__grid { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
+  .waitlist__count { font-size: 0.95rem; color: var(--on-teal-muted); }
+</style>
