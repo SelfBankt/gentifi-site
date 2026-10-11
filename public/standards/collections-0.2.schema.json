@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gentifi.com/standards/collections-0.2.schema.json",
-  "title": "Collection (draft 0.2)",
+  "title": "Business Collection (draft 0.2)",
   "description": "A group of businesses (an event, a place, an association or a marketplace) described as an Agentic Resource Discovery (ARD v0.91) manifest: the entries are the members, and the collection object says what the group is. Proposal for discussion, not a standard.",
   "type": "object",
   "required": ["collection", "entries"],
@@ -87,7 +87,7 @@
     },
     "entry": {
       "type": "object",
-      "description": "An ARD entry. Collections adds terms in the col namespace; any other namespaced terms are allowed, as in ARD.",
+      "description": "An ARD entry. Business Collections adds terms in the col namespace; any other namespaced terms are allowed, as in ARD.",
       "required": ["identifier", "displayName", "type"],
       "properties": {
         "@context": {},

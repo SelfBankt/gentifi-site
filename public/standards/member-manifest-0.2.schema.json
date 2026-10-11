@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gentifi.com/standards/member-manifest-0.2.schema.json",
-  "title": "ARD manifest with Collections terms (draft 0.2)",
+  "title": "ARD manifest with Business Collections terms (draft 0.2)",
   "description": "A business's or publisher's own ARD manifest (/.well-known/ard.json). Members confirm membership with col:memberOf on their own entry (rule 1); publishers list their collections as entries of type application/ai-collection+json.",
   "type": "object",
   "required": ["entries"],
