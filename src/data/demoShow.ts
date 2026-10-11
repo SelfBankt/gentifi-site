@@ -1,5 +1,10 @@
 // Fictional trade show used by the Standards page diagram, example and explorer.
 // Every exhibitor, stand, price and domain here is made up.
+// Documents follow Collections draft 0.2 (an ARD v0.91 manifest plus a collection object).
+
+export const ARD_CONTEXT = 'https://agenticresourcediscovery.org/context/v1';
+export const COLLECTIONS_NS = 'https://gentifi.com/standards/collections/v0.2#';
+const context = [ARD_CONTEXT, { col: COLLECTIONS_NS }];
 
 export interface Member {
   name: string;
@@ -11,14 +16,18 @@ export interface Member {
 }
 
 export const show = {
-  id: 'demo-selfbuild-2027',
+  id: 'urn:air:shows.example:collection:demo-selfbuild-2027',
+  slug: 'demo-selfbuild-2027',
   name: 'Demo Self Build Show 2027',
   kind: 'event' as const,
   publisher: { name: 'Demo Shows', domain: 'shows.example' },
   validFrom: '2027-05-14',
   validTo: '2027-05-16',
-  facets: ['category', 'priceFrom', 'stand'],
+  facets: ['col:category', 'col:priceFrom', 'col:stand'],
 };
+
+/** Where the organiser publishes the collection; members link back to this URL. */
+export const collectionUrl = `https://${show.publisher.domain}/collections/${show.slug}.json`;
 
 export const members: Member[] = [
   { name: 'Example Windows', stand: 'B12', category: 'glazing', priceFrom: 540, unit: 'm²', domain: 'windows.example' },
@@ -33,7 +42,22 @@ export const members: Member[] = [
   { name: 'Example Rainwater', stand: 'D05', category: 'water', priceFrom: 2100, unit: 'installed', domain: 'rainwater.example' },
 ];
 
-export const catalogUrl = (m: Member) => `https://${m.domain}/.well-known/ai-catalog.json`;
+const identifier = (m: Member) => `urn:air:${m.domain}:mcp:catalogue`;
+const cardUrl = (m: Member) => `https://${m.domain}/mcp/server-card.json`;
+
+/** One member as an ARD entry with Collections terms. */
+export function memberEntry(m: Member) {
+  return {
+    '@context': context,
+    identifier: identifier(m),
+    displayName: m.name,
+    type: 'application/mcp-server-card+json',
+    url: cardUrl(m),
+    'col:stand': m.stand,
+    'col:category': m.category,
+    'col:priceFrom': { amount: m.priceFrom, currency: 'GBP', unit: m.unit },
+  };
+}
 
 /** The collection document for the show, as it would be published. */
 export function collectionDoc(limit = members.length) {
@@ -46,20 +70,21 @@ export function collectionDoc(limit = members.length) {
       validFrom: show.validFrom,
       validTo: show.validTo,
       facets: show.facets,
-      members: members.slice(0, limit).map((m) => ({
-        catalog: catalogUrl(m),
-        role: { stand: m.stand, category: m.category },
-      })),
     },
+    entries: members.slice(0, limit).map(memberEntry),
   };
 }
 
-/** What a member adds to its own catalogue to confirm membership (rule 1). */
+/** What a member adds to its own ard.json to confirm membership (rule 1). */
 export const memberBacklink = {
-  memberOf: [
+  entries: [
     {
-      collection: `https://${show.publisher.domain}/.well-known/collections/${show.id}.json`,
-      role: { stand: members[0].stand },
+      '@context': context,
+      identifier: identifier(members[0]),
+      displayName: members[0].name,
+      type: 'application/mcp-server-card+json',
+      url: cardUrl(members[0]),
+      'col:memberOf': [{ collection: collectionUrl }],
     },
   ],
 };

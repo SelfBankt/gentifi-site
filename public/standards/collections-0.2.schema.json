@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gentifi.com/standards/collections-0.2.schema.json",
+  "title": "Collection (draft 0.2)",
+  "description": "A group of businesses (an event, a place, an association or a marketplace) described as an Agentic Resource Discovery (ARD v0.91) manifest: the entries are the members, and the collection object says what the group is. Proposal for discussion, not a standard.",
+  "type": "object",
+  "required": ["collection", "entries"],
+  "properties": {
+    "collection": { "$ref": "#/$defs/collection" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:air:[A-Za-z0-9.-]+:[^:\\s]+:\\S+$",
+      "description": "ARD identifier: urn:air:<publisher domain>:<namespace>:<name>."
+    },
+    "httpsUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "collection": {
+      "type": "object",
+      "required": ["id", "name", "kind", "publisher"],
+      "properties": {
+        "id": {
+          "allOf": [{ "$ref": "#/$defs/urn" }, { "pattern": "^urn:air:[^:]+:collection:" }],
+          "description": "urn:air:<publisher domain>:collection:<name>. The domain must match publisher.domain."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["event", "place", "association", "marketplace"] },
+        "description": { "type": "string" },
+        "url": { "$ref": "#/$defs/httpsUrl", "description": "A page about the group, for people." },
+        "publisher": {
+          "type": "object",
+          "required": ["name", "domain"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "domain": { "type": "string", "format": "hostname", "description": "The domain the collection is served from." }
+          }
+        },
+        "validFrom": { "type": "string", "format": "date" },
+        "validTo": { "type": "string", "format": "date", "description": "Members stay reachable afterwards through their own resources." },
+        "area": {
+          "type": "object",
+          "properties": {
+            "country": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2 country code." },
+            "postalCodes": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "Postal code prefixes that make up the area, such as BS1." },
+            "boundary": { "$ref": "#/$defs/httpsUrl", "description": "URL of a GeoJSON boundary." }
+          }
+        },
+        "facets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^([A-Za-z][\\w-]*:[A-Za-z][\\w-]*|capabilities|tags)$"
+          },
+          "description": "Namespaced terms on the entries that agents can filter by, such as col:category."
+        },
+        "memberOf": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/memberOfLink" },
+          "description": "For a nested collection: the parents it agrees to be part of (rule 4)."
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "money": {
+      "type": "object",
+      "required": ["amount", "currency"],
+      "properties": {
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "unit": { "type": "string" }
+      }
+    },
+    "memberOfLink": {
+      "type": "object",
+      "required": ["collection"],
+      "properties": {
+        "collection": { "$ref": "#/$defs/httpsUrl", "description": "URL of the collection document." },
+        "id": { "$ref": "#/$defs/urn" },
+        "role": { "type": "object" }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "description": "An ARD entry. Collections adds terms in the col namespace; any other namespaced terms are allowed, as in ARD.",
+      "required": ["identifier", "displayName", "type"],
+      "properties": {
+        "@context": {},
+        "identifier": { "$ref": "#/$defs/urn" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "pattern": "^[a-z]+/[a-z0-9.+-]+$" },
+        "url": { "$ref": "#/$defs/httpsUrl" },
+        "data": {},
+        "description": { "type": "string" },
+        "representativeQueries": { "type": "array", "items": { "type": "string" } },
+        "capabilities": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "col:category": { "type": "string" },
+        "col:stand": { "type": "string" },
+        "col:tier": { "type": "string" },
+        "col:priceFrom": { "$ref": "#/$defs/money" },
+        "col:manifest": { "$ref": "#/$defs/httpsUrl" },
+        "col:memberOf": { "type": "array", "items": { "$ref": "#/$defs/memberOfLink" } }
+      },
+      "oneOf": [
+        { "required": ["url"], "not": { "required": ["data"] } },
+        { "required": ["data"], "not": { "required": ["url"] } }
+      ],
+      "additionalProperties": true
+    }
+  }
+}
