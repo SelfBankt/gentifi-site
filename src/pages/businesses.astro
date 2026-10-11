@@ -13,13 +13,13 @@ const benefits = [
   { title: 'Works with any agent', body: 'Including the ones people build for themselves.' },
   { title: 'Safe checkout', body: 'Customers confirm every order, then finish it through your own checkout.' },
   { title: 'A chat assistant, if you want one', body: 'For customers without an agent, on WhatsApp, Telegram or your website.' },
-  { title: 'See what you sell', body: 'A simple view of what agents sold for you.' },
+  { title: 'A witness for every sale', body: 'A record of what agents sold for you, and when each customer agreed.' },
 ];
 
 const steps = [
   { title: 'Join the waitlist', body: 'Tell us about your business. We’re starting with a small group.' },
   { title: 'We set you up', body: 'We bring in your products, prices or bookings from a spreadsheet, your shop or your booking system, and check that agents can use them.' },
-  { title: 'Put up your sticker', body: 'Customers scan it, add you to their agent, and start asking.' },
+  { title: 'Put up your sign', body: 'Customers scan it, approve the handshake in their own app, and start asking.' },
 ];
 
 const examples = [
@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     q: 'Can an agent order something my customer didn’t want?',
-    a: 'No. Customers confirm every order before it goes through, and agents can’t connect to you or buy without their approval.',
+    a: 'No. Every order waits for the customer to touch and agree in their own app, and agents can’t connect to you or buy without their approval.',
   },
   {
     q: 'I already sell on Shopify. Is this for me?',
@@ -103,6 +103,7 @@ const faqs = [
         <div class="section-head">
           <span class="eyebrow">What you get</span>
           <h2>Everything agents need, done for you.</h2>
+          <p>Every business has a gift. We make sure agents can find it.</p>
         </div>
         <ul class="benefits">
           {benefits.map((b) => (
@@ -119,11 +120,11 @@ const faqs = [
     <section class="section section--grey">
       <div class="container sticker-row">
         <div class="sticker-row__copy">
-          <span class="eyebrow">Your sticker</span>
-          <h2>One sticker. Any agent.</h2>
+          <span class="eyebrow">Gentifi signs</span>
+          <h2>One sign. Every agent.</h2>
           <p>
-            Put it in your window, by the till, on your website or in your emails. Customers scan it to add you to
-            their agent, and approve it in their own app.
+            A window sticker, a counter card for the till, and a badge for your website and emails. Customers scan one
+            to add you to their agent, and approve the handshake in their own app.
           </p>
           <WebBadges />
           <p><a class="sticker-row__link" href="/b/demo-business">See what a scan opens</a></p>
@@ -181,7 +182,7 @@ const faqs = [
     <section class="section section--teal open-band">
       <div class="container open-band__inner">
         <div>
-          <span class="eyebrow">Open by design</span>
+          <span class="eyebrow">In one accord</span>
           <h2>Open source, so you're never locked in.</h2>
           <p>The toolkit behind Gentifi is open source, and everything follows open standards, so your setup is never tied to us.</p>
         </div>
@@ -215,8 +216,8 @@ const faqs = [
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
-          <h2>Make your business agent-ready.</h2>
-          <p>We're starting with farm shops, local farms and farmers' markets, then other local businesses. Join the list and we'll be in touch.</p>
+          <h2>Join the Genesis cohort.</h2>
+          <p>Our first group of agent-ready businesses, starting with farm shops, local farms and farmers' markets. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm role="business" />

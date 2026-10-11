@@ -16,7 +16,7 @@ const githubUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
 
 const steps = [
   { title: 'Send us your products', body: 'A spreadsheet is fine. We turn your products, prices, stock and services into something AI agents can read and act on.' },
-  { title: 'Put up your sticker', body: 'Customers scan it to add your business to the AI agent they already use, and approve it in their own app.' },
+  { title: 'Put up your sign', body: 'Customers scan it, approve the handshake in their own app, and your business is in the agent they already use.' },
   { title: 'Customers just ask', body: 'Their agent checks your stock, prices and times, then books or orders once they say yes.' },
 ];
 
@@ -87,7 +87,7 @@ const control = [
     <section class="section mission-band" id="local-food">
       <div class="container mission">
         <div class="mission__copy">
-          <span class="eyebrow">Our first mission</span>
+          <span class="eyebrow">Our first mission: a local food revival</span>
           <h2>Local food, found by AI.</h2>
           <p>A farm shop’s stock changes every day: the eggs sell out, the bread comes out at twelve, the Christmas orders open. Most of that never reaches a website, so AI agents can’t see it.</p>
           <p>We’re starting with farm shops, local farms and farmers’ markets in Bristol and South Gloucestershire, so the farm down the road is as easy for an agent to find as the supermarket.</p>
@@ -104,8 +104,8 @@ const control = [
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">For businesses</span>
-          <h2>Get your business agent-ready.</h2>
-          <p>No website or developer needed. Keep your own checkout.</p>
+          <h2>Answer every call.</h2>
+          <p>When a customer’s agent asks about your stock, prices or opening times, Gentifi answers for you. No website or developer needed, and you keep your own checkout.</p>
         </div>
 
         <ol class="strip" id="how-it-works">
@@ -153,7 +153,7 @@ const control = [
         <article class="setup">
           <div>
             <h3>We set it up for you</h3>
-            <p>We bring in your products and prices, get you on the Gentifi network, and send your sticker. All we need:</p>
+            <p>We bring in your products and prices, get you on the Gentifi network, and send your signs. All we need:</p>
             <ul class="setup__needs">
               {needs.map((n) => <li><Tick size={18} tick="var(--teal)" /><span>{n}</span></li>)}
             </ul>
@@ -201,7 +201,7 @@ const control = [
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Privacy</span>
-          <h2>Customers are always in control.</h2>
+          <h2>Nothing happens until they touch and agree.</h2>
         </div>
         <ul class="control">
           {control.map((c) => <li><Tick size={22} tick="var(--white)" /><span>{c}</span></li>)}
@@ -213,7 +213,7 @@ const control = [
     <section class="section section--teal" id="events">
       <div class="container events">
         <div class="events__copy">
-          <span class="eyebrow">Your market, your show, your high street</span>
+          <span class="eyebrow">Markets, shows and gatherings</span>
           <h2>One connection for a whole farmers’ market, show or high street.</h2>
           <p>
             Visitors add your market, event or street to their agent once, then ask across every trader or exhibitor:
@@ -238,9 +238,9 @@ const control = [
     <section class="section section--grey" id="open">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Open by design</span>
+          <span class="eyebrow">In one accord</span>
           <h2>Open source. Open standards. No lock-in.</h2>
-          <p>Anyone can use, check and improve what we build. Your business stays yours, in formats any agent can read.</p>
+          <p>One set of open standards, so every agent hears your business in its own language. Anyone can use, check and improve what we build, and your business stays yours.</p>
         </div>
         <div class="open">
           <article class="open__card">
@@ -270,8 +270,8 @@ const control = [
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
-          <h2>Be one of the first agent-ready businesses.</h2>
-          <p>We're starting with farm shops, local farms and farmers' markets in Bristol and South Gloucestershire, then other local businesses and events. Join the list and we'll be in touch.</p>
+          <h2>Join the Genesis cohort.</h2>
+          <p>Our first group of agent-ready businesses. We're starting with farm shops, local farms and farmers' markets in Bristol and South Gloucestershire, then other local businesses and events. Join the list and we'll be in touch.</p>
           <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm tone="light" />
