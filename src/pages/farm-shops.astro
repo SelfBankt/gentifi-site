@@ -17,8 +17,8 @@ const board = [
 ];
 
 const problems = [
-  { title: 'It sells out, then it’s back', body: 'The eggs are gone by eleven and the bread comes out at twelve. A website can’t keep up, so an agent guesses, or sends people somewhere it can see.' },
-  { title: 'Posted, not published', body: 'Today’s stock lives on the chalkboard, in a Facebook post or in a WhatsApp group. Agents can’t read any of those.' },
+  { title: 'It sells out, then it’s back', body: 'The eggs are gone by eleven and the bread comes out at twelve. A website can’t keep up, so AI guesses, or sends people somewhere it can see.' },
+  { title: 'Posted, not published', body: 'Today’s stock lives on the chalkboard, in a Facebook post or in a WhatsApp group. AI can’t read any of those.' },
   { title: 'No barcodes, no listing', body: 'Loose veg, meat from the counter and your own jam rarely have barcodes, and the tools that put shop stock on Google need them.' },
 ];
 
@@ -30,24 +30,24 @@ const asks = [
 ];
 
 const steps = [
-  { title: 'Start with what you have', body: 'Your Google Sheet, your till’s product list or your online shop. We bring it in and check that agents read it correctly.' },
-  { title: 'Mark what’s in, from your phone', body: 'In, running low or sold out, in a few taps. Agents see when you last updated each item, so they say “in this morning” rather than promise.' },
-  { title: 'Customers ask, you confirm', body: 'Agents prepare reservations and orders, and the customer confirms them in their own app. They reach you by email or through your own checkout, as orders do now.' },
+  { title: 'Start with what you have', body: 'Your Google Sheet, your till’s product list or your online shop. We bring it in and check that AI assistants read it correctly.' },
+  { title: 'Mark what’s in, from your phone', body: 'In, running low or sold out, in a few taps. Customers’ AI sees when you last updated each item, so they say “in this morning” rather than promise.' },
+  { title: 'Customers ask, you confirm', body: 'Their AI prepares reservations and orders, and the customer confirms them in their own app. They reach you by email or through your own checkout, as orders do now.' },
 ];
 
 const features = [
   { title: 'What’s in today', body: 'In, low or sold out, with the time you last checked.' },
   { title: 'Pre-orders and collection', body: 'Order-by days, collection slots and Christmas orders.' },
   { title: 'By weight, by item or by the box', body: 'Prices per kilo, per item or per box. Nothing needs a barcode.' },
-  { title: 'Where it’s from', body: 'Grown or reared here, or from a named neighbour, so agents can answer “is it local?”' },
-  { title: 'In season', body: 'Items come and go with the seasons, so agents stop offering asparagus when it ends.' },
+  { title: 'Where it’s from', body: 'Grown or reared here, or from a named neighbour, so AI can answer “is it local?”' },
+  { title: 'In season', body: 'Items come and go with the seasons, so AI stops offering asparagus when it ends.' },
   { title: 'More than the shop', body: 'Separate hours for honesty boxes, vending machines, pick-your-own and the café.' },
 ];
 
 const faqs = [
   {
-    q: 'My stock changes every day. Won’t agents get it wrong?',
-    a: 'Each item shows when you last updated it, and agents pass that on: “duck eggs were in at 9.10”. Mark things in or sold out from your phone in a few taps, or keep updating the Google Sheet you already use.',
+    q: 'My stock changes every day. Won’t AI get it wrong?',
+    a: 'Each item shows when you last updated it, and AI passes that on: “duck eggs were in at 9.10”. Mark things in or sold out from your phone in a few taps, or keep updating the Google Sheet you already use.',
   },
   {
     q: 'I sell by weight and most things have no barcode.',
@@ -55,15 +55,15 @@ const faqs = [
   },
   {
     q: 'Can customers pre-order, like Christmas meat or a weekly veg box?',
-    a: 'Yes. Agents can reserve things for a collection day you choose and tell customers your order-by dates. You confirm orders as you do now.',
+    a: 'Yes. AI assistants can reserve things for a collection day you choose and tell customers your order-by dates. You confirm orders as you do now.',
   },
   {
-    q: 'Do customers pay through the agent?',
+    q: 'Do customers pay through their AI?',
     a: 'Not to start with. Customers confirm the order in their own app and pay you as they do now, at collection or through your own checkout.',
   },
   {
     q: 'We already post our stock on Facebook. Why this as well?',
-    a: 'Agents can’t read Facebook posts or WhatsApp groups. Gentifi puts the same news somewhere every agent can read, with your prices and opening times alongside.',
+    a: 'AI assistants can’t read Facebook posts or WhatsApp groups. Gentifi puts the same news somewhere they can read, with your prices and opening times alongside.',
   },
   {
     q: 'Is this just for Bristol?',
@@ -73,7 +73,7 @@ const faqs = [
 ---
 <Base
   title="Farm shops and local food · Gentifi"
-  description="Gentifi lets AI agents like Claude and ChatGPT see what's in at your farm shop today, check prices and opening times, and reserve things for collection, with customers confirming every order. Starting in Bristol and South Gloucestershire."
+  description="Gentifi lets your customers’ AI assistant see what’s in at your farm shop today, check prices and opening times, and reserve things for collection, with customers confirming every order. Starting in Bristol and South Gloucestershire."
 >
   <Header ctaHref="#waitlist" />
   <main id="main">
@@ -82,9 +82,9 @@ const faqs = [
       <div class="container hero__grid">
         <div class="hero__copy">
           <span class="eyebrow">For farm shops, farms and markets</span>
-          <h1>Tell every AI agent what’s in today.</h1>
+          <h1>Tell your customers’ AI what’s in today.</h1>
           <p class="hero__lede">
-            When people ask Claude, ChatGPT or their own agent where to buy local food, Gentifi lets it see your stock,
+            When people ask their AI assistant where to buy local food, Gentifi lets it see your stock,
             prices and opening times, and reserve things for collection, with the customer confirming every order.
           </p>
           <div class="hero__ctas">
@@ -107,7 +107,7 @@ const faqs = [
               <li><span>{b.item}</span><span class:list={['status', `status--${b.tone}`]}>{b.status}</span></li>
             ))}
           </ul>
-          <figcaption>A demo farm shop’s board. Agents read it, with the time it was last updated.</figcaption>
+          <figcaption>A demo farm shop’s board. AI reads it, with the time it was last updated.</figcaption>
         </figure>
       </div>
     </section>
@@ -118,7 +118,7 @@ const faqs = [
         <div class="section-head">
           <span class="eyebrow">Why we start with farms</span>
           <h2>Your stock changes every day. The web doesn’t.</h2>
-          <p>AI agents can only recommend what they can read. Big retailers publish product feeds; the farm shop down the road has a chalkboard. We want the farm to be as easy for an agent to find as the supermarket.</p>
+          <p>AI assistants can only recommend what they can read. Big retailers publish product feeds; the farm shop down the road has a chalkboard. We want the farm to be as easy for an agent to find as the supermarket.</p>
         </div>
         <ul class="problems">
           {problems.map((p) => <li><h3>{p.title}</h3><p>{p.body}</p></li>)}
@@ -129,7 +129,7 @@ const faqs = [
     <!-- What customers ask -->
     <section class="section section--grey" id="ask">
       <div class="container ask">
-        <div class="chat" aria-label="Example conversation with an AI agent">
+        <div class="chat" aria-label="Example conversation with an AI assistant">
           <p class="chat__you">Which farm shop near me has duck eggs today?</p>
           <p class="chat__agent">Hollow Lane Farm Shop, 2 miles away, marked duck eggs as running low at 9.10am. £3.60 for six. Shall I reserve some?</p>
           <p class="chat__you">Yes, six, and I’ll collect after 2.</p>
@@ -140,7 +140,7 @@ const faqs = [
         </div>
         <div class="ask__copy">
           <span class="eyebrow">What customers ask</span>
-          <h2>Their agent checks. They touch and agree.</h2>
+          <h2>Their AI checks. They touch and agree.</h2>
           <p>Customers ask in plain English. The agent checks what you marked as in, tells them when you checked, and asks before it reserves anything.</p>
           <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
         </div>
@@ -234,7 +234,6 @@ const faqs = [
           <span class="eyebrow">Waitlist</span>
           <h2>Join the Genesis cohort.</h2>
           <p>Live stock for farm shops is coming together now, and pre-orders for collection work already. Join the list and we’ll be in touch.</p>
-          <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
         </div>
         <WaitlistForm role="farm" />
       </div>
@@ -335,5 +334,4 @@ const faqs = [
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
-  .waitlist__count { font-size: 0.95rem; color: var(--on-teal-muted); }
 </style>

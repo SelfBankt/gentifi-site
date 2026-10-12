@@ -5,19 +5,21 @@ import Footer from '../components/Footer.astro';
 import WindowSticker from '../components/WindowSticker.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
 import ChatMock from '../components/ChatMock.astro';
-import ApprovalDialog from '../components/ApprovalDialog.astro';
-import ConceptNotice from '../components/ConceptNotice.astro';
 import CollectionDiagram from '../components/CollectionDiagram.astro';
-import QrCode from '../components/QrCode.astro';
-import Mark from '../components/Mark.astro';
 import Tick from '../components/Tick.astro';
 
 const githubUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
 
-const steps = [
-  { title: 'Send us your products', body: 'A spreadsheet is fine. We turn your products, prices, stock and services into something AI agents can read and act on.' },
-  { title: 'Put up your sign', body: 'Customers scan it, approve the handshake in their own app, and your business is in the agent they already use.' },
-  { title: 'Customers just ask', body: 'Their agent checks your stock, prices and times, then books or orders once they say yes.' },
+const shopSteps = [
+  { title: 'Send us your price list', body: 'A spreadsheet is fine. You keep updating it there, and AI sees the changes.' },
+  { title: 'Put up your sign', body: 'A counter card by the till and a sticker in the window, each with your own code.' },
+  { title: 'Orders come to you', body: 'Customers confirm every order, and it reaches you by email or through your own checkout, as now.' },
+];
+
+const customerSteps = [
+  { title: 'Scan your sign', body: 'Or tap your link on your website or social pages.' },
+  { title: 'Add your shop to their AI', body: 'It takes a minute in Claude today, and they approve it in their own app.' },
+  { title: 'Just ask', body: '“Have you got sourdough on Saturday? Save me a loaf.” Nothing is ordered until they confirm.' },
 ];
 
 const needs = [
@@ -41,13 +43,13 @@ const mission = [
 
 const control = [
   'Customers approve every connection, in their own app.',
-  'Their agent asks before every booking or order.',
+  'Their AI asks before every booking or order.',
   'Businesses only get their details when they choose to book or buy.',
 ];
 ---
 <Base
-  title="Gentifi: agent-ready business"
-  description="Gentifi makes local businesses findable, bookable and buyable through AI agents like Claude and ChatGPT, starting with independent businesses in Bristol and South Gloucestershire. Customers approve every step. Open source and built on open standards."
+  title="Gentifi: your shop, in your customers’ AI"
+  description="Customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude today, starting with independents in Bristol and South Gloucestershire."
 >
   <Header />
   <main id="main">
@@ -55,20 +57,20 @@ const control = [
     <section class="hero section--teal">
       <div class="container hero__grid">
         <div class="hero__copy">
-          <span class="eyebrow">Claude · ChatGPT · Hermes · any agent</span>
-          <h1 class="hero__title">Open for business in every AI agent.</h1>
+          <span class="eyebrow">For independent shops, cafés and makers</span>
+          <h1 class="hero__title">Your shop, in your customers’ AI.</h1>
           <p class="hero__lede">
-            When people ask their AI agent for something local, Gentifi lets it find your products, check your prices
-            and stock, and book or order, with the customer approving every step.
+            Customers scan your sign once to add you to their AI assistant. Then they can ask what you have and when
+            you’re open, and reserve or order. They confirm every order, and it comes to you the way orders do now.
           </p>
-          <p class="hero__open"><Tick size={18} tick="var(--teal)" />Open source and built on open standards</p>
+          <p class="hero__open"><Tick size={18} tick="var(--teal)" />Live in Claude today, starting in Bristol and South Gloucestershire</p>
           <div class="hero__ctas">
-            <a class="btn btn--primary" href="#waitlist">Get your business agent-ready</a>
-            <a class="btn btn--ghost" href="/b/demo-business">Try a demo scan</a>
+            <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
+            <a class="btn btn--ghost" href="/b/demo-business">Try the live demo</a>
           </div>
           <ul class="hero__alt" aria-label="Find your way">
-            <li><a href="#shoppers">Shopping? See what your agent can do</a></li>
-            <li><a href="#events">Running a show, market or high street?</a></li>
+            <li><a href="#shoppers">Shopping? See how to ask your AI</a></li>
+            <li><a href="#events">Running a market, show or high street?</a></li>
             <li><a href="/toolkit">Developer? Get the toolkit</a></li>
             <li><a href="/farm-shops">Farm shop? See what we’re building</a></li>
           </ul>
@@ -78,82 +80,34 @@ const control = [
           <a href="/b/demo-business" class="hero__sticker-link" aria-label="Open the demo business page">
             <WindowSticker />
           </a>
-          <figcaption>Scan the code with your phone, or tap it: it opens a demo business.</figcaption>
+          <figcaption>Scan it with your phone, or tap it, to open our demo shop.</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- Mission: independents first -->
-    <section class="section mission-band" id="independents">
-      <div class="container mission">
-        <div class="mission__copy">
-          <span class="eyebrow">Our mission: independents first</span>
-          <h2>Bringing independents into the conversation.</h2>
-          <p>When someone asks an AI agent where to buy, book or eat, the big chains already have their data ready. The independent bakery, bike shop, farm shop or maker down the road usually doesn’t, so the agent can’t see them.</p>
-          <p>We’re starting with independent businesses in Bristol and South Gloucestershire, and the markets, shows and high streets that bring them together. Breaking bread.</p>
-          <a class="btn btn--teal" href="/businesses">For independent businesses</a>
-        </div>
-        <ul class="mission__points">
-          {mission.map((m) => <li><Tick size={22} tick="var(--white)" /><div><h3>{m.title}</h3><p>{m.body}</p></div></li>)}
-        </ul>
-      </div>
-    </section>
-
-    <!-- For businesses, with how it works -->
-    <section class="section" id="for-businesses">
+    <!-- How it works: for the shop and for its customers -->
+    <section class="section" id="how-it-works">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">For businesses</span>
+          <span class="eyebrow">How it works</span>
           <h2>Answer every call.</h2>
-          <p>When a customer’s agent asks about your stock, prices or opening times, Gentifi answers for you. No website or developer needed, and you keep your own checkout.</p>
+          <p>Simple for you, and simple for your customers. No website or developer needed, and nothing changes about your till, your checkout or how you take payment.</p>
         </div>
-
-        <ol class="strip" id="how-it-works">
-          <li class="strip__step">
-            <div class="strip__visual" aria-hidden="true">
-              <div class="mini-sheet">
-                <div class="mini-sheet__row mini-sheet__row--head"><span>Item</span><span>Price</span><span>Stock</span></div>
-                <div class="mini-sheet__row"><span>Free-range eggs</span><span>£3.20</span><span>40</span></div>
-                <div class="mini-sheet__row"><span>Sourdough loaf</span><span>£4.50</span><span>12</span></div>
-                <div class="mini-sheet__row"><span>Veg box</span><span>£18.00</span><span>15</span></div>
-              </div>
-            </div>
-            <span class="strip__n">1</span>
-            <h3>{steps[0].title}</h3>
-            <p>{steps[0].body}</p>
-          </li>
-          <li class="strip__step">
-            <div class="strip__visual" aria-hidden="true">
-              <div class="mini-sticker">
-                <div class="mini-sticker__brand"><Mark size={26} /><span>Gentifi</span><Tick size={14} tick="var(--teal)" /></div>
-                <div class="mini-sticker__bottom">
-                  <p>Scan to add us to your AI agent</p>
-                  <div class="mini-sticker__qr"><QrCode label="" /></div>
-                </div>
-              </div>
-            </div>
-            <span class="strip__n">2</span>
-            <h3>{steps[1].title}</h3>
-            <p>{steps[1].body}</p>
-          </li>
-          <li class="strip__step">
-            <div class="strip__visual" aria-hidden="true">
-              <div class="mini-chat">
-                <p class="mini-chat__you">Reserve a dozen eggs for Saturday?</p>
-                <p class="mini-chat__agent">1 x Free-range eggs, £3.20. Collect Saturday.</p>
-                <span class="mini-chat__confirm">Confirm reservation</span>
-              </div>
-            </div>
-            <span class="strip__n">3</span>
-            <h3>{steps[2].title}</h3>
-            <p>{steps[2].body}</p>
-          </li>
-        </ol>
+        <div class="sides">
+          <article class="side">
+            <h3>For your shop</h3>
+            <ol>{shopSteps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
+          </article>
+          <article class="side side--customer">
+            <h3>For your customers</h3>
+            <ol>{customerSteps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
+          </article>
+        </div>
 
         <article class="setup">
           <div>
             <h3>We set it up for you</h3>
-            <p>We bring in your products and prices, get you on the Gentifi network, and send your signs. All we need:</p>
+            <p>We bring in your products and prices, host your shop’s page and connection, and send your signs. All we need:</p>
             <ul class="setup__needs">
               {needs.map((n) => <li><Tick size={18} tick="var(--teal)" /><span>{n}</span></li>)}
             </ul>
@@ -166,6 +120,22 @@ const control = [
       </div>
     </section>
 
+    <!-- Mission: independents first -->
+    <section class="section mission-band" id="independents">
+      <div class="container mission">
+        <div class="mission__copy">
+          <span class="eyebrow">Our mission: independents first</span>
+          <h2>Bringing independents into the conversation.</h2>
+          <p>When someone asks an AI assistant where to buy, book or eat, the big chains already have their data ready. The independent bakery, bike shop, farm shop or maker down the road usually doesn’t, so the AI can’t see them.</p>
+          <p>We’re starting with independent businesses in Bristol and South Gloucestershire, and the markets, shows and high streets that bring them together. Breaking bread.</p>
+          <a class="btn btn--teal" href="/businesses">For independent businesses</a>
+        </div>
+        <ul class="mission__points">
+          {mission.map((m) => <li><Tick size={22} tick="var(--white)" /><div><h3>{m.title}</h3><p>{m.body}</p></div></li>)}
+        </ul>
+      </div>
+    </section>
+
     <!-- Shoppers -->
     <section class="section section--teal" id="shoppers">
       <div class="container">
@@ -173,24 +143,21 @@ const control = [
         <div class="shop__chat"><ChatMock /></div>
         <div class="shop__copy">
           <span class="eyebrow">For shoppers</span>
-          <h2>Just ask your agent.</h2>
+          <h2>Just ask your AI.</h2>
           <p>
-            Ask for what you need in plain English. Your agent checks real stock, prices and opening times, then asks
-            you before it books or buys.
+            Add your favourite local shops to your AI assistant. Then ask in plain English: it checks their real
+            products, prices and opening times, and asks you before it reserves or buys.
           </p>
           <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
-          <div class="shop__buttons">
-            <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="Claude">Add to Claude</button>
-            <button class="btn btn--primary" type="button" data-approval="approve-network" data-app="ChatGPT">Add to ChatGPT</button>
+          <div class="try">
+            <p class="try__title">Try it now in Claude, with our demo shop</p>
+            <ol>
+              <li>Copy this link: <code>https://mcp.gentifi.com/b/demo-business/mcp</code></li>
+              <li>In Claude, open Settings, then Connectors, and choose Add custom connector. Paste the link, then confirm.</li>
+              <li>Ask: “Have they got eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</li>
+            </ol>
+            <a class="btn btn--primary" href="/b/demo-business">Open the demo shop</a>
           </div>
-          <div class="shop__noagent">
-            <p>No agent yet? Chat with our AI instead:</p>
-            <div class="shop__buttons">
-              <button class="btn btn--ghost" type="button" data-concept="open Gentifi's AI assistant in WhatsApp">WhatsApp</button>
-              <button class="btn btn--ghost" type="button" data-concept="open Gentifi's AI assistant in Telegram">Telegram</button>
-            </div>
-          </div>
-          <p class="shop__note">Gentifi isn't live yet, so these buttons show a preview.</p>
         </div>
         </div>
       </div>
@@ -216,15 +183,16 @@ const control = [
           <span class="eyebrow">Markets, shows and gatherings</span>
           <h2>One connection for a whole market, show or high street.</h2>
           <p>
-            Visitors add your market, event or street to their agent once, then ask across every trader or exhibitor:
+            Visitors add your market, event or street to their AI once, then ask across every trader or exhibitor:
             <q>Which stalls on Saturday have sourdough? Save me a loaf.</q>
             <q>Which stands sell triple glazing under £600/m²? Get me three quotes.</q>
           </p>
           <ul class="events__points">
             <li><Tick size={20} tick="var(--teal)" /><span>Every member keeps its own data, prices and checkout.</span></li>
             <li><Tick size={20} tick="var(--teal)" /><span>Nobody is listed without agreeing to it.</span></li>
-            <li><Tick size={20} tick="var(--teal)" /><span>Exhibitors stay in visitors' agents after the event.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Exhibitors stay in visitors’ AI after the event.</span></li>
           </ul>
+          <p class="events__pilot">We’re piloting this with the first markets and shows.</p>
           <div class="events__ctas">
             <a class="btn btn--primary" href="?role=organiser#waitlist">Put your market, show or street on Gentifi</a>
             <a class="btn btn--ghost" href="/standards">How Business Collections work</a>
@@ -234,64 +202,37 @@ const control = [
       </div>
     </section>
 
-    <!-- Open by design -->
-    <section class="section section--grey" id="open">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">In one accord</span>
-          <h2>Open source. Open standards. No lock-in.</h2>
-          <p>One set of open standards, so every agent hears your business in its own language. Anyone can use, check and improve what we build, and your business stays yours.</p>
-        </div>
-        <div class="open">
-          <article class="open__card">
-            <h3>Open-source toolkit</h3>
-            <p>Turns a product list into everything agents need, and tests it like an agent would. Anyone can use and improve it, under the Apache 2.0 licence.</p>
-            <div class="open__links">
-              <a href="/toolkit">See the toolkit</a>
-              <a href={githubUrl}>GitHub</a>
-            </div>
-          </article>
-          <article class="open__card">
-            <h3>Built on open standards</h3>
-            <p>We use the standards Claude, ChatGPT and other agents already understand, so you're never tied to one company.</p>
-            <div class="open__links"><a href="/standards">Our standards</a></div>
-          </article>
-          <article class="open__card open__card--key">
-            <h3>Adding what's missing</h3>
-            <p>Today's standards describe one business at a time. We're drafting Business Collections: an open way to describe a whole market, high street or trade show.</p>
-            <div class="open__links"><a href="/standards#draft">Read the draft</a></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- Waitlist -->
     <section class="section waitlist" id="waitlist">
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
           <h2>Join the Genesis cohort.</h2>
-          <p>Our first group of agent-ready businesses. We're starting with independent businesses in Bristol and South Gloucestershire, and the markets, shows and high streets that bring them together. Join the list and we'll be in touch.</p>
-          <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
+          <p>Our first group of businesses on Gentifi. We're starting with independent businesses in Bristol and South Gloucestershire, and the markets, shows and high streets that bring them together. Join the list and we'll be in touch.</p>
         </div>
         <WaitlistForm tone="light" />
+      </div>
+    </section>
+
+    <!-- Open by design -->
+    <section class="section section--grey open-band" id="open">
+      <div class="container open-band__inner">
+        <div class="open-band__copy">
+          <span class="eyebrow">In one accord</span>
+          <h2>Open source. Open standards. No lock-in.</h2>
+          <p>One set of open standards, so every AI assistant hears your business in its own language. Anyone can use, check and improve what we build, and your business stays yours.</p>
+        </div>
+        <ul class="open-band__links">
+          <li><a href="/toolkit">The open-source toolkit</a></li>
+          <li><a href="/standards">The standards we build on</a></li>
+          <li><a href="/standards#draft">The Business Collections draft</a></li>
+          <li><a href={githubUrl}>GitHub</a></li>
+        </ul>
       </div>
     </section>
   </main>
   <Footer />
 
-  <ConceptNotice />
-  <ApprovalDialog
-    id="approve-network"
-    name="Gentifi"
-    initials="G"
-    via="Network connector · gentifi.com/mcp"
-    abilities={[
-      'Search businesses on the Gentifi network',
-      'Check live prices, stock and availability',
-      'Prepare bookings and orders for you to confirm',
-    ]}
-  />
 </Base>
 
 <style>
@@ -331,46 +272,18 @@ const control = [
   .mission__points h3 { font-size: 1.1rem; margin-bottom: 4px; }
   .mission__points p { color: var(--ink-muted); }
 
-  /* How it works: three steps, each with a small picture of what happens */
-  .strip { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
-  @media (min-width: 860px) { .strip { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
-  .strip__step { display: grid; gap: 10px; align-content: start; }
-  .strip__visual {
-    height: 196px;
-    border-radius: var(--radius);
-    background: var(--grey);
-    display: grid;
-    place-items: center;
-    padding: 20px;
-    margin-bottom: 8px;
-    overflow: hidden;
-  }
-  .strip__n {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--teal); color: var(--copper);
-    display: grid; place-items: center;
-    font-weight: 700; font-size: 0.95rem;
-  }
-  .strip h3 { font-size: 1.2rem; margin-top: 2px; }
-  .strip__step > p { color: var(--ink-muted); }
-
-  .mini-sheet { width: 100%; max-width: 280px; background: var(--white); border: 1px solid var(--border); border-radius: 12px; font-size: 0.8rem; overflow: hidden; }
-  .mini-sheet__row { display: grid; grid-template-columns: 1.7fr 1fr 0.7fr; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--grey); }
-  .mini-sheet__row--head { border-top: 0; background: var(--teal); color: var(--white); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .mini-sheet__row span:nth-child(2), .mini-sheet__row span:nth-child(3) { font-family: var(--font-mono); }
-
-  .mini-sticker { width: 156px; aspect-ratio: 1; background: var(--teal); color: var(--white); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-3deg); box-shadow: 0 14px 30px -14px rgb(0 0 0 / 0.5); }
-  .mini-sticker__brand { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: 0.85rem; }
-  .mini-sticker__bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; border-top: 1px solid var(--teal-line); padding-top: 8px; }
-  .mini-sticker p { font-size: 0.64rem; font-weight: 600; line-height: 1.25; }
-  .mini-sticker__qr { width: 54px; flex-shrink: 0; }
-  .mini-sticker__qr :global(.qr) { padding: 6%; border-radius: 8px; }
-
-  .mini-chat { width: 100%; max-width: 280px; display: grid; gap: 8px; font-size: 0.8rem; line-height: 1.4; }
-  .mini-chat p { margin: 0; padding: 8px 12px; border-radius: 14px; }
-  .mini-chat__you { justify-self: end; background: var(--teal); color: var(--white); border-bottom-right-radius: 4px; }
-  .mini-chat__agent { background: var(--white); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
-  .mini-chat__confirm { justify-self: start; background: var(--copper); color: var(--teal); font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+  /* How it works: the shop and its customers, side by side */
+  .sides { display: grid; gap: 20px; }
+  @media (min-width: 860px) { .sides { grid-template-columns: 1fr 1fr; } }
+  .side { background: var(--grey); border-radius: var(--radius); padding: 28px; display: grid; gap: 18px; align-content: start; }
+  .side--customer { background: var(--teal); color: var(--white); }
+  .side h3 { font-size: 1.3rem; }
+  .side ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: step; }
+  .side li { counter-increment: step; display: grid; grid-template-columns: 36px 1fr; gap: 2px 12px; }
+  .side li::before { content: counter(step); grid-row: span 2; width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; }
+  .side--customer li::before { background: var(--copper); color: var(--teal); }
+  .side li span { color: var(--ink-muted); }
+  .side--customer li span { color: var(--on-teal-muted); }
 
   /* We set it up */
   .setup {
@@ -398,15 +311,16 @@ const control = [
   .shop { display: grid; gap: 40px; align-items: center; }
   @media (min-width: 960px) { .shop { grid-template-columns: 1fr 1fr; gap: 64px; } }
   .shop__chat { width: 100%; max-width: 460px; justify-self: center; }
-  .shop__copy { display: grid; gap: 16px; justify-items: start; }
+  .shop__copy { display: grid; gap: 16px; justify-items: start; min-width: 0; }
   .shop__copy .eyebrow { margin-bottom: 0; }
   .shop__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
   .asks { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .asks li { background: var(--teal-raised); border: 1px solid var(--teal-line); color: var(--white); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.95rem; }
-  .shop__buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-  .shop__noagent { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--teal-line); width: 100%; }
-  .shop__noagent p { font-weight: 600; }
-  .shop__note { font-size: 0.85rem; color: var(--on-teal-muted); }
+  .try { width: 100%; background: var(--teal-raised); border: 1px solid var(--teal-line); border-radius: var(--radius); padding: 20px 22px; display: grid; gap: 12px; justify-items: start; }
+  .try__title { font-weight: 700; }
+  .try ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; color: var(--on-teal-muted); }
+  .try li::marker { color: var(--copper); font-weight: 700; }
+  .try code { color: var(--white); overflow-wrap: anywhere; font-size: 0.88rem; }
 
   /* Control */
   .control { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
@@ -428,28 +342,21 @@ const control = [
   .events__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
   .events__points li { display: flex; gap: 10px; align-items: flex-start; }
   .events__points li :global(svg) { margin-top: 3px; }
+  .events__pilot { color: var(--on-teal-muted); font-size: 0.95rem; }
   .events__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
   .events__visual { width: 100%; max-width: 480px; justify-self: center; }
 
   /* Open by design */
-  .open { display: grid; gap: 20px; }
-  @media (min-width: 900px) { .open { grid-template-columns: repeat(3, 1fr); } }
-  .open__card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .open__card h3 { font-size: 1.25rem; }
-  .open__card > p { color: var(--ink-muted); }
-  .open__card--key { box-shadow: inset 0 0 0 2px var(--copper); }
-  .open__links { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; gap: 18px; }
-  .open__links a { color: var(--teal); font-weight: 600; }
+  .open-band__inner { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 900px) { .open-band__inner { grid-template-columns: 1.4fr 1fr; gap: 56px; } }
+  .open-band__copy { display: grid; gap: 14px; }
+  .open-band__copy .eyebrow { margin-bottom: 0; }
+  .open-band__copy p { color: var(--ink-muted); max-width: 40rem; }
+  .open-band__links { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .open-band__links a { color: var(--teal); font-weight: 600; }
+  .open-band__links a::after { content: ' \2192'; color: var(--copper); }
 
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
-  .waitlist__count { font-size: 0.95rem; color: var(--ink-muted); }
 </style>

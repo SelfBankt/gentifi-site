@@ -12,7 +12,7 @@ const { id, name, initials, via, abilities } = Astro.props;
 ---
 <dialog class="approve" id={id} aria-labelledby={`${id}-title`}>
   <div class="approve__frame">
-    <p class="approve__label">Example: what <span data-app>your agent app</span> shows</p>
+    <p class="approve__label">Example: what <span data-app>your AI app</span> shows</p>
     <div class="sheet">
       <div class="sheet__head">
         <div class="sheet__avatar" aria-hidden="true">{initials}</div>
@@ -29,7 +29,7 @@ const { id, name, initials, via, abilities } = Astro.props;
       </div>
     </div>
     <p class="approve__note" data-note>
-      In the live version, this approval happens inside <span data-app>your agent app</span>, signed in as you. Nothing is added until you tap Connect.
+      This approval happens inside <span data-app>your AI app</span>, signed in as you. Nothing is added until you confirm.
     </p>
     <button class="btn btn--ghost btn--block approve__close" type="button" data-close>Close demo</button>
   </div>
@@ -42,12 +42,12 @@ const { id, name, initials, via, abilities } = Astro.props;
     dialog.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dialog.close()));
     dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
     dialog.querySelector('[data-approve]')?.addEventListener('click', () => {
-      if (note) note.textContent = 'Demo only: nothing was connected. Gentifi is not live yet.';
+      if (note) note.textContent = 'This is only an illustration, so nothing was connected. To add the demo shop for real, follow the steps on the page.';
     });
     document.querySelectorAll<HTMLButtonElement>(`[data-approval="${dialog.id}"]`).forEach((btn) => {
       btn.addEventListener('click', () => {
         if (note) note.innerHTML = defaultNote;
-        dialog.querySelectorAll('[data-app]').forEach((el) => (el.textContent = btn.dataset.app ?? 'your agent app'));
+        dialog.querySelectorAll('[data-app]').forEach((el) => (el.textContent = btn.dataset.app ?? 'your AI app'));
         dialog.showModal();
       });
     });

@@ -10,7 +10,7 @@ import WebBadges from '../components/WebBadges.astro';
 ---
 <Base
   title="How it works, in detail · Gentifi"
-  description="What happens behind a Gentifi sign: how businesses reach any AI agent, what a scan does, and where the open-source toolkit fits."
+  description="What happens behind a Gentifi sign: how businesses reach customers’ AI assistants, what a scan does, and where the open-source toolkit fits."
 >
   <Header />
   <main id="main">
@@ -20,7 +20,7 @@ import WebBadges from '../components/WebBadges.astro';
         <span class="eyebrow">For businesses and developers</span>
         <h1>How it works, in detail.</h1>
         <p class="hero__lede">
-          What happens behind the sign: how your business reaches any AI agent, what a scan does, and where the
+          What happens behind the sign: how your business reaches your customers’ AI, what a scan does, and where the
           open-source toolkit fits.
         </p>
         <nav class="jump" aria-label="On this page">
@@ -37,21 +37,21 @@ import WebBadges from '../components/WebBadges.astro';
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">The big picture</span>
-          <h2>Publish once. Reach every agent.</h2>
+          <h2>Publish once. Ready for your customers’ AI.</h2>
           <p>
-            You publish your business to Gentifi once. Customers connect Gentifi to their own agent, by choice, and
-            their agent can then find, price, book and buy from you.
+            You publish your business to Gentifi once. Customers add it to their own AI assistant, by choice, and it
+            can then find, price, book and buy from you, with the customer confirming.
           </p>
         </div>
         <HowItWorks />
         <div class="two-up connectors">
           <div>
             <h3>Your own connection</h3>
-            <p>Your sign and link add just your business to a customer's agent.</p>
+            <p>Your sign and link add just your business to a customer’s AI assistant.</p>
           </div>
           <div>
-            <h3>The Gentifi network</h3>
-            <p>One connection reaches every business on Gentifi, or a group, like one town, one event or one trade body.</p>
+            <h3>The Gentifi network <span class="soon">Coming next</span></h3>
+            <p>One connection will reach every business on Gentifi, or a group, like one town, one event or one trade body.</p>
           </div>
         </div>
       </div>
@@ -158,4 +158,5 @@ import WebBadges from '../components/WebBadges.astro';
   .dev h2 { margin-bottom: 14px; }
   .dev p { color: var(--on-teal-muted); max-width: 42rem; }
   .dev__buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+  .soon { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); border: 1px dashed var(--ink-muted); border-radius: 6px; padding: 1px 6px; vertical-align: middle; margin-left: 6px; }
 </style>
