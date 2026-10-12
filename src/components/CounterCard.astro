@@ -6,20 +6,20 @@ import QrCode from './QrCode.astro';
 interface Props {
   business?: string;
 }
-const { business = 'Your business' } = Astro.props;
+const { business } = Astro.props;
 ---
 <div class="card-wrap">
-  <figure class="counter" aria-label={`Gentifi counter card for ${business}`}>
+  <figure class="counter" aria-label={business ? `Gentifi counter card for ${business}` : 'Gentifi counter card'}>
     <div class="counter__head">
       <Logo tone="light" size="sm" />
       <div class="counter__title">Ask your AI about us</div>
       <p class="counter__body">
-        Scan to add {business} to your AI assistant. Then ask what we have, prices or opening times.
+        Scan to add {business ?? 'us'} to your AI assistant. Then ask what we have, prices or opening times.
       </p>
     </div>
     <div class="counter__qr"><QrCode /></div>
     <div class="counter__foot">
-      <div class="counter__say">Works in Claude today</div>
+      <div class="counter__say">Works in Claude and ChatGPT today</div>
       <div class="counter__meta"><span class="dot"></span>Nothing is added or ordered without your OK</div>
     </div>
   </figure>

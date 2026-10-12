@@ -25,7 +25,7 @@ const { business = 'Your business' } = Astro.props;
     <div class="sticker__bottom">
       <div class="sticker__text">
         <div class="sticker__cta">Scan to add us to your AI assistant</div>
-        <div class="sticker__agents">Works in Claude today</div>
+        <div class="sticker__agents">Works in Claude and ChatGPT today</div>
         <div class="sticker__biz">{business}</div>
       </div>
       <div class="sticker__qr"><QrCode /></div>
@@ -69,7 +69,7 @@ const { business = 'Your business' } = Astro.props;
   }
   .sticker__text { display: grid; gap: 1.8cqi; max-width: 52cqi; }
   .sticker__cta { font-size: max(12px, 4cqi); font-weight: 600; line-height: 1.25; }
-  .sticker__agents { font-family: var(--font-mono); font-size: max(10px, 2.8cqi); color: var(--copper); }
+  .sticker__agents { font-family: var(--font-mono); font-size: max(9px, 2.45cqi); color: var(--copper); }
   .sticker__biz { font-family: var(--font-mono); font-size: max(10px, 2.6cqi); color: var(--on-teal-muted); }
   .sticker__qr { width: 27cqi; flex-shrink: 0; font-size: 2.4cqi; }
 </style>
