@@ -2,9 +2,9 @@
   "version": 1,
   "business": {
     "name": "Hollow Lane Farm Shop",
-    "slug": "demo-business",
+    "slug": "hollow-lane-farm-shop",
     "kind": "Farm shop",
-    "description": "A fictional farm shop that demonstrates Gentifi. Its products, prices and contact details are made up.",
+    "description": "A fictional farm shop, used to demonstrate Gentifi.",
     "website": "",
     "telephone": "",
     "email": "orders@hollowlane.example",
@@ -13,10 +13,9 @@
       "locality": "",
       "postcode": ""
     },
-    "area": "Demo area",
+    "area": "BS",
     "openingHours": [
-      "Tu-Fr 09:00-17:00",
-      "Sa 09:00-16:00"
+      "Tu-Sa 09:00-17:00"
     ],
     "currency": "GBP"
   },
@@ -31,7 +30,7 @@
       "type": "csv",
       "file": "examples/demo-farm-shop.csv"
     },
-    "updatedAt": "2026-10-11T09:00:00.000Z",
+    "updatedAt": "2026-10-12T20:43:33.098Z",
     "items": [
       {
         "sku": "EGG-12",
@@ -81,7 +80,7 @@
     ]
   },
   "publish": {
-    "baseUrl": "https://gentifi.com/b/demo-business",
+    "baseUrl": "https://mcp.gentifi.com/b/demo-business",
     "mcpUrl": ""
   },
   "memberOf": [],

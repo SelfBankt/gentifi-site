@@ -1,14 +1,14 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
-  "name": "com.gentifi/demo-business",
+  "name": "com.gentifi.mcp/hollow-lane-farm-shop",
   "version": "0.1.0",
   "title": "Hollow Lane Farm Shop",
   "description": "Products, prices, stock and ordering at Hollow Lane Farm Shop",
-  "websiteUrl": "https://gentifi.com/b/demo-business",
+  "websiteUrl": "https://mcp.gentifi.com/b/demo-business",
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://gentifi.com/b/demo-business/mcp",
+      "url": "https://mcp.gentifi.com/b/demo-business/mcp",
       "supportedProtocolVersions": [
         "2026-07-28",
         "2025-11-25",
