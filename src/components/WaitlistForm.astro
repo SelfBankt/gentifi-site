@@ -1,7 +1,7 @@
 ---
 // Sign-ups go to a Google Sheet through a small Apps Script web app (see waitlist/apps-script.gs).
 // Paste the web app's /exec URL here. While it's empty, the form explains that nothing was sent.
-const WAITLIST_ENDPOINT = '';
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
 
 interface Props {
   role?: 'business' | 'farm' | 'developer' | 'customer' | 'organiser';
