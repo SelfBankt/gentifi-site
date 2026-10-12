@@ -3,12 +3,16 @@
  *
  * Set up (once):
  *   1. Create a Google Sheet, then Extensions > Apps Script. Paste this file in, replacing everything.
+ *      If Extensions > Apps Script won't open (common with several Google accounts signed in), create
+ *      a new project at script.google.com instead, and put the sheet's ID in SHEET_ID below.
  *   2. Deploy > New deployment > type "Web app".
  *      Execute as: Me. Who has access: Anyone. Deploy, and allow access when asked.
  *   3. Copy the web app URL (it ends in /exec) into the site's WaitlistForm.astro.
  * After editing this script, use Deploy > Manage deployments > Edit > New version, so the URL stays the same.
  */
 
+// Only needed for a standalone script: the long ID in the sheet's address, between /d/ and /edit
+const SHEET_ID = '';
 const SHEET_NAME = 'Waitlist';
 const HEADERS = ['Received', 'Name', 'Email', 'Role', 'Business', 'Postcode area', 'Page'];
 const ROLES = ['business', 'farm', 'developer', 'customer', 'organiser'];
@@ -51,7 +55,7 @@ function clean(value, max) {
 }
 
 function getSheet() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
