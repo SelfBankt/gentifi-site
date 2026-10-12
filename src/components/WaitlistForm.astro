@@ -1,7 +1,7 @@
 ---
-// Posts to a placeholder endpoint until a form provider is chosen.
-// With JS on, submission is intercepted and nothing is sent.
-const WAITLIST_ENDPOINT = '/api/waitlist-placeholder';
+// Sign-ups go to a Google Sheet through a small Apps Script web app (see waitlist/apps-script.gs).
+// Paste the web app's /exec URL here. While it's empty, the form explains that nothing was sent.
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
 
 interface Props {
   role?: 'business' | 'farm' | 'developer' | 'customer' | 'organiser';
@@ -16,7 +16,7 @@ const roles = [
   { value: 'organiser', label: 'Organising a show, market, high street or trade body' },
 ];
 ---
-<form class:list={['waitlist', `waitlist--${tone}`]} action={WAITLIST_ENDPOINT} method="post" data-placeholder-form>
+<form class:list={['waitlist', `waitlist--${tone}`]} action={WAITLIST_ENDPOINT || undefined} method="post" data-waitlist-form data-endpoint={WAITLIST_ENDPOINT}>
   <div class="field">
     <label for="wl-name">Your name</label>
     <input id="wl-name" name="name" type="text" autocomplete="name" required />
@@ -39,9 +39,13 @@ const roles = [
     <label for="wl-postcode">Postcode area <span class="opt">(optional)</span></label>
     <input id="wl-postcode" name="postcode" type="text" autocomplete="postal-code" maxlength="8" />
   </div>
+  <div class="trap" aria-hidden="true">
+    <label for="wl-website">Leave this empty</label>
+    <input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
   <div class="field--wide actions">
     <button class:list={['btn', tone === 'light' ? 'btn--teal' : 'btn--primary']} type="submit">Join the waitlist</button>
-    <p class="note">We'll only email you about Gentifi's launch. <span class="placeholder">[PRIVACY POLICY LINK]</span></p>
+    <p class="note">We'll only email you about Gentifi's launch. <a href="/privacy">How we use your details</a></p>
   </div>
   <p class="status field--wide" role="status" aria-live="polite"></p>
 </form>
@@ -49,22 +53,47 @@ const roles = [
 <script>
   // A link such as /?role=organiser#waitlist chooses the role in advance.
   const askedRole = new URLSearchParams(location.search).get('role');
-  document.querySelectorAll<HTMLSelectElement>('form[data-placeholder-form] select[name="role"]').forEach((select) => {
+  document.querySelectorAll<HTMLSelectElement>('form[data-waitlist-form] select[name="role"]').forEach((select) => {
     if (askedRole && [...select.options].some((o) => o.value === askedRole)) select.value = askedRole;
   });
 
-  document.querySelectorAll<HTMLFormElement>('form[data-placeholder-form]').forEach((form) => {
-    form.addEventListener('submit', (e) => {
+  document.querySelectorAll<HTMLFormElement>('form[data-waitlist-form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const status = form.querySelector('.status');
-      if (status) {
-        status.textContent = 'Thanks. This is a concept site, so nothing was sent: the waitlist provider is not connected yet.';
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const say = (text: string) => { if (status) status.textContent = text; };
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        say('Thanks. The waitlist isn’t connected yet, so nothing was sent.');
+        return;
+      }
+      const data = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+      data.set('page', location.pathname);
+      if (button) button.disabled = true;
+      say('Sending…');
+      try {
+        // A simple form POST: Apps Script answers it without a CORS preflight
+        const res = await fetch(endpoint, { method: 'POST', body: data });
+        const body = await res.json();
+        if (body.ok) {
+          form.reset();
+          say('Thanks, you’re on the list. We’ll be in touch.');
+        } else {
+          say(body.error || 'That didn’t go through. Please check your details and try again.');
+        }
+      } catch {
+        say('That didn’t go through, probably a connection problem. Please try again.');
+      } finally {
+        if (button) button.disabled = false;
       }
     });
   });
 </script>
 
 <style>
+  .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .note a { color: inherit; font-weight: 600; }
   .waitlist {
     display: grid;
     gap: 18px;
