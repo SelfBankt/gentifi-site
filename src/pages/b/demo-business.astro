@@ -17,7 +17,8 @@ const business = {
   slug: 'demo-business',
 };
 const badgeLink = `gentifi.com/b/${business.slug}`;
-const connectorUrl = `https://gentifi.com/b/${business.slug}/mcp`;
+// The demo connector is live on the Gentifi host
+const connectorUrl = `https://mcp.gentifi.com/b/${business.slug}/mcp`;
 const files = `/b/${business.slug}`;
 const toolkitUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
 
@@ -77,6 +78,10 @@ const asks = [
             For any other agent: <code>{connectorUrl}</code>
           </p>
           <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
+          <div class="try">
+            <strong>This demo connector is live. Try it now.</strong>
+            <span>In Claude, open Settings, then Connectors, then Add custom connector, and paste the link above. Then ask: “Have they got eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -158,7 +163,7 @@ const asks = [
             <dt>Agent Skill</dt><dd><a href={`${files}/SKILL.md`}><code>{badgeLink}/SKILL.md</code></a></dd>
             <dt>schema.org</dt><dd><a href={`${files}/business.jsonld`}><code>{badgeLink}/business.jsonld</code></a></dd>
             <dt>Window sticker</dt><dd><a href={`${files}/badge.svg`}><code>{badgeLink}/badge.svg</code></a></dd>
-            <dt>MCP connector</dt><dd><code>{connectorUrl}</code> <span class="agents__soon">not live yet</span></dd>
+            <dt>MCP connector</dt><dd><code>{connectorUrl}</code> <span class="agents__live">live</span></dd>
           </dl>
         </details>
       </div>
@@ -287,4 +292,6 @@ const asks = [
   .scan-foot a { color: var(--white); }
   .scan-foot__small { margin-top: 8px; font-size: 0.85rem; }
 
+  .try { display: grid; gap: 4px; margin-top: 8px; padding: 14px 16px; border-radius: 12px; background: var(--grey); color: var(--ink); font-size: 0.92rem; text-align: left; }
+  .agents__live { font-family: var(--font-mono); font-size: 0.75rem; padding: 1px 8px; border-radius: 6px; background: var(--copper); color: var(--teal); }
 </style>

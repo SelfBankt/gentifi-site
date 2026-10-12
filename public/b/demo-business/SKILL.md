@@ -1,22 +1,22 @@
 ---
-name: demo-business
-description: "Look up products, prices, stock and opening hours at Hollow Lane Farm Shop (Farm shop, Demo area), and prepare orders for the customer to confirm. Use when the user asks about Hollow Lane Farm Shop or wants Free-range eggs (dozen), Sourdough loaf or Seasonal veg box from it."
+name: hollow-lane-farm-shop
+description: "Look up products, prices, stock and opening hours at Hollow Lane Farm Shop (Farm shop, BS), and prepare orders for the customer to confirm. Use when the user asks about Hollow Lane Farm Shop or wants Free-range eggs (dozen), Sourdough loaf or Seasonal veg box from it."
 metadata:
   generator: "gentifi-toolkit 0.1.0"
-  updated: "2026-10-11"
+  updated: "2026-10-12"
 ---
 
 # Hollow Lane Farm Shop
 
-A fictional farm shop that demonstrates Gentifi. Its products, prices and contact details are made up.
+A fictional farm shop, used to demonstrate Gentifi.
 
-This information comes from Hollow Lane Farm Shop's own catalogue and was last updated on 2026-10-11. Prices are in GBP. Prices and stock can change, so say when they were last updated when you quote them.
+This information comes from Hollow Lane Farm Shop's own catalogue and was last updated on 2026-10-12. Prices are in GBP. Prices and stock can change, so say when they were last updated when you quote them.
 
 ## Live connection
 
-Hollow Lane Farm Shop has an MCP connector at https://gentifi.com/b/demo-business/mcp with the tools `search_catalogue`, `check_availability`, `prepare_order` and `get_business_info`. Adding a connector is the user's choice: if they want live stock, tell them it exists and let them approve it in their own app. Without it, use the snapshot below.
+Hollow Lane Farm Shop has an MCP connector at https://mcp.gentifi.com/b/demo-business/mcp with the tools `search_catalogue`, `check_availability`, `prepare_order` and `get_business_info`. Adding a connector is the user's choice: if they want live stock, tell them it exists and let them approve it in their own app. Without it, use the snapshot below.
 
-## Catalogue snapshot (2026-10-11)
+## Catalogue snapshot (2026-10-12)
 
 | Item | SKU | Price | Stock | Availability |
 | --- | --- | --- | --- | --- |
@@ -26,8 +26,7 @@ Hollow Lane Farm Shop has an MCP connector at https://gentifi.com/b/demo-busines
 
 ## Opening hours
 
-- Tuesday to Friday, 09:00 to 17:00
-- Saturday, 09:00 to 16:00
+- Tuesday to Saturday, 09:00 to 17:00
 
 ## Ordering
 

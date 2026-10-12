@@ -1,11 +1,11 @@
 {
   "entries": [
     {
-      "identifier": "urn:air:gentifi.com:mcp:demo-business",
+      "identifier": "urn:air:mcp.gentifi.com:mcp:hollow-lane-farm-shop",
       "displayName": "Hollow Lane Farm Shop",
       "type": "application/mcp-server-card+json",
-      "url": "https://gentifi.com/b/demo-business/mcp/server-card.json",
-      "description": "A fictional farm shop that demonstrates Gentifi. Its products, prices and contact details are made up.",
+      "url": "https://mcp.gentifi.com/b/demo-business/mcp/server-card.json",
+      "description": "A fictional farm shop, used to demonstrate Gentifi.",
       "representativeQueries": [
         "Does Hollow Lane Farm Shop have Free-range eggs (dozen) in stock?",
         "How much is Sourdough loaf at Hollow Lane Farm Shop?",
@@ -20,16 +20,16 @@
       ],
       "tags": [
         "Farm shop",
-        "Demo area"
+        "BS"
       ],
       "version": "0.1.0",
-      "updatedAt": "2026-10-11T09:00:00.000Z"
+      "updatedAt": "2026-10-12T20:43:33.098Z"
     },
     {
-      "identifier": "urn:air:gentifi.com:skill:demo-business",
+      "identifier": "urn:air:mcp.gentifi.com:skill:hollow-lane-farm-shop",
       "displayName": "Hollow Lane Farm Shop (Agent Skill)",
       "type": "application/ai-skill+md",
-      "url": "https://gentifi.com/b/demo-business/SKILL.md",
+      "url": "https://mcp.gentifi.com/b/demo-business/SKILL.md",
       "description": "How an agent can look up Hollow Lane Farm Shop's catalogue and prepare orders for the customer to confirm.",
       "representativeQueries": [
         "Does Hollow Lane Farm Shop have Free-range eggs (dozen) in stock?",
@@ -37,7 +37,7 @@
         "When is Hollow Lane Farm Shop open?",
         "Reserve Seasonal veg box from Hollow Lane Farm Shop"
       ],
-      "updatedAt": "2026-10-11T09:00:00.000Z"
+      "updatedAt": "2026-10-12T20:43:33.098Z"
     }
   ]
 }
