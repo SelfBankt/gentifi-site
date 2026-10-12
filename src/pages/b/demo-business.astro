@@ -35,7 +35,7 @@ const asks = [
 ---
 <Base
   title={`Add ${business.name} to your AI assistant · Gentifi demo`}
-  description={`Demo page: add ${business.name} to your AI assistant and try it in Claude. Fictional business.`}
+  description={`Demo page: add ${business.name} to your AI assistant and try it in Claude or ChatGPT. Fictional business.`}
 >
   <meta slot="head" name="robots" content="noindex" />
   <link slot="head" rel="ard" href={`${files}/ard.json`} />
@@ -72,7 +72,11 @@ const asks = [
                 <span data-copy-label>Copy link</span>
               </button>
             </li>
-            <li><strong>Add it in Claude</strong><span>Open Settings, then Connectors, and choose Add custom connector. Paste the link, then confirm.</span></li>
+            <li>
+              <strong>Add it to your AI app</strong>
+              <span><b>Claude:</b> open Settings, then Connectors, and choose Add custom connector. Paste the link, then confirm.</span>
+              <span><b>ChatGPT:</b> go to <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a>, press +, and choose Add custom MCP server. Paste the link, choose no authentication, then create and install it. In a new chat, type @ and pick the shop.</span>
+            </li>
             <li><strong>Just ask</strong><span>“Have they got eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</span></li>
           </ol>
           <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
@@ -88,7 +92,7 @@ const asks = [
         <ol class="steps">
           <li class="steps__key">
             <span class="steps__n" aria-hidden="true">1</span>
-            <div><strong>You approve it</strong><span>Claude asks you to confirm before anything is added. Nothing installs silently.</span></div>
+            <div><strong>You approve it</strong><span>Your AI app asks you to confirm before anything is added. Nothing installs silently.</span></div>
           </li>
           <li>
             <span class="steps__n" aria-hidden="true">2</span>
@@ -293,4 +297,5 @@ const asks = [
   .try li { counter-increment: t; display: grid; gap: 6px; padding-left: 34px; position: relative; }
   .try li::before { content: counter(t); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
   .try__link { overflow-wrap: anywhere; font-size: 0.85rem; }
+  .try a { color: var(--teal); font-weight: 600; }
 </style>

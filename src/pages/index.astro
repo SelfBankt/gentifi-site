@@ -18,7 +18,7 @@ const shopSteps = [
 
 const customerSteps = [
   { title: 'Scan your sign', body: 'Or tap your link on your website or social pages.' },
-  { title: 'Add your shop to their AI', body: 'It takes a minute in Claude today, and they approve it in their own app.' },
+  { title: 'Add your shop to their AI', body: 'It takes a minute in Claude or ChatGPT, and they approve it in their own app.' },
   { title: 'Just ask', body: '“Have you got sourdough on Saturday? Save me a loaf.” Nothing is ordered until they confirm.' },
 ];
 
@@ -49,7 +49,7 @@ const control = [
 ---
 <Base
   title="Gentifi: your shop, in your customers’ AI"
-  description="Customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude today, starting with independents in Bristol and South Gloucestershire."
+  description="Customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude and ChatGPT today, starting with independents in Bristol and South Gloucestershire."
 >
   <Header />
   <main id="main">
@@ -63,7 +63,7 @@ const control = [
             Customers scan your sign once to add you to their AI assistant. Then they can ask what you have and when
             you’re open, and reserve or order. They confirm every order, and it comes to you the way orders do now.
           </p>
-          <p class="hero__open"><Tick size={18} tick="var(--teal)" />Live in Claude today, starting in Bristol and South Gloucestershire</p>
+          <p class="hero__open"><Tick size={18} tick="var(--teal)" />Live in Claude and ChatGPT today, starting in Bristol and South Gloucestershire</p>
           <div class="hero__ctas">
             <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
             <a class="btn btn--ghost" href="/b/demo-business">Try the live demo</a>
@@ -150,10 +150,15 @@ const control = [
           </p>
           <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
           <div class="try">
-            <p class="try__title">Try it now in Claude, with our demo shop</p>
+            <p class="try__title">Try it now with our demo shop</p>
             <ol>
               <li>Copy this link: <code>https://mcp.gentifi.com/b/demo-business/mcp</code></li>
-              <li>In Claude, open Settings, then Connectors, and choose Add custom connector. Paste the link, then confirm.</li>
+              <li>Paste it into your AI app, then confirm.
+                <ul>
+                  <li><strong>Claude:</strong> open Settings, then Connectors, and choose Add custom connector.</li>
+                  <li><strong>ChatGPT:</strong> go to <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a>, press +, and choose Add custom MCP server, with no authentication. Then type @ in a new chat to pick the shop.</li>
+                </ul>
+              </li>
               <li>Ask: “Have they got eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</li>
             </ol>
             <a class="btn btn--primary" href="/b/demo-business">Open the demo shop</a>
@@ -321,6 +326,8 @@ const control = [
   .try ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; color: var(--on-teal-muted); }
   .try li::marker { color: var(--copper); font-weight: 700; }
   .try code { color: var(--white); overflow-wrap: anywhere; font-size: 0.88rem; }
+  .try ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+  .try strong, .try a { color: var(--white); }
 
   /* Control */
   .control { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
