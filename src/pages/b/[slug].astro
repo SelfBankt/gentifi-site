@@ -1,0 +1,29 @@
+---
+// Short links for printed signs: gentifi.com/b/<business> forwards to the business's
+// live page on the Gentifi host. Add a business to src/data/hosted.json when it goes live.
+import hosted from '../../data/hosted.json';
+
+export function getStaticPaths() {
+  return hosted
+    .filter((b) => b.slug !== 'demo-business')
+    .map((b) => ({ params: { slug: b.slug }, props: { business: b } }));
+}
+
+const { business } = Astro.props;
+const target = `https://mcp.gentifi.com/b/${business.slug}/`;
+---
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{business.name} · Gentifi</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href={target}>
+<meta http-equiv="refresh" content={`0; url=${target}`}>
+<style>body { font-family: system-ui, sans-serif; color: #05414D; margin: 40px 16px; } a { color: #05414D; font-weight: 600; }</style>
+</head>
+<body>
+<p>Opening <a href={target}>{business.name} on Gentifi</a>…</p>
+</body>
+</html>
