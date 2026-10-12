@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Privacy · Gentifi" description="How Gentifi uses the details you give when you join the waitlist.">
+  <Header />
+  <main id="main">
+    <section class="section">
+      <div class="container prose">
+        <span class="eyebrow">Privacy</span>
+        <h1>How we use your details</h1>
+        <p class="updated">Last updated 12 October 2026</p>
+
+        <h2>What we collect</h2>
+        <p>When you join the waitlist we keep your name, your email address, what you’re joining as (for example a business owner or a developer), and, if you give them, your business name and postcode area. We also note which page you signed up on and when.</p>
+
+        <h2>Why</h2>
+        <p>To tell you when Gentifi launches, to invite you to join early, and to understand which kinds of businesses and places want it first. We only email you about Gentifi. We don’t sell or share your details, and we don’t use them for advertising.</p>
+
+        <h2>Our legal basis</h2>
+        <p>Your consent, which you give by joining the list. You can withdraw it at any time.</p>
+
+        <h2>Where it’s kept</h2>
+        <p>In a Google Sheet that only the Gentifi team can open. Google stores it for us as our data processor.</p>
+
+        <h2>How long</h2>
+        <p>Until Gentifi launches in your area and for up to 12 months after, unless you ask us to delete it sooner.</p>
+
+        <h2>Your rights</h2>
+        <p>You can ask to see, correct or delete your details, or to come off the list, by emailing <span class="placeholder">[CONTACT EMAIL]</span>. If you’re unhappy with how we’ve handled your details, you can complain to the Information Commissioner’s Office at ico.org.uk.</p>
+
+        <h2>Who we are</h2>
+        <p>Gentifi, <span class="placeholder">[COMPANY NAME AND ADDRESS]</span>.</p>
+
+        <h2>On the rest of the site</h2>
+        <p>This site doesn’t use advertising or tracking cookies. The demo pages don’t send anything you type.</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .prose { max-width: calc(46rem + var(--gutter) * 2); display: grid; gap: 14px; }
+  .prose h1 { margin-bottom: 4px; }
+  .prose h2 { font-size: 1.25rem; margin-top: 18px; }
+  .prose p { color: var(--ink-muted); }
+  .updated { font-family: var(--font-mono); font-size: 0.85rem; }
+</style>
