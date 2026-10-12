@@ -7,19 +7,25 @@ import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
 import Tick from '../components/Tick.astro';
 
-const benefits = [
-  { title: 'Found by AI agents', body: 'Agents can see what you sell, what it costs and when you’re open.' },
-  { title: 'Found where customers look', body: 'Through the Gentifi connector in Claude, ChatGPT and other agents, and in AI search through your own structured data.' },
-  { title: 'Works with any agent', body: 'Including the ones people build for themselves.' },
-  { title: 'Safe checkout', body: 'Customers confirm every order, then finish it through your own checkout.' },
-  { title: 'A chat assistant, if you want one', body: 'For customers without an agent, on WhatsApp, Telegram or your website.' },
-  { title: 'A witness for every sale', body: 'A record of what agents sold for you, and when each customer agreed.' },
+const today = [
+  { title: 'Found by AI assistants', body: 'Customers’ AI can see what you sell, what it costs and when you’re open.' },
+  { title: 'Readable by AI search', body: 'Your shop’s page carries structured data that AI search engines can read.' },
+  { title: 'Your own checkout', body: 'Customers confirm every order, and it reaches you by email or through your own checkout.' },
+  { title: 'Your signs', body: 'A window sticker and a counter card with your own code, ready to print.' },
+  { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes.' },
+];
+
+const coming = [
+  { title: 'One-tap adding', body: 'Customers add your shop from inside their AI app, without copying a link.' },
+  { title: 'A witness for every sale', body: 'A record of what AI sold for you, and when each customer agreed.' },
+  { title: 'A chat assistant', body: 'For customers without an AI assistant, on WhatsApp or your website.' },
+  { title: 'Imports', body: 'Straight from your online shop or booking system.' },
 ];
 
 const steps = [
   { title: 'Join the waitlist', body: 'Tell us about your business. We’re starting with a small group.' },
-  { title: 'We set you up', body: 'We bring in your products, prices or bookings from a spreadsheet, your shop or your booking system, and check that agents can use them.' },
-  { title: 'Put up your sign', body: 'Customers scan it, approve the handshake in their own app, and start asking.' },
+  { title: 'We set you up', body: 'We bring in your products and prices from a spreadsheet or price list, and check that AI assistants read them correctly.' },
+  { title: 'Put up your sign', body: 'Customers scan it, approve it in their own app, and start asking.' },
 ];
 
 const examples = [
@@ -48,22 +54,22 @@ const faqs = [
   },
   {
     q: 'Do I need a website or a developer?',
-    a: 'No. We host everything for you. If you do have a developer, they can use our open-source toolkit instead.',
+    a: 'No. We host everything for you, including a page for your shop. If you do have a developer, they can use our open-source toolkit instead.',
   },
   {
-    q: 'Which AI agents does it work with?',
-    a: 'Claude, ChatGPT and other agents that follow the same open standards. Customers without an agent can use the optional chat assistant.',
+    q: 'Which AI assistants does it work with?',
+    a: 'Claude today: customers add your shop in a minute in its settings, and approve it there. We’re testing other AI assistants, and working on one-tap adding.',
   },
   {
-    q: 'Can an agent order something my customer didn’t want?',
-    a: 'No. Every order waits for the customer to touch and agree in their own app, and agents can’t connect to you or buy without their approval.',
+    q: 'Can AI order something my customer didn’t want?',
+    a: 'No. Every order waits for the customer to touch and agree in their own app, and nothing can connect to your shop or buy without their approval.',
   },
   {
     q: 'I already sell on Shopify. Is this for me?',
     a: 'Shopify can show your online products in some AI assistants. Gentifi adds what that leaves out: your opening hours and local stock, reservations and bookings, and the events and markets you take part in, alongside the other shops near you.',
   },
   {
-    q: 'I run a farm shop. Can agents see what’s in today?',
+    q: 'I run a farm shop. Can customers’ AI see what’s in today?',
     a: 'We’re building that now: stock marked in or sold out from your phone, with the time you checked. Pre-orders for collection work already.',
     link: { href: '/farm-shops', label: 'What we’re building for farm shops' },
   },
@@ -75,7 +81,7 @@ const faqs = [
 ---
 <Base
   title="For businesses · Gentifi"
-  description="Let AI agents like Claude and ChatGPT find your business, check your prices and stock, and book or order, with customers approving every step. We set you up. Open source and built on open standards."
+  description="Let customers ask their AI assistant about your business: what you sell, prices and opening times, and reserve or order, confirming every order themselves. We set you up. Live in Claude today."
 >
   <Header ctaHref="#waitlist" />
   <main id="main">
@@ -83,19 +89,19 @@ const faqs = [
     <section class="hero section--teal">
       <div class="container">
         <span class="eyebrow">For businesses</span>
-        <h1>Let AI agents find you, book you and buy from you.</h1>
+        <h1>Let customers ask their AI about you.</h1>
         <p class="hero__lede">
-          When customers ask Claude, ChatGPT or another AI agent for something you sell, Gentifi makes sure it can
-          find you, check your prices, and book or buy.
+          When customers add your shop to their AI assistant, they can ask what you sell, check prices and opening
+          times, and reserve or order. They confirm every order, and it comes to you the way orders do now.
         </p>
         <div class="hero__ctas">
           <a class="btn btn--primary" href="#waitlist">Join the waitlist</a>
-          <a class="btn btn--ghost" href="/b/demo-business">See a demo scan</a>
+          <a class="btn btn--ghost" href="/b/demo-business">Try the live demo</a>
         </div>
         <ul class="hero__points">
           <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
-          <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
-          <li><Tick size={18} tick="var(--teal)" />Open source, no lock-in</li>
+          <li><Tick size={18} tick="var(--teal)" />Keep your own till and checkout</li>
+          <li><Tick size={18} tick="var(--teal)" />Live in Claude today</li>
         </ul>
       </div>
     </section>
@@ -105,17 +111,28 @@ const faqs = [
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">What you get</span>
-          <h2>Everything agents need, done for you.</h2>
-          <p>Every business has a gift. We make sure agents can find it.</p>
+          <h2>Everything AI needs, done for you.</h2>
+          <p>Every business has a gift. We make sure AI can find it.</p>
         </div>
-        <ul class="benefits">
-          {benefits.map((b) => (
-            <li>
-              <Tick size={22} tick="var(--white)" />
-              <div><h3>{b.title}</h3><p>{b.body}</p></div>
-            </li>
-          ))}
-        </ul>
+        <div class="offer">
+          <div>
+            <h3 class="offer__label">Today</h3>
+            <ul class="benefits">
+              {today.map((b) => (
+                <li>
+                  <Tick size={22} tick="var(--white)" />
+                  <div><h4>{b.title}</h4><p>{b.body}</p></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="offer__coming">
+            <h3 class="offer__label">Coming next</h3>
+            <ul class="coming">
+              {coming.map((b) => <li><h4>{b.title}</h4><p>{b.body}</p></li>)}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -124,10 +141,10 @@ const faqs = [
       <div class="container sticker-row">
         <div class="sticker-row__copy">
           <span class="eyebrow">Gentifi signs</span>
-          <h2>One sign. Every agent.</h2>
+          <h2>Put up your sign. Customers do the rest.</h2>
           <p>
             A window sticker, a counter card for the till, and a badge for your website and emails. Customers scan one
-            to add you to their agent, and approve the handshake in their own app.
+            to add you to their AI assistant, and approve it in their own app.
           </p>
           <WebBadges />
           <p><a class="sticker-row__link" href="/b/demo-business">See what a scan opens</a></p>
@@ -141,7 +158,7 @@ const faqs = [
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Getting started</span>
-          <h2>Three steps to agent-ready.</h2>
+          <h2>Three steps to get started.</h2>
         </div>
         <ol class="steps">
           {steps.map((s, i) => (
@@ -176,7 +193,7 @@ const faqs = [
             </article>
           ))}
         </div>
-        <p class="b2b">Selling to other businesses? It works the same way, with account prices and approvals.</p>
+        <p class="b2b">Selling to other businesses? Account prices and approvals are coming next.</p>
         <p class="b2b">Running a show, a market, a high street or a trade body? One connection can cover every trader, exhibitor or member. <a href="/#events">See how</a></p>
       </div>
     </section>
@@ -220,8 +237,7 @@ const faqs = [
         <div class="section-head">
           <span class="eyebrow">Waitlist</span>
           <h2>Join the Genesis cohort.</h2>
-          <p>Our first group of agent-ready businesses, starting with independents in Bristol and South Gloucestershire. Join the list and we'll be in touch.</p>
-          <p class="waitlist__count"><span class="placeholder">[WAITLIST COUNT]</span> already signed up</p>
+          <p>Our first group of businesses on Gentifi, starting with independents in Bristol and South Gloucestershire. Join the list and we'll be in touch.</p>
         </div>
         <WaitlistForm role="business" />
       </div>
@@ -240,12 +256,18 @@ const faqs = [
   .hero__points li { display: flex; align-items: center; gap: 8px; }
 
   /* Benefits */
-  .benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px 40px; }
+  .offer { display: grid; gap: 32px; }
+  @media (min-width: 960px) { .offer { grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: start; } }
+  .offer__label { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 18px; }
+  .offer__coming { background: var(--grey); border-radius: var(--radius); padding: 24px 26px; }
+  .coming { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .coming h4 { font-size: 1.02rem; margin-bottom: 2px; }
+  .coming p { color: var(--ink-muted); font-size: 0.95rem; }
+  .benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px 36px; }
   @media (min-width: 720px) { .benefits { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1040px) { .benefits { grid-template-columns: repeat(3, 1fr); } }
   .benefits li { display: flex; gap: 14px; align-items: flex-start; }
   .benefits li :global(svg) { margin-top: 2px; flex-shrink: 0; }
-  .benefits h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .benefits h4 { font-size: 1.1rem; margin-bottom: 4px; }
   .benefits p { color: var(--ink-muted); }
 
   /* Sticker */
@@ -327,5 +349,4 @@ const faqs = [
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
-  .waitlist__count { font-size: 0.95rem; color: var(--on-teal-muted); }
 </style>

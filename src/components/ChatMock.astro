@@ -11,7 +11,7 @@ const { tone = 'dark' } = Astro.props;
 <figure class:list={['chat', `chat--${tone}`]}>
   <figcaption class="chat__caption">Illustration · fictional business</figcaption>
   <div class="chat__window">
-    <div class="chat__bar"><span class="chat__dot"></span><span class="chat__dot"></span><span class="chat__dot"></span><span class="chat__title">Your agent</span></div>
+    <div class="chat__bar"><span class="chat__dot"></span><span class="chat__dot"></span><span class="chat__dot"></span><span class="chat__title">Your AI assistant</span></div>
     <div class="chat__body">
       <p class="msg msg--you">Which farm near me has eggs this week? Reserve a dozen for Saturday.</p>
       <div class="msg msg--agent">
@@ -35,7 +35,7 @@ const { tone = 'dark' } = Astro.props;
           <span class="confirm__no">Change</span>
         </div>
       </div>
-      <p class="chat__note">The agent asks. You confirm.</p>
+      <p class="chat__note">Your AI asks. You confirm.</p>
     </div>
   </div>
 </figure>

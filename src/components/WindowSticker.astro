@@ -8,7 +8,7 @@ import QrCode from './QrCode.astro';
 interface Props {
   business?: string;
 }
-const { business = '[YOUR BUSINESS NAME]' } = Astro.props;
+const { business = 'Your business' } = Astro.props;
 ---
 <div class="sticker-wrap">
   <figure class="sticker" aria-label={`Gentifi window sticker for ${business}`}>
@@ -24,8 +24,8 @@ const { business = '[YOUR BUSINESS NAME]' } = Astro.props;
     </div>
     <div class="sticker__bottom">
       <div class="sticker__text">
-        <div class="sticker__cta">Scan to add us to your AI agent</div>
-        <div class="sticker__agents">Claude · ChatGPT · Hermes · any agent</div>
+        <div class="sticker__cta">Scan to add us to your AI assistant</div>
+        <div class="sticker__agents">Works in Claude today</div>
         <div class="sticker__biz">{business}</div>
       </div>
       <div class="sticker__qr"><QrCode /></div>

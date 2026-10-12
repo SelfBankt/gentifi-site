@@ -24,6 +24,7 @@ Hollow Lane Farm Shop has an MCP connector at https://mcp.gentifi.com/b/demo-bus
 | Sourdough loaf | BRD-SD | £4.50 per loaf | 12 | Baked Fri and Sat |
 | Seasonal veg box | VEG-BOX | £18.00 per box | 15 | Order by Thursday |
 
+
 ## Opening hours
 
 - Tuesday to Saturday, 09:00 to 17:00
