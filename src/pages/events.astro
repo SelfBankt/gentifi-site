@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CollectionDiagram from '../components/CollectionDiagram.astro';
+import Tick from '../components/Tick.astro';
+
+// Organisers' enquiries go to the "Organisers" tab through the waitlist's Apps Script (see waitlist/apps-script.gs)
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
+
+const visitorSteps = [
+  { title: 'Scan the sign at the entrance', body: 'Or tap the link on your website, programme or social pages.' },
+  { title: 'Add your event to their AI', body: 'One link in Claude or ChatGPT covers every trader, and they approve it in their own app.' },
+  { title: 'Ask across every stall', body: '“Which stalls have sourdough on Saturday? Save me a loaf.” Nothing is ordered until they confirm.' },
+];
+
+const included = [
+  { title: 'Every trader set up for you', body: 'Each trader who agrees gets their own page, products and prices in Claude and ChatGPT, and their own signs.' },
+  { title: 'One connection for the whole event', body: 'Visitors add your market, show or street once, and reach only your traders.' },
+  { title: 'Signs for the entrance and stalls', body: 'A window sticker and counter cards with your event’s own code, ready to print.' },
+  { title: 'An AI visibility check for your website', body: 'What your event’s website tells AI today, and the structured data to fix it.' },
+  { title: 'Traders stay with visitors', body: 'After the event, visitors can still ask about the traders they liked, if the traders want that.' },
+  { title: 'Numbers you can share', body: 'How often visitors opened traders’ pages and asked their AI about them, counted anonymously.' },
+];
+
+const pilot = [
+  { title: 'Tell us about your event', body: 'Use the form below. We’ll call to talk it through.' },
+  { title: 'Share your trader list', body: 'We contact each trader, and set up everyone who agrees from their own product list.' },
+  { title: 'Put up the signs', body: 'At the entrance, on stalls, and in your programme or emails.' },
+  { title: 'Visitors ask', body: 'We share the counts with you afterwards.' },
+];
+
+const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trade body or association', 'Something else'];
+---
+<Base
+  title="Markets, shows and high streets · Gentifi"
+  description="One connection for your whole market, show or high street: every trader set up in Claude and ChatGPT, visitors asking across every stall, and signs for the entrance. A package for organisers, starting in Bristol and South Gloucestershire."
+>
+  <Header ctaHref="#enquire" ctaLabel="Talk to us" />
+  <main id="main">
+    <section class="hero section--teal">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow">For markets, shows and high streets</span>
+          <h1>One connection for your whole market, show or high street.</h1>
+          <p class="hero__lede">
+            Visitors add your event to their AI assistant once, then ask across every trader: what they have, prices
+            and opening times, and to reserve something. A package for organisers, with every trader set up for you.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#enquire">Talk to us about a pilot</a>
+            <a class="btn btn--ghost" href="#package">What’s included</a>
+          </div>
+        </div>
+        <div class="hero__visual"><CollectionDiagram /></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">For your visitors</span>
+          <h2>Every stall, in one question.</h2>
+        </div>
+        <ol class="steps">{visitorSteps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
+      </div>
+    </section>
+
+    <section class="section section--grey" id="package">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The package</span>
+          <h2>Everything your traders need, done for you.</h2>
+          <p>AI optimisation for a whole event at once, built around your traders and your dates.</p>
+        </div>
+        <ul class="included">{included.map((i) => <li><Tick size={22} tick="var(--white)" /><div><h3>{i.title}</h3><p>{i.body}</p></div></li>)}</ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container two">
+        <div>
+          <div class="section-head">
+            <span class="eyebrow">How a pilot works</span>
+            <h2>Four steps.</h2>
+          </div>
+          <ol class="steps steps--plain">{pilot.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
+        </div>
+        <div class="rules">
+          <h3>The rules we keep</h3>
+          <ul>
+            <li><Tick size={20} tick="var(--white)" /><span>Every trader keeps its own data, prices and checkout.</span></li>
+            <li><Tick size={20} tick="var(--white)" /><span>Nobody is listed without agreeing to it.</span></li>
+            <li><Tick size={20} tick="var(--white)" /><span>Visitors approve the connection, and every order, in their own app.</span></li>
+          </ul>
+          <p>Built on an open standard: your event is published as a <a href="/standards">Business Collection</a>, so any AI assistant can read it, not just ours.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--teal" id="enquire">
+      <div class="container narrow">
+        <div class="section-head">
+          <span class="eyebrow">Talk to us</span>
+          <h2>Tell us about your event.</h2>
+          <p>We’re piloting with the first markets, shows and high streets in Bristol and South Gloucestershire. We’ll reply to talk it through.</p>
+        </div>
+        <form class="enquire" action={ENDPOINT} method="post" data-enquire data-endpoint={ENDPOINT}>
+          <input type="hidden" name="form" value="organiser" />
+          <div class="field"><label for="o-name">Your name</label><input id="o-name" name="name" autocomplete="name" required /></div>
+          <div class="field"><label for="o-email">Email</label><input id="o-email" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field"><label for="o-event">Event or organisation</label><input id="o-event" name="event" required /></div>
+          <div class="field"><label for="o-kind">What is it</label><select id="o-kind" name="kind">{kinds.map((k) => <option>{k}</option>)}</select></div>
+          <div class="field"><label for="o-traders">Roughly how many traders <span class="opt">(optional)</span></label><input id="o-traders" name="traders" inputmode="numeric" /></div>
+          <div class="field"><label for="o-when">When it runs <span class="opt">(optional)</span></label><input id="o-when" name="when" placeholder="For example: first Saturday of the month" /></div>
+          <div class="field"><label for="o-town">Town <span class="opt">(optional)</span></label><input id="o-town" name="town" autocomplete="address-level2" /></div>
+          <div class="field"><label for="o-site">Website <span class="opt">(optional)</span></label><input id="o-site" name="site_url" inputmode="url" placeholder="yourmarket.co.uk" /></div>
+          <div class="field wide"><label for="o-phone">Phone <span class="opt">(optional)</span></label><input id="o-phone" name="phone" type="tel" autocomplete="tel" /></div>
+          <div class="field wide"><label for="o-notes">Anything else <span class="opt">(optional)</span></label><textarea id="o-notes" name="notes" rows="3"></textarea></div>
+          <div class="trap" aria-hidden="true"><label for="o-trap">Leave this empty</label><input id="o-trap" name="trap" tabindex="-1" autocomplete="off" /></div>
+          <div class="wide actions">
+            <button class="btn btn--primary" type="submit">Send</button>
+            <p class="note">We’ll only use these details to talk to you about Gentifi. <a href="/privacy#organisers">How we use your details</a></p>
+          </div>
+          <p class="status wide" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-enquire]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector('.status')!;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+      body.set('page', location.pathname);
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        // A simple form POST: Apps Script answers it without a CORS preflight
+        const reply = await (await fetch(form.dataset.endpoint!, { method: 'POST', body })).json();
+        if (reply.ok) {
+          form.reset();
+          status.textContent = 'Thank you. We’ll be in touch soon to talk it through.';
+        } else {
+          status.textContent = reply.error || 'That didn’t go through. Please check your details and try again.';
+        }
+      } catch {
+        status.textContent = 'That didn’t go through, probably a connection problem. Please try again, or email gentifiai@gmail.com.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .hero { padding-block: clamp(48px, 8vw, 96px); }
+  .hero__grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 960px) { .hero__grid { grid-template-columns: 1.1fr minmax(0, 0.9fr); gap: 56px; } }
+  .hero__copy { min-width: 0; }
+  .hero h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.08; max-width: 16em; }
+  .hero__lede { margin-top: 18px; color: var(--on-teal-muted); font-size: 1.1rem; max-width: 38rem; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero__visual { min-width: 0; max-width: 480px; width: 100%; justify-self: center; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: s; }
+  @media (min-width: 860px) { .steps:not(.steps--plain) { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+  .steps li { counter-increment: s; background: var(--grey); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 6px; }
+  .steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; }
+  .steps span { color: var(--ink-muted); }
+  .steps--plain li { background: none; padding: 0 0 0 48px; position: relative; }
+  .steps--plain li::before { position: absolute; left: 0; top: 0; }
+  .included { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px 36px; }
+  @media (min-width: 720px) { .included { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1040px) { .included { grid-template-columns: repeat(3, 1fr); } }
+  .included li { display: flex; gap: 14px; align-items: flex-start; }
+  .included li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+  .included h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .included p { color: var(--ink-muted); }
+  .two { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .two { grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; } }
+  .rules { background: var(--grey); border-radius: var(--radius); padding: 26px 28px; display: grid; gap: 14px; }
+  .rules h3 { font-size: 1.3rem; }
+  .rules ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .rules li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
+  .rules li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+  .rules p { color: var(--ink-muted); }
+  .rules a { color: var(--teal); font-weight: 600; }
+  .narrow { max-width: calc(48rem + var(--gutter) * 2); }
+  .enquire { display: grid; gap: 16px; margin-top: 8px; }
+  @media (min-width: 640px) { .enquire { grid-template-columns: 1fr 1fr; } .wide { grid-column: 1 / -1; } }
+  .field { display: grid; gap: 6px; min-width: 0; }
+  label { font-size: 0.9rem; font-weight: 600; }
+  .opt { font-weight: 400; color: var(--on-teal-muted); }
+  input, select, textarea { font: inherit; min-height: 48px; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--teal-line); background: var(--teal-raised); color: var(--white); width: 100%; }
+  textarea { min-height: 0; resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--copper); }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+  .note { font-size: 0.85rem; color: var(--on-teal-muted); }
+  .note a { color: var(--white); font-weight: 600; }
+  .status:empty { display: none; }
+  .status { padding: 12px 16px; border: 1px solid var(--copper); border-radius: var(--radius-sm); color: var(--white); }
+  .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+</style>

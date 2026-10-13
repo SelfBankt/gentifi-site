@@ -2,7 +2,8 @@
  * Gentifi waitlist and business sign-ups: receives the site's forms and adds a row to this sheet.
  * The waitlist goes to the "Waitlist" tab; the business sign-up form (gentifi.com/join) goes to
  * "Sign-ups", and emails you each time someone signs up. Requests for an AI visibility check
- * (the short form on gentifi.com) go to "AI checks", with an email too.
+ * (the short form on gentifi.com) go to "AI checks", and organisers' enquiries (gentifi.com/events)
+ * go to "Organisers", each with an email too.
  *
  * Set up (once):
  *   1. Create a Google Sheet, then Extensions > Apps Script. Paste this file in, replacing everything.
@@ -34,6 +35,10 @@ const DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const CHECKS_NAME = 'AI checks';
 const CHECK_HEADERS = ['Received', 'Business', 'Website', 'Email', 'Town', 'Page'];
 
+const ORGANISERS_NAME = 'Organisers';
+const ORGANISER_HEADERS = ['Received', 'Name', 'Email', 'Phone', 'Event or organisation', 'Kind', 'Traders', 'When', 'Town', 'Website', 'Notes', 'Page'];
+const EVENT_KINDS = ['Market', 'Show or festival', 'High street or town centre', 'Trade body or association', 'Something else'];
+
 // Who gets an email for each sign-up: blank means the account that deployed this script
 const NOTIFY = '';
 
@@ -43,6 +48,7 @@ function doPost(e) {
   if (p.trap || (p.form !== 'signup' && p.website)) return json({ ok: true });
   if (p.form === 'signup') return signUp(p);
   if (p.form === 'check') return askForCheck(p);
+  if (p.form === 'organiser') return organiserEnquiry(p);
 
   const name = clean(p.name, 100);
   const email = String(p.email || '').trim().toLowerCase().slice(0, 200);
@@ -125,6 +131,35 @@ function askForCheck(p) {
     MailApp.sendEmail(NOTIFY || Session.getEffectiveUser().getEmail(), 'AI visibility check requested: ' + business,
       CHECK_HEADERS.map((h, i) => h + ': ' + row[i]).join('\n')
       + '\n\nRun: gentifi website --check ' + site + ' --name "' + business.replace(/"/g, '') + '" --report report.html');
+  } catch (err) {
+    // The row is saved even if the email can't be sent
+  }
+  return json({ ok: true });
+}
+
+/** A market, show, high street or trade body asking about a package for its traders. */
+function organiserEnquiry(p) {
+  const name = clean(p.name, 100);
+  const email = String(p.email || '').trim().toLowerCase().slice(0, 200);
+  const event = clean(p.event, 160);
+  if (!name || !event || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return json({ ok: false, error: 'Please give your name, your email address and the name of your event or organisation.' });
+  }
+  const kind = EVENT_KINDS.indexOf(p.kind) >= 0 ? p.kind : 'Something else';
+  let site = String(p.site_url || '').trim().slice(0, 300);
+  if (site && !/^https?:\/\//i.test(site)) site = 'https://' + site;
+  const row = [new Date(), name, email, clean(p.phone, 40), event, kind, clean(p.traders, 20), clean(p.when, 160), clean(p.town, 80),
+    cleanUrl(site), cleanBlock(p.notes, 2000), clean(p.page, 200)];
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    getSheet(ORGANISERS_NAME, ORGANISER_HEADERS).appendRow(row);
+  } finally {
+    lock.releaseLock();
+  }
+  try {
+    MailApp.sendEmail(NOTIFY || Session.getEffectiveUser().getEmail(), 'Organiser enquiry: ' + event,
+      ORGANISER_HEADERS.map((h, i) => h + ': ' + row[i]).join('\n'));
   } catch (err) {
     // The row is saved even if the email can't be sent
   }
