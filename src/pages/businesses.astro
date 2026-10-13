@@ -9,7 +9,9 @@ import Tick from '../components/Tick.astro';
 
 const today = [
   { title: 'Found by AI assistants', body: 'Customers’ AI can see what you sell, what it costs and when you’re open.' },
-  { title: 'Readable by AI search', body: 'Your shop’s page carries structured data that AI search engines can read.' },
+  { title: 'An AI visibility check', body: 'A one-page report on what your website and Google profile tell AI today, in plain English.' },
+  { title: 'Your website, made AI-readable', body: 'Structured data that tells AI you’re a local shop, where you are and when you’re open. Paste it in once, and your site looks the same.' },
+  { title: 'Your Google profile, checked', body: 'Name, hours, holiday hours, category and products, so AI answers about you correctly.' },
   { title: 'Your own checkout', body: 'Customers confirm every order, and it reaches you by email or through your own checkout.' },
   { title: 'Your signs', body: 'A window sticker and a counter card with your own code, ready to print.' },
   { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes.' },
@@ -44,6 +46,10 @@ const needs = [
 ];
 
 const faqs = [
+  {
+    q: 'What is AI optimisation?',
+    a: 'Making sure AI assistants such as ChatGPT, Claude, Google’s AI answers and Perplexity can find your business and describe it correctly: what you sell, prices, where you are and when you’re open. We check what they can read about you today, fix your website’s structured data and your Google profile, and put your products into Claude and ChatGPT directly.',
+  },
   {
     q: 'I’m an independent with no online shop. Is this for me?',
     a: 'Yes. That’s who we’re starting with, in Bristol and South Gloucestershire. A spreadsheet of what you sell is enough, and orders and bookings still come to you.',
@@ -81,14 +87,14 @@ const faqs = [
 ---
 <Base
   title="For businesses · Gentifi"
-  description="Let customers ask their AI assistant about your business: what you sell, prices and opening times, and reserve or order, confirming every order themselves. We set you up. Live in Claude and ChatGPT today."
+  description="AI optimisation for small businesses: let customers ask their AI assistant about your business: what you sell, prices and opening times, and reserve or order, confirming every order themselves. We set you up. Live in Claude and ChatGPT today."
 >
   <Header />
   <main id="main">
     <!-- Hero -->
     <section class="hero section--teal">
       <div class="container">
-        <span class="eyebrow">For businesses</span>
+        <span class="eyebrow">AI optimisation for small businesses</span>
         <h1>Let customers ask their AI about you.</h1>
         <p class="hero__lede">
           When customers add your shop to their AI assistant, they can ask what you sell, check prices and opening

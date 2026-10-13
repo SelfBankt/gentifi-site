@@ -16,6 +16,15 @@ const shopSteps = [
   { title: 'Orders come to you', body: 'Customers confirm every order, and it reaches you by email or through your own checkout, as now.' },
 ];
 
+const checkHref = 'mailto:gentifiai@gmail.com?subject=AI%20visibility%20check&body=Business%20name%3A%0AWebsite%3A%0ATown%3A%0A';
+
+const optimise = [
+  { title: 'An AI visibility check', body: 'We check what your website and Google profile tell AI today, and send you a one-page report in plain English.' },
+  { title: 'Your website, made AI-readable', body: 'We write the structured data that tells AI you’re a local shop, where you are and when you’re open. You paste it in once, and your site looks the same.' },
+  { title: 'Your Google profile, checked', body: 'Name, hours, holiday hours, category and products, so AI answers about you correctly.' },
+  { title: 'In Claude and ChatGPT', body: 'Your products, prices and opening times in your customers’ AI assistants, kept up to date from your own list.' },
+];
+
 const customerSteps = [
   { title: 'Scan your sign', body: 'Or tap your link on your website or social pages.' },
   { title: 'Add your shop to their AI', body: 'It takes a minute in Claude or ChatGPT, and they approve it in their own app.' },
@@ -49,7 +58,7 @@ const control = [
 ---
 <Base
   title="Gentifi: your shop, in your customers’ AI"
-  description="Customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude and ChatGPT today, starting with independents in Bristol and South Gloucestershire."
+  description="AI optimisation for independent shops: customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude and ChatGPT today, starting with independents in Bristol and South Gloucestershire."
 >
   <Header />
   <main id="main">
@@ -57,7 +66,7 @@ const control = [
     <section class="hero section--teal">
       <div class="container hero__grid">
         <div class="hero__copy">
-          <span class="eyebrow">For independent shops, cafés and makers</span>
+          <span class="eyebrow">AI optimisation for independent shops, cafés and makers</span>
           <h1 class="hero__title">Your shop, in your customers’ AI.</h1>
           <p class="hero__lede">
             Customers scan your sign once to add you to their AI assistant. Then they can ask what you have and when
@@ -117,6 +126,24 @@ const control = [
             <a class="setup__link" href="/how-it-works">How it works, in detail</a>
           </div>
         </article>
+      </div>
+    </section>
+
+    <!-- AI optimisation -->
+    <section class="section section--grey" id="ai-optimisation">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">AI optimisation, done for you</span>
+          <h2>Get found by AI, not just by Google.</h2>
+          <p>When customers ask ChatGPT, Claude, Google or Perplexity about local shops, the answer comes from what AI can read about you. We make sure it reads the right things.</p>
+        </div>
+        <ul class="optimise">
+          {optimise.map((o) => <li><h3>{o.title}</h3><p>{o.body}</p></li>)}
+        </ul>
+        <div class="optimise__ctas">
+          <a class="btn btn--teal" href={checkHref}>Ask for your AI visibility check</a>
+          <a class="setup__link" href="/join">Or sign up your shop</a>
+        </div>
       </div>
     </section>
 
@@ -291,6 +318,16 @@ const control = [
   .side--customer li span { color: var(--on-teal-muted); }
 
   /* We set it up */
+  /* AI optimisation */
+  .optimise { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .optimise { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .optimise { grid-template-columns: repeat(4, 1fr); } }
+  .optimise li { background: var(--white); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 8px; align-content: start; border-top: 4px solid var(--copper); }
+  .optimise h3 { font-size: 1.1rem; }
+  .optimise p { color: var(--ink-muted); font-size: 0.95rem; }
+  .optimise__ctas { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+  .optimise__ctas .setup__link { color: var(--teal); }
+
   .setup {
     margin-top: clamp(40px, 6vw, 56px);
     display: grid;
