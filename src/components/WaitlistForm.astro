@@ -44,8 +44,8 @@ const roles = [
     <input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off" />
   </div>
   <div class="field--wide actions">
-    <button class:list={['btn', tone === 'light' ? 'btn--teal' : 'btn--primary']} type="submit">Join the waitlist</button>
-    <p class="note">We'll only email you about Gentifi's launch. <a href="/privacy">How we use your details</a></p>
+    <button class:list={['btn', tone === 'light' ? 'btn--teal' : 'btn--primary']} type="submit">Keep me posted</button>
+    <p class="note">We'll only email you about Gentifi. <a href="/privacy">How we use your details</a></p>
   </div>
   <p class="status field--wide" role="status" aria-live="polite"></p>
 </form>
@@ -78,7 +78,7 @@ const roles = [
         const body = await res.json();
         if (body.ok) {
           form.reset();
-          say('Thanks, you’re on the list. We’ll be in touch.');
+          say('Thanks. We’ll keep you posted.');
         } else {
           say(body.error || 'That didn’t go through. Please check your details and try again.');
         }
