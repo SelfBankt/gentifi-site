@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+  "name": "com.gentifi.mcp/network",
+  "version": "0.1.0",
+  "title": "Gentifi",
+  "description": "Independent local businesses: their products, prices, stock, opening times and ordering",
+  "websiteUrl": "https://gentifi.com/connector",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.gentifi.com/mcp",
+      "supportedProtocolVersions": [
+        "2026-07-28",
+        "2025-11-25",
+        "2025-06-18",
+        "2025-03-26",
+        "2024-11-05"
+      ]
+    }
+  ]
+}
