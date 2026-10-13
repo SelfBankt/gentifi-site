@@ -124,6 +124,16 @@ function cleanUrl(value) {
   return /^https?:\/\/\S+$/i.test(url) ? url : '';
 }
 
+/**
+ * Run this once from the editor (choose it in the function list, then Run) to grant the email
+ * permission and send yourself a test alert. Sign-up alerts only work after that.
+ */
+function sendTestEmail() {
+  const to = NOTIFY || Session.getEffectiveUser().getEmail();
+  MailApp.sendEmail(to, 'Gentifi sign-up alerts work', 'You will get an email like this each time a business signs up at gentifi.com/join.');
+  Logger.log('Sent a test email to ' + to);
+}
+
 function doGet() {
   return ContentService.createTextOutput('The Gentifi waitlist is working. Sign up at gentifi.com.');
 }
