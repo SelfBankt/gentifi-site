@@ -1,0 +1,3 @@
+name,price_gbp,unit,category,description,availability,stock
+Example item,4.50,each,Example category,Replace these example rows with your own,Every day,yes
+Another example,12.00,box,Example category,,Order by Thursday,yes
