@@ -18,6 +18,8 @@ const business = {
 const badgeLink = `gentifi.com/b/${business.slug}`;
 // The demo connector is live on the Gentifi host
 const connectorUrl = `https://mcp.gentifi.com/b/${business.slug}/mcp`;
+// Customers add the one Gentifi connector, which includes every shop on Gentifi
+const gentifiUrl = 'https://mcp.gentifi.com/mcp';
 const files = `/b/${business.slug}`;
 const toolkitUrl = 'https://github.com/SelfBankt/gentifi-toolkit';
 
@@ -28,9 +30,9 @@ const stock = [
 ];
 
 const asks = [
-  'Have they got eggs this week? Reserve a dozen for Saturday.',
-  "What's in the veg box this week, and can I collect after 5?",
-  'Order a sourdough loaf for Friday collection.',
+  'Does Hollow Lane Farm have eggs this week? Reserve a dozen for Saturday.',
+  "What's in Hollow Lane's veg box this week, and can I collect after 5?",
+  'Order a sourdough loaf from Hollow Lane for Friday collection.',
 ];
 ---
 <Base
@@ -66,16 +68,17 @@ const asks = [
         <div class="actions">
           <ol class="try">
             <li>
-              <strong>Copy this link</strong>
-              <code class="try__link">{connectorUrl}</code>
-              <button class="btn btn--primary btn--block" type="button" data-copy={connectorUrl}>
+              <strong>Copy the Gentifi link</strong>
+              <span>It includes {business.name}.</span>
+              <code class="try__link">{gentifiUrl}</code>
+              <button class="btn btn--primary btn--block" type="button" data-copy={gentifiUrl}>
                 <span data-copy-label>Copy link</span>
               </button>
             </li>
             <li>
               <strong>Add it to your AI app</strong>
               <span><b>Claude:</b> Settings → Connectors → Add custom connector. Paste the link.</span>
-              <span><b>ChatGPT:</b> In a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → + → Add custom MCP server. Paste the link, no authentication. Then type @ in a chat to pick the shop.</span>
+              <span><b>ChatGPT:</b> In a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server. Paste the link, no authentication. Then type @ in a chat to pick the shop.</span>
             </li>
             <li><strong>Just ask</strong><span>“Does Hollow Lane Farm have eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</span></li>
           </ol>
@@ -163,7 +166,8 @@ const asks = [
             <dt>Agent Skill</dt><dd><a href={`${files}/SKILL.md`}><code>{badgeLink}/SKILL.md</code></a></dd>
             <dt>schema.org</dt><dd><a href={`${files}/business.jsonld`}><code>{badgeLink}/business.jsonld</code></a></dd>
             <dt>Window sticker</dt><dd><a href={`${files}/badge.svg`}><code>{badgeLink}/badge.svg</code></a></dd>
-            <dt>MCP connector</dt><dd><code>{connectorUrl}</code> <span class="agents__live">live</span></dd>
+            <dt>Gentifi connector</dt><dd><code>{gentifiUrl}</code> <span class="agents__live">live</span></dd>
+            <dt>This shop’s own connector</dt><dd><code>{connectorUrl}</code> <span class="agents__live">live</span></dd>
           </dl>
         </details>
       </div>
