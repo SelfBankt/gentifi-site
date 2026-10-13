@@ -16,7 +16,7 @@ const visitorSteps = [
 
 const included = [
   { title: 'Every trader set up for you', body: 'Each trader who agrees gets their own page, products and prices in Claude and ChatGPT, and their own signs.' },
-  { title: 'One connection for the whole event', body: 'Visitors add your market, show or street once, and reach only your traders.' },
+  { title: 'One connection for the whole collection', body: 'Visitors add your market, show or street once, and reach only your members.' },
   { title: 'Signs for the entrance and stalls', body: 'A window sticker and counter cards with your event’s own code, ready to print.' },
   { title: 'An AI visibility check for your website', body: 'What your event’s website tells AI today, and the structured data to fix it.' },
   { title: 'Traders stay with visitors', body: 'After the event, visitors can still ask about the traders they liked, if the traders want that.' },
@@ -30,33 +30,56 @@ const pilot = [
   { title: 'Visitors ask', body: 'We share the counts with you afterwards.' },
 ];
 
+const collectionKinds = [
+  { title: 'Events', examples: 'Markets, shows, fairs and festivals', body: 'Every stall or exhibitor, with the dates it runs.' },
+  { title: 'Places', examples: 'High streets, town centres and business districts', body: 'Every shop, café and service on the street, all year round.' },
+  { title: 'Associations', examples: 'Trade bodies, guilds and food partnerships', body: 'Every member, wherever they are.' },
+  { title: 'Marketplaces', examples: 'Food hubs, co-ops and maker collectives', body: 'Every producer who sells through you.' },
+];
+
 const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trade body or association', 'Something else'];
 ---
 <Base
   title="Markets, shows and high streets · Gentifi"
-  description="One connection for your whole market, show or high street: every trader set up in Claude and ChatGPT, visitors asking across every stall, and signs for the entrance. A package for organisers, starting in Bristol and South Gloucestershire."
+  description="Turn your market, show, high street or trade body into a collection: one connection for every member, every trader set up in Claude and ChatGPT, visitors asking across every stall, and signs for the entrance. A package for organisers, starting in Bristol and South Gloucestershire."
 >
   <Header ctaHref="#enquire" ctaLabel="Talk to us" />
   <main id="main">
     <section class="hero section--teal">
       <div class="container hero__grid">
         <div class="hero__copy">
-          <span class="eyebrow">For markets, shows and high streets</span>
+          <span class="eyebrow">For markets, shows and high street collections</span>
           <h1>One connection for your whole market, show or high street.</h1>
           <p class="hero__lede">
-            Visitors add your event to their AI assistant once, then ask across every trader: what they have, prices
-            and opening times, and to reserve something. A package for organisers, with every trader set up for you.
+            Turn your market, show or high street into a collection: visitors add it to their AI assistant once, then
+            ask across every trader. A package for organisers, with every trader set up for you.
           </p>
           <div class="hero__ctas">
             <a class="btn btn--primary" href="#enquire">Talk to us about a pilot</a>
-            <a class="btn btn--ghost" href="#package">What’s included</a>
+            <a class="btn btn--ghost" href="#collections">What’s a collection?</a>
           </div>
         </div>
         <div class="hero__visual"><CollectionDiagram /></div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="collections">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Collections</span>
+          <h2>What’s a collection?</h2>
+          <p>Any group of businesses that belong together. Customers add the collection once, and their AI can find, compare and reserve across every member, while each business keeps its own products, prices and checkout.</p>
+        </div>
+        <ul class="kinds">{collectionKinds.map((k) => <li><h3>{k.title}</h3><p class="kinds__eg">{k.examples}</p><p>{k.body}</p></li>)}</ul>
+        <ul class="facts">
+          <li><Tick size={20} tick="var(--white)" /><span><strong>One link for everyone.</strong> A sign, a programme or a newsletter reaches every member at once.</span></li>
+          <li><Tick size={20} tick="var(--white)" /><span><strong>Members stay independent.</strong> Each keeps its own data and checkout, and can belong to more than one collection.</span></li>
+          <li><Tick size={20} tick="var(--white)" /><span><strong>An open standard.</strong> Published as a <a href="/standards">Business Collection</a>, so any AI assistant can read it, not just ours.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--grey">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">For your visitors</span>
@@ -66,18 +89,18 @@ const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trad
       </div>
     </section>
 
-    <section class="section section--grey" id="package">
+    <section class="section" id="package">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">The package</span>
           <h2>Everything your traders need, done for you.</h2>
-          <p>AI optimisation for a whole event at once, built around your traders and your dates.</p>
+          <p>AI optimisation for a whole collection at once, built around your members and your dates.</p>
         </div>
         <ul class="included">{included.map((i) => <li><Tick size={22} tick="var(--white)" /><div><h3>{i.title}</h3><p>{i.body}</p></div></li>)}</ul>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--grey">
       <div class="container two">
         <div>
           <div class="section-head">
@@ -93,7 +116,6 @@ const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trad
             <li><Tick size={20} tick="var(--white)" /><span>Nobody is listed without agreeing to it.</span></li>
             <li><Tick size={20} tick="var(--white)" /><span>Visitors approve the connection, and every order, in their own app.</span></li>
           </ul>
-          <p>Built on an open standard: your event is published as a <a href="/standards">Business Collection</a>, so any AI assistant can read it, not just ours.</p>
         </div>
       </div>
     </section>
@@ -169,7 +191,7 @@ const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trad
   .hero__visual { min-width: 0; max-width: 480px; width: 100%; justify-self: center; }
   .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: s; }
   @media (min-width: 860px) { .steps:not(.steps--plain) { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-  .steps li { counter-increment: s; background: var(--grey); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 6px; }
+  .steps li { counter-increment: s; background: var(--white); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 6px; }
   .steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; }
   .steps span { color: var(--ink-muted); }
   .steps--plain li { background: none; padding: 0 0 0 48px; position: relative; }
@@ -183,7 +205,7 @@ const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trad
   .included p { color: var(--ink-muted); }
   .two { display: grid; gap: 40px; }
   @media (min-width: 960px) { .two { grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; } }
-  .rules { background: var(--grey); border-radius: var(--radius); padding: 26px 28px; display: grid; gap: 14px; }
+  .rules { background: var(--white); border-radius: var(--radius); padding: 26px 28px; display: grid; gap: 14px; }
   .rules h3 { font-size: 1.3rem; }
   .rules ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
   .rules li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; }
@@ -205,4 +227,17 @@ const kinds = ['Market', 'Show or festival', 'High street or town centre', 'Trad
   .status:empty { display: none; }
   .status { padding: 12px 16px; border: 1px solid var(--copper); border-radius: var(--radius-sm); color: var(--white); }
   .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .kinds { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .kinds { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .kinds { grid-template-columns: repeat(4, 1fr); } }
+  .kinds li { background: var(--grey); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 6px; align-content: start; border-top: 4px solid var(--copper); }
+  .kinds h3 { font-size: 1.15rem; }
+  .kinds__eg { font-weight: 600; color: var(--teal); }
+  .kinds p:not(.kinds__eg) { color: var(--ink-muted); font-size: 0.95rem; }
+  .facts { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 14px; }
+  @media (min-width: 960px) { .facts { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+  .facts li { display: flex; gap: 12px; align-items: flex-start; color: var(--ink-muted); }
+  .facts li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+  .facts strong { color: var(--teal); }
+  .facts a { color: var(--teal); font-weight: 600; }
 </style>
