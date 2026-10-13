@@ -1,7 +1,8 @@
 /**
  * Gentifi waitlist and business sign-ups: receives the site's forms and adds a row to this sheet.
  * The waitlist goes to the "Waitlist" tab; the business sign-up form (gentifi.com/join) goes to
- * "Sign-ups", and emails you each time someone signs up.
+ * "Sign-ups", and emails you each time someone signs up. Requests for an AI visibility check
+ * (the short form on gentifi.com) go to "AI checks", with an email too.
  *
  * Set up (once):
  *   1. Create a Google Sheet, then Extensions > Apps Script. Paste this file in, replacing everything.
@@ -30,6 +31,9 @@ const ORDER_METHODS = {
   none: 'No orders ahead: customers visit',
 };
 const DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+const CHECKS_NAME = 'AI checks';
+const CHECK_HEADERS = ['Received', 'Business', 'Website', 'Email', 'Town', 'Page'];
+
 // Who gets an email for each sign-up: blank means the account that deployed this script
 const NOTIFY = '';
 
@@ -38,6 +42,7 @@ function doPost(e) {
   // Bots fill in the hidden "trap" or "website" field; tell them it worked and keep nothing
   if (p.trap || (p.form !== 'signup' && p.website)) return json({ ok: true });
   if (p.form === 'signup') return signUp(p);
+  if (p.form === 'check') return askForCheck(p);
 
   const name = clean(p.name, 100);
   const email = String(p.email || '').trim().toLowerCase().slice(0, 200);
@@ -92,6 +97,34 @@ function signUp(p) {
   try {
     MailApp.sendEmail(NOTIFY || Session.getEffectiveUser().getEmail(), 'New Gentifi sign-up: ' + business,
       SIGNUP_HEADERS.map((h, i) => h + ': ' + row[i]).join('\n'));
+  } catch (err) {
+    // The row is saved even if the email can't be sent
+  }
+  return json({ ok: true });
+}
+
+/** A business asking for an AI visibility check of its website. */
+function askForCheck(p) {
+  const business = clean(p.business, 120);
+  const email = String(p.email || '').trim().toLowerCase().slice(0, 200);
+  let site = String(p.site_url || '').trim().slice(0, 300);
+  if (site && !/^https?:\/\//i.test(site)) site = 'https://' + site;
+  site = cleanUrl(site);
+  if (!business || !site || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return json({ ok: false, error: 'Please give your business name, its website and your email address.' });
+  }
+  const row = [new Date(), business, site, email, clean(p.town, 80), clean(p.page, 200)];
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    getSheet(CHECKS_NAME, CHECK_HEADERS).appendRow(row);
+  } finally {
+    lock.releaseLock();
+  }
+  try {
+    MailApp.sendEmail(NOTIFY || Session.getEffectiveUser().getEmail(), 'AI visibility check requested: ' + business,
+      CHECK_HEADERS.map((h, i) => h + ': ' + row[i]).join('\n')
+      + '\n\nRun: gentifi website --check ' + site + ' --name "' + business.replace(/"/g, '') + '" --report report.html');
   } catch (err) {
     // The row is saved even if the email can't be sent
   }

@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WindowSticker from '../components/WindowSticker.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
+import CheckForm from '../components/CheckForm.astro';
 import ChatMock from '../components/ChatMock.astro';
 import CollectionDiagram from '../components/CollectionDiagram.astro';
 import Tick from '../components/Tick.astro';
@@ -16,7 +17,6 @@ const shopSteps = [
   { title: 'Orders come to you', body: 'Customers confirm every order, and it reaches you by email or through your own checkout, as now.' },
 ];
 
-const checkHref = 'mailto:gentifiai@gmail.com?subject=AI%20visibility%20check&body=Business%20name%3A%0AWebsite%3A%0ATown%3A%0A';
 
 const optimise = [
   { title: 'An AI visibility check', body: 'We check what your website and Google profile tell AI today, and send you a one-page report in plain English.' },
@@ -140,10 +140,9 @@ const control = [
         <ul class="optimise">
           {optimise.map((o) => <li><h3>{o.title}</h3><p>{o.body}</p></li>)}
         </ul>
-        <div class="optimise__ctas">
-          <a class="btn btn--teal" href={checkHref}>Ask for your AI visibility check</a>
-          <a class="setup__link" href="/join">Or sign up your shop</a>
-        </div>
+        <h3 class="optimise__ask">Ask for your AI visibility check</h3>
+        <CheckForm />
+        <p class="optimise__or">Ready to go further? <a href="/join">Sign up your shop</a></p>
       </div>
     </section>
 
@@ -325,8 +324,9 @@ const control = [
   .optimise li { background: var(--white); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 8px; align-content: start; border-top: 4px solid var(--copper); }
   .optimise h3 { font-size: 1.1rem; }
   .optimise p { color: var(--ink-muted); font-size: 0.95rem; }
-  .optimise__ctas { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
-  .optimise__ctas .setup__link { color: var(--teal); }
+  .optimise__ask { font-size: 1.2rem; margin: 36px 0 14px; }
+  .optimise__or { margin-top: 16px; color: var(--ink-muted); }
+  .optimise__or a { color: var(--teal); font-weight: 600; }
 
   .setup {
     margin-top: clamp(40px, 6vw, 56px);
