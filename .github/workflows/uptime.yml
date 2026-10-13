@@ -1,0 +1,38 @@
+# Checks every 15 minutes that gentifi.com and the Gentifi connector are up.
+# A failed run emails whoever last changed this file (GitHub's default for scheduled workflows).
+name: Uptime
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Website
+        run: curl -fsS --retry 2 --retry-all-errors --max-time 20 -o /dev/null https://gentifi.com/
+
+      - name: Host and businesses
+        run: |
+          health=$(curl -fsS --retry 2 --retry-all-errors --max-time 20 https://mcp.gentifi.com/healthz)
+          echo "$health"
+          echo "$health" | jq -e '.ok == true and .businesses >= 1' > /dev/null
+
+      - name: Gentifi connector answers
+        run: |
+          reply=$(curl -fsS --retry 2 --retry-all-errors --max-time 20 -X POST https://mcp.gentifi.com/mcp \
+            -H 'content-type: application/json' -H 'accept: application/json, text/event-stream' \
+            -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"gentifi-uptime","version":"1"}}}')
+          echo "$reply" | jq -e '.result.serverInfo.name == "gentifi"' > /dev/null
+
+      - name: Search answers
+        # A query that matches nothing, so the check never counts as a shop appearing in a search
+        run: curl -fsS --retry 2 --retry-all-errors --max-time 20 'https://mcp.gentifi.com/ask?query=zzuptimecheck' | jq -e '.results | type == "array"' > /dev/null
+
+      - name: Demo shop page
+        run: curl -fsS --retry 2 --retry-all-errors --max-time 20 -o /dev/null https://mcp.gentifi.com/b/demo-business/
