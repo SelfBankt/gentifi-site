@@ -1,5 +1,25 @@
 ---
 import Logo from './Logo.astro';
+
+const groups = [
+  { title: 'For businesses', links: [
+    { href: '/join', label: 'Sign up your shop' },
+    { href: '/#ai-optimisation', label: 'AI visibility check' },
+    { href: '/businesses', label: 'What you get' },
+    { href: '/how-it-works', label: 'How it works' },
+    { href: '/farm-shops', label: 'Farm shops' },
+  ] },
+  { title: 'For shoppers', links: [
+    { href: '/b/demo-business', label: 'Try the demo' },
+    { href: '/connector', label: 'The Gentifi connector' },
+  ] },
+  { title: 'Gentifi', links: [
+    { href: '/toolkit', label: 'Developers' },
+    { href: '/standards', label: 'Open standards' },
+    { href: '/#waitlist', label: 'Stay in touch' },
+    { href: '/privacy', label: 'Privacy' },
+  ] },
+];
 ---
 <footer class="site-footer">
   <div class="container site-footer__inner">
@@ -8,19 +28,14 @@ import Logo from './Logo.astro';
       <p>Making local businesses findable, bookable and buyable through AI assistants.</p>
       <p class="site-footer__open">Open source, under the Apache 2.0 licence. Built on open standards.</p>
     </div>
-    <ul class="site-footer__links">
-      <li><a href="/#shoppers">For shoppers</a></li>
-      <li><a href="/businesses">For businesses</a></li>
-      <li><a href="/join">Sign up your shop</a></li>
-      <li><a href="/how-it-works">How it works</a></li>
-      <li><a href="/connector">The Gentifi connector</a></li>
-      <li><a href="/toolkit">Open-source toolkit</a></li>
-      <li><a href="/standards">Open standards</a></li>
-      <li><a href="/b/demo-business">Try the demo</a></li>
-      <li><a href="/#waitlist">Stay in touch</a></li>
-      <li><a href="https://github.com/SelfBankt">GitHub</a></li>
-      <li><a href="/privacy">Privacy</a></li>
-    </ul>
+    <nav class="site-footer__groups" aria-label="Footer">
+      {groups.map((g) => (
+        <div>
+          <h2 class="site-footer__heading">{g.title}</h2>
+          <ul class="site-footer__links">{g.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </div>
+      ))}
+    </nav>
   </div>
   <div class="container site-footer__note">
     <p>Early days: live in Claude and ChatGPT, starting in Bristol and South Gloucestershire. Anything marked “coming next” isn’t built yet.</p>
@@ -42,6 +57,8 @@ import Logo from './Logo.astro';
     gap: 32px;
   }
   .site-footer__brand { max-width: 26rem; display: grid; gap: 14px; }
+  .site-footer__groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 28px 40px; flex: 1 1 320px; min-width: 0; max-width: 640px; }
+  .site-footer__heading { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--copper); margin-bottom: 10px; }
   .site-footer__links { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   .site-footer__links a { color: var(--white); }
   .site-footer__note {
