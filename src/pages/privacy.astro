@@ -3,14 +3,15 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
-<Base title="Privacy · Gentifi" description="How Gentifi uses the details you give when you join the waitlist.">
+<Base title="Privacy · Gentifi" description="How Gentifi uses the details you give when you join the waitlist, and how the Gentifi connector handles your requests.">
   <Header />
   <main id="main">
     <section class="section">
       <div class="container prose">
         <span class="eyebrow">Privacy</span>
         <h1>How we use your details</h1>
-        <p class="updated">Last updated 12 October 2026</p>
+        <p class="updated">Last updated 13 October 2026</p>
+        <p>This covers the waitlist and the <a href="#connector">Gentifi connector</a> you can add to your AI assistant.</p>
 
         <h2>What we collect</h2>
         <p>When you join the waitlist we keep your name, your email address, what you’re joining as (for example a business owner or a developer), and, if you give them, your business name and postcode area. We also note which page you signed up on and when.</p>
@@ -33,6 +34,17 @@ import Footer from '../components/Footer.astro';
         <h2>Who we are</h2>
         <p>Gentifi. You can reach us at <a href="mailto:gentifiai@gmail.com">gentifiai@gmail.com</a>.</p>
 
+        <h2 id="connector">When you use the Gentifi connector</h2>
+        <p>The <a href="/connector">Gentifi connector</a> lets your AI assistant ask shops on Gentifi what they have, and prepare reservations you confirm yourself. This is what happens to your requests.</p>
+        <h3>What reaches us</h3>
+        <p>Only what your AI app sends when it uses a Gentifi tool: the words you’re searching for, which shop, the items and quantities, and any collection date or note for an order. Requests come from your AI app’s servers, such as Anthropic’s or OpenAI’s, not from your device. We don’t receive your name, contact details, location or chat history, and the connector has no sign-in.</p>
+        <h3>What we do with it</h3>
+        <p>We use each request only to answer it, from the shop’s own catalogue, and then discard it. We don’t store, log, sell or share your requests, use them for advertising, or build a profile of you. Our server only records errors, without what you asked.</p>
+        <h3>Who else is involved</h3>
+        <p>Our server is hosted by Hostinger, which processes the traffic for us. Your conversation itself is handled by your AI app’s provider under their own privacy policy. If you choose to send a reservation email or use a shop’s checkout, that goes directly to the shop and is covered by the shop’s privacy terms.</p>
+        <h3>How long</h3>
+        <p>We don’t keep your requests, so there is nothing to retain or delete. You can remove the connector at any time in your AI app’s settings. Questions: <a href="mailto:gentifiai@gmail.com">gentifiai@gmail.com</a>.</p>
+
         <h2>On the rest of the site</h2>
         <p>This site doesn’t use advertising or tracking cookies. The demo pages don’t send anything you type.</p>
       </div>
@@ -45,6 +57,7 @@ import Footer from '../components/Footer.astro';
   .prose { max-width: calc(46rem + var(--gutter) * 2); display: grid; gap: 14px; }
   .prose h1 { margin-bottom: 4px; }
   .prose h2 { font-size: 1.25rem; margin-top: 18px; }
+  .prose h3 { font-size: 1.05rem; margin-top: 6px; }
   .prose p { color: var(--ink-muted); }
   .prose a { color: var(--teal); font-weight: 600; }
   .updated { font-family: var(--font-mono); font-size: 0.85rem; }
