@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
+import CollectionDiagram from '../components/CollectionDiagram.astro';
 import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
 import Tick from '../components/Tick.astro';
@@ -183,6 +184,32 @@ const faqs = [
       </div>
     </section>
 
+    <!-- Events, markets and high streets -->
+    <section class="section section--teal" id="events">
+      <div class="container events">
+        <div class="events__copy">
+          <span class="eyebrow">Markets, shows and gatherings</span>
+          <h2>One connection for a whole market, show or high street.</h2>
+          <p>
+            Visitors add your market, event or street to their AI once, then ask across every trader or exhibitor:
+            <q>Which stalls on Saturday have sourdough? Save me a loaf.</q>
+            <q>Which stands sell triple glazing under £600/m²? Get me three quotes.</q>
+          </p>
+          <ul class="events__points">
+            <li><Tick size={20} tick="var(--teal)" /><span>Every member keeps its own data, prices and checkout.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Nobody is listed without agreeing to it.</span></li>
+            <li><Tick size={20} tick="var(--teal)" /><span>Exhibitors stay in visitors’ AI after the event.</span></li>
+          </ul>
+          <p class="events__pilot">We’re piloting this with the first markets and shows.</p>
+          <div class="events__ctas">
+            <a class="btn btn--primary" href="?role=organiser#waitlist">Put your market, show or street on Gentifi</a>
+            <a class="btn btn--ghost" href="/standards">How Business Collections work</a>
+          </div>
+        </div>
+        <div class="events__visual"><CollectionDiagram /></div>
+      </div>
+    </section>
+
     <!-- Examples -->
     <section class="section section--grey" id="examples">
       <div class="container">
@@ -355,4 +382,18 @@ const faqs = [
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
+  /* Events, markets and high streets */
+  .events { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 1000px) { .events { grid-template-columns: 1.05fr 1fr; gap: 64px; } }
+  .events__copy { display: grid; gap: 18px; justify-items: start; min-width: 0; }
+  .events__copy .eyebrow { margin-bottom: 0; }
+  .events__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
+  .events__copy q { display: block; margin-top: 10px; color: var(--white); font-weight: 600; }
+  .events__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .events__points li { display: flex; gap: 10px; align-items: flex-start; }
+  .events__points li :global(svg) { margin-top: 3px; }
+  .events__pilot { color: var(--on-teal-muted); font-size: 0.95rem; }
+  .events__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .events__visual { width: 100%; max-width: 480px; justify-self: center; }
+
 </style>
