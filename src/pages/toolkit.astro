@@ -130,6 +130,7 @@ const next = [
             <a class="btn btn--primary" href={githubUrl}>View on GitHub</a>
             <a class="btn btn--ghost" href={toolkitZip}>Download .zip</a>
           </div>
+          <p class="hero__standards">Interested in the specs? See <a href="/standards">the open standards we build on, and the Business Collections draft</a>.</p>
           <div class="hero__install">
             <p>Or run it now, nothing to install:</p>
             <CopyLine text={toolkitHelp} prompt="$" label="Copy command" />
@@ -509,4 +510,6 @@ its prices and prepare orders the customer confirms.</code></pre>
   .hosted h2 { margin-bottom: 14px; }
   .hosted p { color: var(--on-teal-muted); max-width: 40rem; }
   .hosted__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__standards { margin-top: 16px; color: var(--on-teal-muted); font-size: 0.95rem; }
+  .hero__standards a { color: var(--white); font-weight: 600; }
 </style>

@@ -12,9 +12,9 @@ const links = [
   { href: '/businesses', label: 'Businesses' },
   { href: '/#shoppers', label: 'Shoppers' },
   { href: '/how-it-works', label: 'How it works' },
-  { href: '/toolkit', label: 'Open source' },
-  { href: '/standards', label: 'Open standards' },
   { href: '/farm-shops', label: 'Farm shops' },
+  // The toolkit and the standards it builds on, for developers
+  { href: '/toolkit', label: 'Developers', also: ['/standards'] },
   { href: '/b/demo-business', label: 'Try the demo' },
 ];
 ---
@@ -25,7 +25,7 @@ const links = [
     <!-- Full menu on wide screens -->
     <nav class="nav-wide" aria-label="Main">
       <ul>
-        {links.map((l) => <li><a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
+        {links.map((l) => <li><a href={l.href} aria-current={path === l.href || l.also?.includes(path) ? 'page' : undefined}>{l.label}</a></li>)}
       </ul>
     </nav>
 
@@ -36,7 +36,7 @@ const links = [
       <summary aria-label="Menu"><span class="nav-menu__icon" aria-hidden="true"></span>Menu</summary>
       <nav aria-label="Main">
         <ul>
-          {links.map((l) => <li><a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
+          {links.map((l) => <li><a href={l.href} aria-current={path === l.href || l.also?.includes(path) ? 'page' : undefined}>{l.label}</a></li>)}
           <li class="nav-menu__cta"><a class="btn btn--primary" href={ctaHref}>{ctaLabel}</a></li>
         </ul>
       </nav>
@@ -135,8 +135,8 @@ const links = [
     .nav-menu__cta { display: block; }
   }
 
-  /* The full menu needs about 1240px with the sign-up button; narrower screens use the menu button */
-  @media (min-width: 1280px) {
+  /* The full menu needs about 1120px with the sign-up button; narrower screens use the menu button */
+  @media (min-width: 1140px) {
     .nav-wide { display: block; }
     .nav-menu { display: none; }
     .site-header__inner { gap: 20px; }
