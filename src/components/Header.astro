@@ -2,9 +2,10 @@
 import Logo from './Logo.astro';
 
 interface Props {
+  ctaLabel?: string;
   ctaHref?: string;
 }
-const { ctaHref = '/#waitlist' } = Astro.props;
+const { ctaHref = '/join', ctaLabel = 'Sign up your shop' } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const links = [
@@ -28,7 +29,7 @@ const links = [
       </ul>
     </nav>
 
-    <a class="btn btn--primary site-header__cta" href={ctaHref}>Join the waitlist</a>
+    <a class="btn btn--primary site-header__cta" href={ctaHref}>{ctaLabel}</a>
 
     <!-- Compact menu on smaller screens; works without JavaScript -->
     <details class="nav-menu">
@@ -36,7 +37,7 @@ const links = [
       <nav aria-label="Main">
         <ul>
           {links.map((l) => <li><a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>)}
-          <li class="nav-menu__cta"><a class="btn btn--primary" href={ctaHref}>Join the waitlist</a></li>
+          <li class="nav-menu__cta"><a class="btn btn--primary" href={ctaHref}>{ctaLabel}</a></li>
         </ul>
       </nav>
     </details>
@@ -128,7 +129,7 @@ const links = [
   .nav-menu__cta { display: none; }
   .nav-menu nav .nav-menu__cta a { color: var(--teal); background: var(--copper); border-radius: 999px; margin-top: 8px; justify-content: center; }
 
-  /* Phones: the waitlist button moves into the menu to make room */
+  /* Phones: the sign-up button moves into the menu to make room */
   @media (max-width: 519px) {
     .site-header__cta { display: none; }
     .nav-menu__cta { display: block; }
