@@ -30,7 +30,7 @@ const asks = [
 ];
 
 const steps = [
-  { title: 'Start with what you have', body: 'Your Google Sheet, your till’s product list or your online shop. We bring it in and check that AI assistants read it correctly.' },
+  { title: 'Start with what you have', body: 'Your Google Sheet or price list today, and your till or online shop next. We bring it in and check that AI assistants read it correctly.' },
   { title: 'Mark what’s in, from your phone', body: 'In, running low or sold out, in a few taps. Customers’ AI sees when you last updated each item, so they say “in this morning” rather than promise.' },
   { title: 'Customers ask, you confirm', body: 'Their AI prepares reservations and orders, and the customer confirms them in their own app. They reach you by email or through your own checkout, as orders do now.' },
 ];
@@ -75,7 +75,7 @@ const faqs = [
   title="Farm shops and local food · Gentifi"
   description="Gentifi lets your customers’ AI assistant see what’s in at your farm shop today, check prices and opening times, and reserve things for collection, with customers confirming every order. Starting in Bristol and South Gloucestershire."
 >
-  <Header ctaHref="#waitlist" ctaLabel="Stay in touch" />
+  <Header ctaHref="/join?kind=Farm%20shop" />
   <main id="main">
     <!-- Hero: the promise, and today's board as proof -->
     <section class="hero section--teal">
@@ -88,11 +88,12 @@ const faqs = [
             prices and opening times, and reserve things for collection, with the customer confirming every order.
           </p>
           <div class="hero__ctas">
-            <a class="btn btn--primary" href="#waitlist">Join the farm shop waitlist</a>
+            <a class="btn btn--primary" href="/join?kind=Farm%20shop">Sign up your farm shop</a>
             <a class="btn btn--ghost" href="/b/demo-business">See a demo farm shop</a>
           </div>
+          <p class="hero__wait">Waiting for live stock from your phone? <a href="#waitlist">Stay in touch</a></p>
           <ul class="hero__points">
-            <li><Tick size={18} tick="var(--teal)" />Start from a spreadsheet or your till</li>
+            <li><Tick size={18} tick="var(--teal)" />Start from a spreadsheet</li>
             <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
             <li><Tick size={18} tick="var(--teal)" />Starting in Bristol and South Gloucestershire</li>
           </ul>
@@ -232,8 +233,8 @@ const faqs = [
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Stay in touch</span>
-          <h2>Join the Genesis cohort.</h2>
-          <p>Live stock for farm shops is coming together now, and pre-orders for collection work already. Join the list and we’ll be in touch.</p>
+          <h2>Waiting for live stock? Stay in touch.</h2>
+          <p>Updating stock from your phone is coming next, and pre-orders for collection work already. Ready now? <a href="/join?kind=Farm%20shop">Sign up your farm shop</a> and join the Genesis cohort.</p>
         </div>
         <WaitlistForm role="farm" />
       </div>
@@ -334,4 +335,6 @@ const faqs = [
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
+  .hero__wait { margin-top: 14px; color: var(--on-teal-muted); font-size: 0.95rem; }
+  .hero__wait a, #waitlist .section-head a { color: var(--white); font-weight: 600; }
 </style>
