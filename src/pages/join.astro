@@ -1,0 +1,225 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// The same Apps Script web app as the waitlist (see waitlist/apps-script.gs): sign-ups go to its "Sign-ups" tab
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
+
+const kinds = ['Bakery', 'Café', 'Farm shop', 'Deli or food shop', 'Restaurant or pub', 'Other shop', 'Maker or producer', 'Services or trades', 'Something else'];
+const days = [
+  { code: 'Mo', name: 'Monday' },
+  { code: 'Tu', name: 'Tuesday' },
+  { code: 'We', name: 'Wednesday' },
+  { code: 'Th', name: 'Thursday' },
+  { code: 'Fr', name: 'Friday' },
+  { code: 'Sa', name: 'Saturday' },
+  { code: 'Su', name: 'Sunday' },
+];
+const orders = [
+  { value: 'email', label: 'Customers email us to reserve or order' },
+  { value: 'phone', label: 'Customers phone us to reserve or order' },
+  { value: 'shop', label: 'We have an online shop' },
+  { value: 'booking', label: 'We use a booking system' },
+  { value: 'none', label: 'We don’t take orders ahead: customers just visit' },
+];
+---
+<Base
+  title="Sign up your shop · Gentifi"
+  description="Tell us about your shop, your opening hours, how you take orders and what you sell, and we’ll set you up in your customers’ AI."
+>
+  <Header />
+  <main id="main">
+    <section class="hero section--teal">
+      <div class="container">
+        <span class="eyebrow">Sign up your shop</span>
+        <h1>Tell us about your shop. We’ll do the rest.</h1>
+        <p class="hero__lede">
+          This takes about ten minutes. We’ll set up your shop’s page and connection, then send you a link to check
+          everything before it goes live, and arrange your signs.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
+        <form class="join" action={ENDPOINT} method="post" data-join data-endpoint={ENDPOINT}>
+          <input type="hidden" name="form" value="signup" />
+
+          <fieldset>
+            <legend>Your business</legend>
+            <div class="grid">
+              <div class="field"><label for="j-business">Business name</label><input id="j-business" name="business" autocomplete="organization" required /></div>
+              <div class="field"><label for="j-kind">What kind of business</label>
+                <select id="j-kind" name="kind">{kinds.map((k) => <option>{k}</option>)}</select></div>
+              <div class="field wide"><label for="j-street">Street address <span class="opt">(optional)</span></label><input id="j-street" name="street" autocomplete="address-line1" /></div>
+              <div class="field"><label for="j-town">Town</label><input id="j-town" name="town" autocomplete="address-level2" /></div>
+              <div class="field"><label for="j-postcode">Postcode</label><input id="j-postcode" name="postcode" autocomplete="postal-code" maxlength="8" required /></div>
+              <div class="field"><label for="j-phone">Shop phone <span class="opt">(optional)</span></label><input id="j-phone" name="phone" type="tel" autocomplete="tel" /></div>
+              <div class="field"><label for="j-site">Website <span class="opt">(optional)</span></label><input id="j-site" name="site_url" type="url" placeholder="https://" /></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>You</legend>
+            <div class="grid">
+              <div class="field"><label for="j-name">Your name</label><input id="j-name" name="name" autocomplete="name" required /></div>
+              <div class="field"><label for="j-email">Your email</label><input id="j-email" name="email" type="email" autocomplete="email" required /></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Opening hours</legend>
+            <p class="hint">Tick “Closed” for days you’re shut. You can add holiday hours later.</p>
+            <div class="hours">
+              {days.map((d) => (
+                <div class="day" data-day>
+                  <span class="day__name">{d.name}</span>
+                  <label class="sr-only" for={`j-${d.code}-open`}>{d.name} opens</label>
+                  <input id={`j-${d.code}-open`} name={`${d.code}_open`} type="time" value={d.code === 'Su' ? '' : '09:00'} />
+                  <span aria-hidden="true">to</span>
+                  <label class="sr-only" for={`j-${d.code}-close`}>{d.name} closes</label>
+                  <input id={`j-${d.code}-close`} name={`${d.code}_close`} type="time" value={d.code === 'Su' ? '' : '17:00'} />
+                  <label class="closed"><input type="checkbox" name={`${d.code}_closed`} value="yes" checked={d.code === 'Su'} /> Closed</label>
+                </div>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>How customers order from you today</legend>
+            <div class="choices">
+              {orders.map((o, i) => (
+                <label class="choice"><input type="radio" name="orders" value={o.value} checked={i === 0} data-orders /> {o.label}</label>
+              ))}
+            </div>
+            <div class="field" data-for="email"><label for="j-orders-email">Email for orders</label><input id="j-orders-email" name="orders_email" type="email" /></div>
+            <div class="field" data-for="phone"><label for="j-orders-phone">Phone for orders <span class="opt">(if not the shop phone)</span></label><input id="j-orders-phone" name="orders_phone" type="tel" /></div>
+            <div class="field" data-for="shop booking"><label for="j-orders-url">Link to your online shop or booking page</label><input id="j-orders-url" name="orders_url" type="url" placeholder="https://" /></div>
+            <p class="hint">Nothing changes about how you take orders or payment: customers confirm every order with you, the way they do now.</p>
+          </fieldset>
+
+          <fieldset>
+            <legend>What you sell</legend>
+            <p class="hint">
+              Whatever you have is fine: a link to a spreadsheet or price list, or paste it below. Starting from scratch?
+              Use our <a href="/templates/product-list-template.csv" download>product list template</a> or the
+              <a href="/templates/bakery-template.csv" download>bakery template</a> (with allergens), in Google Sheets or Excel.
+            </p>
+            <div class="field"><label for="j-products-link">Link to your product list <span class="opt">(Google Sheet, website page or file)</span></label><input id="j-products-link" name="products_link" type="url" placeholder="https://" /></div>
+            <div class="field"><label for="j-products">Or paste it here</label>
+              <textarea id="j-products" name="products" rows="8" placeholder={'One item per line, with its price, for example:\nSourdough loaf, £4.50, Fri and Sat\nFree-range eggs (dozen), £3.20'}></textarea></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Anything else</legend>
+            <div class="field"><label for="j-notes">Anything we should know <span class="opt">(optional)</span></label><textarea id="j-notes" name="notes" rows="3" placeholder="For example: we bake to order on Fridays, or we’re a market stall on Saturdays."></textarea></div>
+          </fieldset>
+
+          <div class="trap" aria-hidden="true"><label for="j-trap">Leave this empty</label><input id="j-trap" name="trap" tabindex="-1" autocomplete="off" /></div>
+
+          <label class="consent"><input type="checkbox" name="consent" value="yes" required />
+            <span>I run this business, and I’m happy for Gentifi to use these details to set it up, as our <a href="/privacy#signup">privacy policy</a> describes. Nothing goes live until I’ve checked it.</span></label>
+
+          <div class="actions">
+            <button class="btn btn--teal" type="submit">Send</button>
+            <p class="status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  // Show only the order details that fit the chosen way of ordering
+  const form = document.querySelector<HTMLFormElement>('form[data-join]');
+  if (form) {
+    const showOrderFields = () => {
+      const chosen = form.querySelector<HTMLInputElement>('input[data-orders]:checked')?.value ?? '';
+      form.querySelectorAll<HTMLElement>('[data-for]').forEach((el) => { el.hidden = !el.dataset.for!.split(' ').includes(chosen); });
+    };
+    form.querySelectorAll('input[data-orders]').forEach((r) => r.addEventListener('change', showOrderFields));
+    showOrderFields();
+
+    // "Closed" greys out that day's times
+    form.querySelectorAll<HTMLElement>('[data-day]').forEach((day) => {
+      const closed = day.querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+      const times = day.querySelectorAll<HTMLInputElement>('input[type="time"]');
+      const sync = () => times.forEach((t) => { t.disabled = closed.checked; });
+      closed.addEventListener('change', sync);
+      sync();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector('.status')!;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const say = (text: string) => { status.textContent = text; };
+      const data = new FormData(form);
+      if (!String(data.get('products_link') ?? '').trim() && !String(data.get('products') ?? '').trim()) {
+        say('Please share what you sell: a link to your list, or paste it in.');
+        form.querySelector<HTMLInputElement>('#j-products-link')?.focus();
+        return;
+      }
+      const body = new URLSearchParams(data as unknown as Record<string, string>);
+      body.set('page', location.pathname);
+      button.disabled = true;
+      say('Sending…');
+      try {
+        // A simple form POST: Apps Script answers it without a CORS preflight
+        const res = await fetch(form.dataset.endpoint!, { method: 'POST', body });
+        const reply = await res.json();
+        if (reply.ok) {
+          form.reset();
+          showOrderFields();
+          say('Thank you. We’ll set up your shop and email you a link to check it before anything goes live.');
+        } else {
+          say(reply.error || 'That didn’t go through. Please check your details and try again.');
+        }
+      } catch {
+        say('That didn’t go through, probably a connection problem. Please try again, or email gentifiai@gmail.com.');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .hero { padding-block: clamp(48px, 8vw, 88px); }
+  .hero h1 { max-width: 20ch; }
+  .hero__lede { margin-top: 18px; color: var(--on-teal-muted); max-width: 40rem; font-size: 1.1rem; }
+  .narrow { max-width: calc(46rem + var(--gutter) * 2); }
+  .join { display: grid; gap: 28px; }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 14px; }
+  legend { font-size: 1.25rem; font-weight: 700; color: var(--teal); margin-bottom: 4px; padding: 0; }
+  .grid { display: grid; gap: 14px; }
+  @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } .wide { grid-column: 1 / -1; } }
+  .field { display: grid; gap: 6px; }
+  .field[hidden] { display: none; }
+  label { font-weight: 600; font-size: 0.92rem; color: var(--ink); }
+  .opt { font-weight: 400; color: var(--ink-muted); }
+  .hint { color: var(--ink-muted); font-size: 0.92rem; }
+  .hint a, .consent a { color: var(--teal); font-weight: 600; }
+  input, select, textarea { font: inherit; padding: 10px 14px; min-height: 48px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--white); color: var(--ink); width: 100%; }
+  textarea { min-height: 0; resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--teal); }
+  .hours { display: grid; gap: 8px; }
+  .day { display: grid; grid-template-columns: 6.5rem 1fr auto 1fr; gap: 8px; align-items: center; }
+  .day .closed { grid-column: 2 / -1; display: flex; gap: 8px; align-items: center; font-weight: 400; }
+  @media (min-width: 640px) { .day { grid-template-columns: 7rem 8rem auto 8rem auto; } .day .closed { grid-column: auto; } }
+  .day__name { font-weight: 600; }
+  .day input[type="time"] { min-height: 44px; padding: 6px 10px; }
+  .day input:disabled { opacity: 0.4; }
+  .closed input, .choice input, .consent input { width: auto; min-height: 0; accent-color: var(--teal); }
+  .choices { display: grid; gap: 10px; }
+  .choice { display: flex; gap: 10px; align-items: center; font-weight: 400; }
+  .consent { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; color: var(--ink-muted); }
+  .consent input { margin-top: 4px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .status:empty { display: none; }
+  .status { padding: 12px 16px; border: 1px solid var(--teal); border-radius: var(--radius-sm); color: var(--ink); }
+  .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+</style>
