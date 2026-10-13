@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const gentifiUrl = 'https://mcp.gentifi.com/mcp';
+
+const tools = [
+  { name: 'find_businesses', does: 'Finds shops on Gentifi by name, place, kind of shop or what they sell.' },
+  { name: 'get_business_info', does: 'A shop’s opening hours, contact details and how ordering works.' },
+  { name: 'search_catalogue', does: 'What a shop sells, with prices, stock and when they were last updated.' },
+  { name: 'check_availability', does: 'Whether a shop has enough of one item, and when it’s available.' },
+  { name: 'prepare_order', does: 'Works out a reservation or order and its total, with a link you use to confirm it with the shop. Nothing is ordered or sent.' },
+];
+
+const asks = [
+  'Does Hollow Lane Farm Shop have free-range eggs?',
+  'When is Hollow Lane Farm Shop open?',
+  'Which shops on Gentifi sell sourdough?',
+  'Reserve a dozen eggs at Hollow Lane Farm Shop for Saturday.',
+];
+---
+<Base
+  title="The Gentifi connector · Gentifi"
+  description="Add Gentifi to Claude or ChatGPT once, then ask independent local shops what they have, check prices and opening times, and prepare reservations you confirm yourself."
+>
+  <Header />
+  <main id="main">
+    <section class="section">
+      <div class="container prose">
+        <span class="eyebrow">The Gentifi connector</span>
+        <h1>One connector for every shop on Gentifi.</h1>
+        <p class="lede">
+          Add Gentifi to your AI assistant once. Then ask about any shop on Gentifi: what they have, prices, stock and
+          opening times. Your AI can prepare a reservation or order, and you confirm it with the shop yourself.
+        </p>
+        <p class="link">The link: <code>{gentifiUrl}</code></p>
+
+        <h2>Add it</h2>
+        <ul>
+          <li><strong>Claude:</strong> Settings → Connectors → Add custom connector. Name it Gentifi, paste the link, then confirm.</li>
+          <li><strong>ChatGPT:</strong> in a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server. Name it Gentifi, paste the link and choose no authentication. Then type @ in a chat to pick it.</li>
+          <li><strong>Other AI apps:</strong> paste the link wherever the app lets you add connectors (sometimes called MCP servers).</li>
+        </ul>
+        <p>No account or sign-in is needed, and your app asks you to approve the connection before anything is added.</p>
+
+        <h2>Try asking</h2>
+        <ul>{asks.map((a) => <li>“{a}”</li>)}</ul>
+        <p>
+          Hollow Lane Farm Shop is a fictional shop for trying Gentifi out, so nothing you reserve there is real. Real
+          shops are joining, starting in Bristol and South Gloucestershire.
+        </p>
+
+        <h2>What it can do</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+            <tbody>{tools.map((t) => <tr><td><code>{t.name}</code></td><td>{t.does}</td></tr>)}</tbody>
+          </table>
+        </div>
+        <p>Every tool only reads. Your AI asks shops by name, or by the id <code>find_businesses</code> returns.</p>
+
+        <h2>What it won’t do</h2>
+        <ul>
+          <li>It never places an order, sends a message or takes a payment. You confirm every order with the shop, by email or on the shop’s own checkout.</li>
+          <li>It can’t change a shop’s information. Shops keep their own catalogue up to date.</li>
+          <li>It doesn’t ask for your name, contact details, location or chat history.</li>
+        </ul>
+
+        <h2>Where the information comes from</h2>
+        <p>
+          From each shop’s own catalogue, usually a spreadsheet the shop updates. Gentifi re-reads online sheets every ten
+          minutes, and your AI is told when prices and stock were last updated, so it can say so.
+        </p>
+
+        <h2>Privacy</h2>
+        <p>
+          We don’t keep what you ask. See <a href="/privacy#connector">how the connector handles your requests</a>.
+        </p>
+
+        <h2 id="support">Support</h2>
+        <p>
+          Email <a href="mailto:gentifiai@gmail.com">gentifiai@gmail.com</a> with any problem or question about the
+          connector. For an order you’ve sent, contact the shop directly.
+        </p>
+        <p>
+          Developers: the connector is built with the open-source <a href="/toolkit">Gentifi toolkit</a>, and every shop
+          also has its own connector at <code>https://mcp.gentifi.com/b/&lt;shop&gt;/mcp</code>.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .prose { max-width: calc(46rem + var(--gutter) * 2); display: grid; gap: 14px; }
+  .prose h1 { margin-bottom: 4px; }
+  .prose h2 { font-size: 1.25rem; margin-top: 18px; }
+  .prose p, .prose li { color: var(--ink-muted); }
+  .prose li strong { color: var(--teal); }
+  .prose ul { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+  .prose a { color: var(--teal); font-weight: 600; }
+  .prose code { overflow-wrap: anywhere; }
+  .lede { font-size: 1.1rem; }
+  .link code { color: var(--teal); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--grey); vertical-align: top; }
+  th { color: var(--teal); }
+  td { color: var(--ink-muted); }
+  td code { color: var(--teal); white-space: nowrap; }
+</style>
