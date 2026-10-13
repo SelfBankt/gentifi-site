@@ -136,6 +136,11 @@ const orders = [
   // Show only the order details that fit the chosen way of ordering
   const form = document.querySelector<HTMLFormElement>('form[data-join]');
   if (form) {
+    // A link such as /join?kind=Farm%20shop chooses the kind of business in advance
+    const kind = new URLSearchParams(location.search).get('kind');
+    const kindSelect = form.querySelector<HTMLSelectElement>('select[name="kind"]');
+    if (kind && kindSelect && [...kindSelect.options].some((o) => o.value === kind)) kindSelect.value = kind;
+
     const showOrderFields = () => {
       const chosen = form.querySelector<HTMLInputElement>('input[data-orders]:checked')?.value ?? '';
       form.querySelectorAll<HTMLElement>('[data-for]').forEach((el) => { el.hidden = !el.dataset.for!.split(' ').includes(chosen); });
@@ -207,11 +212,11 @@ const orders = [
   textarea { min-height: 0; resize: vertical; }
   input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--teal); }
   .hours { display: grid; gap: 8px; }
-  .day { display: grid; grid-template-columns: 6.5rem 1fr auto 1fr; gap: 8px; align-items: center; }
+  .day { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px 8px; align-items: center; }
   .day .closed { grid-column: 2 / -1; display: flex; gap: 8px; align-items: center; font-weight: 400; }
   @media (min-width: 640px) { .day { grid-template-columns: 7rem 8rem auto 8rem auto; } .day .closed { grid-column: auto; } }
   .day__name { font-weight: 600; }
-  .day input[type="time"] { min-height: 44px; padding: 6px 10px; }
+  .day input[type="time"] { min-height: 44px; padding: 6px 8px; min-width: 0; }
   .day input:disabled { opacity: 0.4; }
   .closed input, .choice input, .consent input { width: auto; min-height: 0; accent-color: var(--teal); }
   .choices { display: grid; gap: 10px; }
