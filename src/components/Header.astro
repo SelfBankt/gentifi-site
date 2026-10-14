@@ -9,13 +9,13 @@ const { ctaHref = '/join', ctaLabel = 'Sign up your shop' } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const links = [
-  { href: '/businesses', label: 'Businesses' },
-  { href: '/#shoppers', label: 'Shoppers' },
-  { href: '/how-it-works', label: 'How it works' },
+  { href: '/businesses', label: 'Businesses', also: ['/how-it-works'] },
+  { href: '/farm-shops', label: 'Farm shops' },
   { href: '/events', label: 'Markets & Events' },
+  // For shoppers: adding Gentifi to their AI assistant
+  { href: '/connector', label: 'Ask your AI' },
   // The toolkit and the standards it builds on, for developers
   { href: '/toolkit', label: 'Developers', also: ['/standards'] },
-  { href: '/b/demo-business', label: 'Demo' },
 ];
 ---
 <header class="site-header">
