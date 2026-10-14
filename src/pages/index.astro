@@ -33,11 +33,27 @@ const control = [
   'Their AI asks before every booking or order.',
   'Businesses only get their details when they choose to book or buy.',
 ];
+// Tells search engines and AI assistants who Gentifi is
+const organisation = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Gentifi',
+  url: 'https://gentifi.com/',
+  logo: 'https://gentifi.com/brand/gentifi-app-icon.png',
+  email: 'gentifiai@gmail.com',
+  description: 'AI optimisation for independent shops, businesses and events: Gentifi puts a business’s products, prices and opening times in its customers’ AI assistants, such as Claude and ChatGPT.',
+  areaServed: [
+    { '@type': 'Place', name: 'Bristol' },
+    { '@type': 'Place', name: 'South Gloucestershire' },
+  ],
+  sameAs: ['https://github.com/SelfBankt/gentifi-toolkit'],
+};
 ---
 <Base
   title="Gentifi: discoverable and responsive to your customers’ AI"
   description="AI optimisation for independent shops: customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude and ChatGPT today, starting with independents in Bristol and South Gloucestershire."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(organisation)} />
   <Header />
   <main id="main">
     <!-- Hero -->
