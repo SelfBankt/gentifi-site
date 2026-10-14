@@ -206,7 +206,22 @@ const faqs = [
             <a class="btn btn--ghost" href="/standards">How Business Collections work</a>
           </div>
         </div>
-        <div class="markets__visual"><CollectionDiagram /></div>
+        <div class="markets__visual">
+          <CollectionDiagram
+            name="Demo Farmers’ Market"
+            kind="market"
+            asker="Shopper’s AI"
+            question="Which stalls on Saturday have sourdough?"
+            members={[
+              { stand: 'S1', category: 'bakery' },
+              { stand: 'S4', category: 'eggs' },
+              { stand: 'S7', category: 'veg' },
+              { stand: 'S9', category: 'cheese' },
+              { stand: 'S12', category: 'meat' },
+              { stand: 'S15', category: 'preserves' },
+            ]}
+          />
+        </div>
       </div>
     </section>
 
