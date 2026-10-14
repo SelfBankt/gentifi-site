@@ -59,7 +59,7 @@ const commands = [
   {
     name: 'publish',
     usage: 'gentifi publish --self-host <dir>',
-    summary: 'Lay out the files for your own web server, including /.well-known/. Publishing to the Gentifi network comes later.',
+    summary: 'Lay out the files for your own web server, including /.well-known/. Publishing to the Gentifi network from the toolkit comes later; until then, Gentifi hosts it for you.',
     status: 'Self-hosting works',
     options: [['--self-host', 'Directory to write the site to']],
   },
@@ -98,12 +98,12 @@ const done = [
   { title: 'Checkout hand-off', body: 'Orders end on the business’s own checkout, booking page, email or phone, confirmed by the customer.' },
   { title: 'SKILL.md and discovery', body: 'Generated from the same data, in the formats agents read.' },
   { title: 'Link and QR code', body: 'A scan-to-add page and a printable sticker for each business.' },
+  { title: 'Gentifi network hosting', body: 'Each business’s page and connector hosted at mcp.gentifi.com/b/<business>, and one connector for every business.' },
   { title: 'The Gentified test', body: 'Checks a business locally, or any published one by its link.' },
 ];
 
 const next = [
   { title: 'More sources', body: 'Shopify, WooCommerce and booking systems.' },
-  { title: 'Gentifi network hosting', body: 'The connector and page hosted at gentifi.com/b/<business>.' },
   { title: 'Simple dashboard', body: 'Agent questions, orders and revenue.' },
   { title: 'UCP checkout', body: 'For businesses whose checkout supports it.' },
 ];
@@ -282,7 +282,7 @@ its prices and prepare orders the customer confirms.</code></pre>
           <li><Tick size={20} tick="var(--teal)" /><div><strong>The customer always approves.</strong> Every tool is read-only. Connecting an agent to a business, and every order, is confirmed by the customer in their own app or on the business's own checkout.</div></li>
           <li><Tick size={20} tick="var(--teal)" /><div><strong>Information, not instructions.</strong> Generated files say "this business has a connector, here it is". The Gentified test fails any business text that tries to instruct an agent.</div></li>
           <li><Tick size={20} tick="var(--teal)" /><div><strong>Real data only.</strong> Prices, stock and hours come from the business. Missing details are reported, never invented.</div></li>
-          <li><Tick size={20} tick="var(--teal)" /><div><strong>Self-host or not.</strong> Lay out files for your own domain, including <code>/.well-known/</code>, or publish to the Gentifi network when it opens.</div></li>
+          <li><Tick size={20} tick="var(--teal)" /><div><strong>Self-host or not.</strong> Lay out files for your own domain, including <code>/.well-known/</code>, or let Gentifi host it on the Gentifi network.</div></li>
         </ul>
       </div>
     </section>
