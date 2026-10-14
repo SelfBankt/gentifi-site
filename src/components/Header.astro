@@ -22,16 +22,16 @@ const links = [
   <div class="container site-header__inner">
     <Logo href="/" />
 
-    <!-- Full menu on wide screens -->
-    <nav class="nav-wide" aria-label="Main">
+    <a class="btn btn--primary site-header__cta" href={ctaHref}>{ctaLabel}</a>
+
+    <!-- One row of links: beside the logo on wide screens, underneath it on tablets -->
+    <nav class="site-nav" aria-label="Main">
       <ul>
         {links.map((l) => <li><a href={l.href} aria-current={path === l.href || l.also?.includes(path) ? 'page' : undefined}>{l.label}</a></li>)}
       </ul>
     </nav>
 
-    <a class="btn btn--primary site-header__cta" href={ctaHref}>{ctaLabel}</a>
-
-    <!-- Compact menu on smaller screens; works without JavaScript -->
+    <!-- Phones: compact menu; works without JavaScript -->
     <details class="nav-menu">
       <summary aria-label="Menu"><span class="nav-menu__icon" aria-hidden="true"></span>Menu</summary>
       <nav aria-label="Main">
@@ -78,10 +78,6 @@ const links = [
   }
   nav a:hover, nav a[aria-current='page'] { color: var(--white); background: var(--teal-raised); }
   .site-header__cta { flex-shrink: 0; min-height: 40px; padding: 8px 16px; font-size: 0.9rem; white-space: nowrap; }
-
-  /* Wide: full menu */
-  .nav-wide { display: none; }
-  .nav-wide ul { display: flex; gap: 2px; }
 
   /* Narrow: compact menu */
   .nav-menu summary {
@@ -135,12 +131,34 @@ const links = [
     .nav-menu__cta { display: block; }
   }
 
-  /* The full menu needs about 1120px with the sign-up button; narrower screens use the menu button */
-  @media (min-width: 1140px) {
-    .nav-wide { display: block; }
+  /* Phones: the sign-up button moves into the menu to make room */
+  @media (max-width: 519px) {
+    .site-header__cta { display: none; }
+    .nav-menu__cta { display: block; }
+  }
+
+  .site-nav { display: none; }
+
+  /* Tablets: logo and sign-up button, then the links in a row underneath */
+  @media (min-width: 640px) {
     .nav-menu { display: none; }
-    .site-header__inner { gap: 20px; }
+    .site-header__inner { flex-wrap: wrap; row-gap: 6px; padding-top: 12px; }
+    .site-nav {
+      display: block;
+      order: 3;
+      flex-basis: 100%;
+      /* Links have their own 12px padding, so their text lines up with the logo */
+      margin-inline: -12px;
+      padding-bottom: 10px;
+    }
+    .site-nav ul { display: flex; gap: 2px; }
+  }
+
+  /* Wide: links beside the logo, before the sign-up button */
+  @media (min-width: 1000px) {
+    .site-header__inner { flex-wrap: nowrap; gap: 20px; padding-top: 0; }
     .site-header__inner > :global(.logo) { margin-right: 0; }
-    .nav-wide { margin-left: auto; }
+    .site-nav { order: 0; flex-basis: auto; margin: 0 0 0 auto; padding: 0; }
+    .site-header__cta { order: 1; }
   }
 </style>
