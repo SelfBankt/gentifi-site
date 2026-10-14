@@ -4,17 +4,31 @@ import Mark from './Mark.astro';
 import Tick from './Tick.astro';
 import { show, members } from '../data/demoShow';
 
-const shown = members.slice(0, 6);
+// Defaults to the demo trade show; pages can pass their own collection, such as a farmers' market.
+interface Props {
+  name?: string;
+  kind?: string;
+  asker?: string;
+  question?: string;
+  members?: { stand: string; category: string }[];
+}
+const {
+  name = show.name,
+  kind = 'event',
+  asker = 'Attendee’s AI',
+  question = 'Which stands sell triple glazing under £600/m²?',
+  members: shown = members.slice(0, 6),
+} = Astro.props;
 ---
 <figure class="cd">
   <figcaption class="sr-only">
-    An attendee’s AI adds one connection for {show.name}. The collection points to each exhibitor's own catalogue.
+    {asker} adds one connection for {name}. The collection points to each member's own catalogue.
     Each member keeps its own connector, data and checkout.
   </figcaption>
 
   <div class="cd__agent" aria-hidden="true">
-    <span class="cd__agent-label">Attendee’s AI</span>
-    <q>Which stands sell triple glazing under £600/m²?</q>
+    <span class="cd__agent-label">{asker}</span>
+    <q>{question}</q>
   </div>
 
   <div class="cd__drop" aria-hidden="true"><span>one connector</span></div>
@@ -22,8 +36,8 @@ const shown = members.slice(0, 6);
   <div class="cd__collection" aria-hidden="true">
     <Mark size={28} />
     <div>
-      <p class="cd__kind">Collection · event</p>
-      <p class="cd__name">{show.name}</p>
+      <p class="cd__kind">Collection · {kind}</p>
+      <p class="cd__name">{name}</p>
     </div>
   </div>
 
