@@ -34,6 +34,12 @@ const asks = [
   "What's in Hollow Lane's veg box this week, and can I collect after 5?",
   'Order a sourdough loaf from Hollow Lane for Friday collection.',
 ];
+// The Gentifi connector covers every shop, so the first question names this one
+const question = `Using Gentifi, does ${business.name} have free-range eggs? Reserve a dozen for Saturday.`;
+const askLinks = [
+  { app: 'Claude', href: `https://claude.ai/new?q=${encodeURIComponent(question)}` },
+  { app: 'ChatGPT', href: `https://chatgpt.com/?q=${encodeURIComponent(question)}` },
+];
 ---
 <Base
   title={`Add ${business.name} to your AI assistant · Gentifi demo`}
@@ -80,7 +86,15 @@ const asks = [
               <span><b>Claude:</b> Settings → Connectors → Add custom connector. Paste the link.</span>
               <span><b>ChatGPT:</b> In a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server. Paste the link, no authentication. Then type @ in a chat to pick the shop.</span>
             </li>
-            <li><strong>Just ask</strong><span>“Does Hollow Lane Farm have eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</span></li>
+            <li>
+              <strong>Ask about {business.name} by name</strong>
+              <span class="try__q">“{question}”</span>
+              <div class="try__ask">
+                <button class="btn btn--teal" type="button" data-copy={question}><span data-copy-label>Copy question</span></button>
+                {askLinks.map((l) => <a class="btn btn--outline" href={l.href}>Open {l.app}</a>)}
+              </div>
+              <span>Nothing is ordered: it’s a fictional shop.</span>
+            </li>
           </ol>
           <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
           <p class="actions__url">Using another AI app? Paste the link wherever it lets you add connectors.</p>
@@ -191,20 +205,22 @@ const asks = [
 </Base>
 
 <script>
-  const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy]');
-  const copyLabel = copyBtn?.querySelector('[data-copy-label]');
+  // Copy buttons for the link and the first question
   const copyStatus = document.querySelector('[data-copy-status]');
-  copyBtn?.addEventListener('click', async () => {
-    const url = copyBtn.dataset.copy ?? '';
-    let msg = 'Link copied';
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      msg = 'Copy failed: select the link below';
-    }
-    if (copyLabel) copyLabel.textContent = msg;
-    if (copyStatus) copyStatus.textContent = msg;
-    setTimeout(() => { if (copyLabel) copyLabel.textContent = 'Copy connector link'; }, 2500);
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const label = btn.querySelector('[data-copy-label]');
+    const original = label?.textContent ?? '';
+    btn.addEventListener('click', async () => {
+      let msg = 'Copied';
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+      } catch {
+        msg = 'Copy failed: select the text';
+      }
+      if (label) label.textContent = msg;
+      if (copyStatus) copyStatus.textContent = msg;
+      setTimeout(() => { if (label) label.textContent = original; }, 2500);
+    });
   });
 </script>
 
@@ -302,4 +318,7 @@ const asks = [
   .try li::before { content: counter(t); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; font-size: 0.8rem; }
   .try__link { overflow-wrap: anywhere; font-size: 0.85rem; }
   .try a { color: var(--teal); font-weight: 600; }
+  .try__q { font-weight: 600; }
+  .try__ask { display: flex; flex-wrap: wrap; gap: 8px; }
+  .try__ask .btn { min-height: 40px; padding: 8px 16px; font-size: 0.88rem; }
 </style>
