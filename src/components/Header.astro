@@ -6,6 +6,8 @@ interface Props {
   ctaHref?: string;
 }
 const { ctaHref = '/join', ctaLabel = 'Sign up your shop' } = Astro.props;
+// Very small phones show a shorter label for the default button
+const ctaShort = ctaLabel === 'Sign up your shop' ? 'Sign up' : ctaLabel;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const links = [
@@ -22,33 +24,20 @@ const links = [
   <div class="container site-header__inner">
     <Logo href="/" />
 
-    <!-- Full menu on wide screens -->
-    <nav class="nav-wide" aria-label="Main">
+    <a class="btn btn--primary site-header__cta" href={ctaHref}><span class="cta-long">{ctaLabel}</span><span class="cta-short">{ctaShort}</span></a>
+
+    <!-- One row of links: beside the logo on wide screens, a swipeable row underneath on narrow ones -->
+    <nav class="site-nav" aria-label="Main">
       <ul>
         {links.map((l) => <li><a href={l.href} aria-current={path === l.href || l.also?.includes(path) ? 'page' : undefined}>{l.label}</a></li>)}
       </ul>
     </nav>
-
-    <a class="btn btn--primary site-header__cta" href={ctaHref}>{ctaLabel}</a>
-
-    <!-- Compact menu on smaller screens; works without JavaScript -->
-    <details class="nav-menu">
-      <summary aria-label="Menu"><span class="nav-menu__icon" aria-hidden="true"></span>Menu</summary>
-      <nav aria-label="Main">
-        <ul>
-          {links.map((l) => <li><a href={l.href} aria-current={path === l.href || l.also?.includes(path) ? 'page' : undefined}>{l.label}</a></li>)}
-          <li class="nav-menu__cta"><a class="btn btn--primary" href={ctaHref}>{ctaLabel}</a></li>
-        </ul>
-      </nav>
-    </details>
   </div>
 </header>
 
 <script>
-  // Close the compact menu after choosing a link (needed for same-page anchors).
-  document.querySelectorAll<HTMLDetailsElement>('.nav-menu').forEach((menu) => {
-    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.open = false; }));
-  });
+  // On narrow screens, scroll the row so the current page's link is in view.
+  document.querySelector('.site-nav [aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
 </script>
 
 <style>
@@ -79,68 +68,32 @@ const links = [
   nav a:hover, nav a[aria-current='page'] { color: var(--white); background: var(--teal-raised); }
   .site-header__cta { flex-shrink: 0; min-height: 40px; padding: 8px 16px; font-size: 0.9rem; white-space: nowrap; }
 
-  /* Wide: full menu */
-  .nav-wide { display: none; }
-  .nav-wide ul { display: flex; gap: 2px; }
-
-  /* Narrow: compact menu */
-  .nav-menu summary {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 40px;
-    padding: 8px 14px;
-    border: 1px solid var(--teal-line);
-    border-radius: 999px;
-    cursor: pointer;
-    list-style: none;
-    font-size: 0.9rem;
-    font-weight: 600;
+  /* Narrow: logo and sign-up button, then the links in a row that scrolls sideways */
+  .site-header__inner { flex-wrap: wrap; row-gap: 6px; padding-top: 12px; }
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    margin-inline: calc(var(--gutter) * -1);
+    /* Links have their own 12px padding, so their text lines up with the logo */
+    padding: 0 calc(var(--gutter) - 12px) 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .nav-menu summary::-webkit-details-marker { display: none; }
-  .nav-menu__icon,
-  .nav-menu__icon::before,
-  .nav-menu__icon::after {
-    display: block;
-    width: 14px;
-    height: 2px;
-    border-radius: 1px;
-    background: currentColor;
-  }
-  .nav-menu__icon { position: relative; }
-  .nav-menu__icon::before, .nav-menu__icon::after { content: ''; position: absolute; left: 0; }
-  .nav-menu__icon::before { top: -5px; }
-  .nav-menu__icon::after { top: 5px; }
-  .nav-menu[open] summary { background: var(--teal-raised); }
-  .nav-menu nav {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    z-index: 50;
-    background: var(--teal);
-    border-bottom: 1px solid var(--teal-line);
-    padding: 8px var(--gutter) 16px;
-    box-shadow: 0 16px 32px -16px rgb(0 0 0 / 0.5);
-  }
-  .nav-menu nav ul { display: grid; gap: 2px; max-width: var(--max); margin-inline: auto; }
-  .nav-menu nav a { padding: 12px 14px; font-size: 1rem; border-radius: var(--radius-sm); }
+  .site-nav::-webkit-scrollbar { display: none; }
+  .site-nav ul { display: flex; gap: 2px; }
 
-  .nav-menu__cta { display: none; }
-  .nav-menu nav .nav-menu__cta a { color: var(--teal); background: var(--copper); border-radius: 999px; margin-top: 8px; justify-content: center; }
-
-  /* Phones: the sign-up button moves into the menu to make room */
-  @media (max-width: 519px) {
-    .site-header__cta { display: none; }
-    .nav-menu__cta { display: block; }
+  /* Very small phones: a shorter button label so it stays beside the logo */
+  .cta-short { display: none; }
+  @media (max-width: 359px) {
+    .cta-long { display: none; }
+    .cta-short { display: inline; }
   }
 
-  /* The full menu needs about 1120px with the sign-up button; narrower screens use the menu button */
-  @media (min-width: 1140px) {
-    .nav-wide { display: block; }
-    .nav-menu { display: none; }
-    .site-header__inner { gap: 20px; }
+  /* Wide: links beside the logo, before the sign-up button */
+  @media (min-width: 1000px) {
+    .site-header__inner { flex-wrap: nowrap; gap: 20px; padding-top: 0; }
     .site-header__inner > :global(.logo) { margin-right: 0; }
-    .nav-wide { margin-left: auto; }
+    .site-nav { order: 0; flex-basis: auto; margin: 0 0 0 auto; padding: 0; overflow: visible; }
+    .site-header__cta { order: 1; }
   }
 </style>
