@@ -27,6 +27,7 @@ import WebBadges from '../components/WebBadges.astro';
           <a href="#system">The big picture</a>
           <a href="#scan">What a scan does</a>
           <a href="#stickers">The signs</a>
+          <a href="#website">Your website</a>
           <a href="#developers">For developers</a>
         </nav>
       </div>
@@ -99,6 +100,41 @@ import WebBadges from '../components/WebBadges.astro';
       </div>
     </section>
 
+    <!-- Website snippet -->
+    <section class="section section--grey" id="website">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Your website</span>
+          <h2>One snippet, pasted in once.</h2>
+          <p>
+            Search engines and AI assistants trust what your own website says about you. If you have a website, we write
+            a short snippet of structured data for it, and you, or whoever looks after your site, paste it in once. Your
+            site looks exactly the same.
+          </p>
+        </div>
+        <div class="two-up connectors">
+          <div>
+            <h3>What it tells AI</h3>
+            <p>
+              That you’re a local business, with your name, address, opening hours and contact details, in the schema.org
+              format that search engines and AI read. For products and prices it links to your Gentifi page, so it never
+              goes out of date when a price changes.
+            </p>
+          </div>
+          <div>
+            <h3>Adding it</h3>
+            <p>
+              It goes in your website’s header, once. Most website builders have a place for header code, or you can send
+              it to whoever looks after your site. No website? You don’t need one: your Gentifi page does the job.
+            </p>
+          </div>
+        </div>
+        <p class="website__check">
+          Not sure what your website tells AI today? <a href="/#ai-optimisation">Get your AI visibility check</a>.
+        </p>
+      </div>
+    </section>
+
     <!-- Developers -->
     <section class="section section--teal" id="developers">
       <div class="container dev">
@@ -140,6 +176,7 @@ import WebBadges from '../components/WebBadges.astro';
   .connectors { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
   .connectors h3 { margin-bottom: 6px; }
   .connectors p { color: var(--ink-muted); }
+  .website__check { margin-top: 28px; font-weight: 600; }
 
   .scan__wrap { max-width: calc(960px + var(--gutter) * 2); }
   .scan__cta { margin-top: 40px; text-align: center; }
