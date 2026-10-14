@@ -42,12 +42,14 @@ const organisation = {
   ],
   sameAs: ['https://github.com/SelfBankt/gentifi-toolkit'],
 };
+const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Gentifi', url: 'https://gentifi.com/' };
 ---
 <Base
-  title="Gentifi: discoverable and responsive to your customers’ AI"
-  description="AI optimisation for independent shops: customers scan your sign to add your shop to their AI assistant, then ask what you have, check opening times and reserve or order, confirming every order themselves. Live in Claude and ChatGPT today, starting with independents in Bristol and South Gloucestershire."
+  title="AI optimisation for independent shops in Bristol · Gentifi"
+  description="Get your shop found in ChatGPT, Gemini, Meta AI, Copilot and Claude. AI visibility checks and set-up for independents in Bristol and South Gloucestershire."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(organisation)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(website)} />
   <Header />
   <main id="main">
     <!-- Hero -->

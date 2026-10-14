@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
 
-// Every page on the site, except the 404 page and the [slug] redirects to business pages on mcp.gentifi.com.
+// Every page on the site, except the 404 page and business pages under /b/, which are noindex.
 // Trailing slashes match the canonical URLs.
 const pages = Object.keys(import.meta.glob('./**/*.astro'))
-  .filter((f) => !f.includes('[') && !f.endsWith('/404.astro'))
+  .filter((f) => !f.startsWith('./b/') && !f.endsWith('/404.astro'))
   .map((f) => f.replace(/^\.\//, '/').replace(/\.astro$/, '').replace(/\/?index$/, '') + '/');
 
 export const GET: APIRoute = ({ site }) => {
