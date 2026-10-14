@@ -15,12 +15,6 @@ const shopSteps = [
 ];
 
 
-const optimise = [
-  { title: 'An AI visibility check', body: 'We check what your website and Google profile tell AI today, and send you a one-page report in plain English.' },
-  { title: 'Your website, made AI-readable', body: 'We write the structured data that tells AI you’re a local shop, where you are and when you’re open. You paste it in once, and your site looks the same.' },
-  { title: 'Your Google profile, checked', body: 'Name, hours, holiday hours, category and products, so AI answers about you correctly.' },
-  { title: 'In Claude and ChatGPT', body: 'Your products, prices and opening times in your customers’ AI assistants, kept up to date from your own list.' },
-];
 
 const customerSteps = [
   { title: 'Scan your sign', body: 'Or tap your link on your website or social pages.' },
@@ -117,12 +111,10 @@ const organisation = {
           <h2>Get found by AI, not just by Google.</h2>
           <p>When customers ask ChatGPT, Claude, Google or Perplexity about local shops, the answer comes from what AI can read about you. We make sure it reads the right things.</p>
         </div>
-        <ul class="optimise">
-          {optimise.map((o) => <li><h3>{o.title}</h3><p>{o.body}</p></li>)}
-        </ul>
         <h3 class="optimise__ask">Ask for your AI visibility check</h3>
+        <p class="optimise__what">A one-page report, in plain English, on what your website and Google profile tell AI today.</p>
         <CheckForm />
-        <p class="optimise__or">Ready to go further? <a href="/join">Sign up your shop</a>, or see <a href="/how-it-works">how it works, in detail</a>.</p>
+        <p class="optimise__or">Then we fix what’s missing, and put your shop in Claude and ChatGPT. <a href="/businesses">See everything you get</a>, or <a href="/join">sign up your shop</a>.</p>
       </div>
     </section>
 
@@ -154,19 +146,9 @@ const organisation = {
             Add your favourite local shops to your AI assistant. Then ask in plain English: it checks their real
             products, prices and opening times, and asks you before it reserves or buys.
           </p>
-          <div class="try">
-            <p class="try__title">Try it now with our demo shop</p>
-            <ol>
-              <li>Copy the Gentifi link: <code>https://mcp.gentifi.com/mcp</code></li>
-              <li>Paste it into your AI app:
-                <ul>
-                  <li><strong>Claude:</strong> Settings → Connectors → Add custom connector.</li>
-                  <li><strong>ChatGPT:</strong> In a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server, no authentication. Then type @ in a chat to pick the shop.</li>
-                </ul>
-              </li>
-              <li>Ask: “Does Hollow Lane Farm have eggs? Reserve a dozen for Saturday.” Nothing is ordered: it’s a fictional shop.</li>
-            </ol>
-            <a class="btn btn--primary" href="/b/demo-business">Open the demo shop</a>
+          <div class="shop__ctas">
+            <a class="btn btn--primary" href="/connector">Ask your AI</a>
+            <a class="btn btn--ghost" href="/b/demo-business">Try the demo shop</a>
           </div>
         </div>
         </div>
@@ -241,13 +223,8 @@ const organisation = {
   .side--customer li span { color: var(--on-teal-muted); }
 
   /* AI optimisation */
-  .optimise { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 720px) { .optimise { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1100px) { .optimise { grid-template-columns: repeat(4, 1fr); } }
-  .optimise li { background: var(--white); border-radius: var(--radius); padding: 22px 24px; display: grid; gap: 8px; align-content: start; border-top: 4px solid var(--copper); }
-  .optimise h3 { font-size: 1.1rem; }
-  .optimise p { color: var(--ink-muted); font-size: 0.95rem; }
-  .optimise__ask { font-size: 1.2rem; margin: 36px 0 14px; }
+  .optimise__ask { font-size: 1.2rem; margin: 8px 0 6px; }
+  .optimise__what { color: var(--ink-muted); margin-bottom: 16px; }
   .optimise__or { margin-top: 16px; color: var(--ink-muted); }
   .optimise__or a { color: var(--teal); font-weight: 600; }
 
@@ -258,13 +235,7 @@ const organisation = {
   .shop__copy { display: grid; gap: 16px; justify-items: start; min-width: 0; }
   .shop__copy .eyebrow { margin-bottom: 0; }
   .shop__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
-  .try { width: 100%; background: var(--teal-raised); border: 1px solid var(--teal-line); border-radius: var(--radius); padding: 20px 22px; display: grid; gap: 12px; justify-items: start; }
-  .try__title { font-weight: 700; }
-  .try ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; color: var(--on-teal-muted); }
-  .try li::marker { color: var(--copper); font-weight: 700; }
-  .try code { color: var(--white); overflow-wrap: anywhere; font-size: 0.88rem; }
-  .try ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
-  .try strong, .try a { color: var(--white); }
+  .shop__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
