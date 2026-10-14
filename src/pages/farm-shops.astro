@@ -2,6 +2,7 @@
 // Gentifi's first mission: farm shops, local farms and farmers' markets.
 // The board, chat and prices below are fictional demo data.
 import Base from '../layouts/Base.astro';
+import { faqSchema } from '../data/faqSchema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
@@ -72,9 +73,10 @@ const faqs = [
 ];
 ---
 <Base
-  title="Farm shops and local food · Gentifi"
-  description="Gentifi lets your customers’ AI assistant see what’s in at your farm shop today, check prices and opening times, and reserve things for collection, with customers confirming every order. Starting in Bristol and South Gloucestershire."
+  title="AI for farm shops: show what’s in today · Gentifi"
+  description="Let customers’ AI assistants see your farm shop’s stock, prices and opening times, and reserve for collection. Starting in Bristol and South Gloucestershire."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(faqs))} />
   <Header ctaHref="/join?kind=Farm%20shop" />
   <main id="main">
     <!-- Hero: the promise, and today's board as proof -->

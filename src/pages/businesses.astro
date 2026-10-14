@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { faqSchema } from '../data/faqSchema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
@@ -87,9 +88,10 @@ const faqs = [
 ];
 ---
 <Base
-  title="For businesses · Gentifi"
-  description="AI optimisation for small businesses: let customers ask their AI assistant about your business: what you sell, prices and opening times, and reserve or order, confirming every order themselves. We set you up. Live in Claude and ChatGPT today."
+  title="AI optimisation for small businesses · Gentifi"
+  description="Get found and described correctly by AI assistants. We check what AI sees, fix your website and Google profile, and put your products in Claude and ChatGPT."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(faqs))} />
   <Header />
   <main id="main">
     <!-- Hero -->
