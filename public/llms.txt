@@ -1,0 +1,27 @@
+# Gentifi
+
+> Gentifi is AI optimisation for independent shops, businesses and events. It puts a business's products, prices, stock and opening times in its customers' AI assistants (Claude and ChatGPT today), so customers can ask what it has and reserve or order. Customers approve the connection and confirm every order in their own app; orders reach the business by email or its own checkout. Starting in Bristol and South Gloucestershire, UK.
+
+## For businesses
+
+- [What businesses get](https://gentifi.com/businesses): the AI visibility check, AI-readable website data, Google profile check, and listing in customers' AI assistants
+- [Sign up a shop](https://gentifi.com/join): details, opening hours, how orders are taken, and a product list
+- [Farm shops and local food](https://gentifi.com/farm-shops)
+- [Markets, shows and high streets](https://gentifi.com/events): one connection for every trader in a market, show or high street
+- [How it works, in detail](https://gentifi.com/how-it-works)
+
+## For shoppers
+
+- [The Gentifi connector](https://gentifi.com/connector): add https://mcp.gentifi.com/mcp to Claude or ChatGPT to ask about any shop on Gentifi
+- [Demo shop](https://gentifi.com/b/demo-business): Hollow Lane Farm Shop, a fictional shop for trying Gentifi out
+
+## For developers
+
+- [Gentifi Toolkit](https://gentifi.com/toolkit): open source (Apache 2.0), turns a product list into an MCP connector, Agent Skill, ARD discovery files and schema.org data
+- [Open standards and Business Collections](https://gentifi.com/standards)
+- [Source on GitHub](https://github.com/SelfBankt/gentifi-toolkit)
+
+## Optional
+
+- [Privacy](https://gentifi.com/privacy)
+- Contact: gentifiai@gmail.com

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Page not found · Gentifi" description="This page doesn’t exist on Gentifi.">
+  <meta slot="head" name="robots" content="noindex" />
+  <Header />
+  <main id="main">
+    <section class="section">
+      <div class="container not-found">
+        <span class="eyebrow">Page not found</span>
+        <h1>We can’t find that page.</h1>
+        <p>
+          The link may be mistyped, or the page may have moved. If you scanned a shop’s sign, check the address
+          matches the one printed under the code, or ask the shop for their link.
+        </p>
+        <div class="not-found__ctas">
+          <a class="btn btn--primary" href="/">Go to the home page</a>
+          <a class="btn btn--outline" href="/b/demo-business">Try the demo shop</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .not-found { max-width: 40rem; padding-block: clamp(24px, 6vw, 72px); }
+  .not-found p { margin-top: 16px; font-size: 1.1rem; }
+  .not-found__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+</style>
