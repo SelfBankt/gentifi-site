@@ -1,0 +1,175 @@
+{
+  "spec_version": "0.1",
+  "business": {
+    "id": "gtf_hollowlanefarmshop",
+    "name": "Hollow Lane Farm Shop",
+    "description": "A fictional farm shop, used to demonstrate Gentifi.",
+    "categories": [
+      "Store"
+    ],
+    "tags": [
+      "Farm shop",
+      "BS"
+    ],
+    "location": {
+      "address": {
+        "country": "GB"
+      }
+    },
+    "time_zone": "Europe/London",
+    "opening_hours": [
+      {
+        "days": [
+          "tue",
+          "wed",
+          "thu",
+          "fri",
+          "sat"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
+    "contact": {
+      "email": "orders@hollowlane.example"
+    },
+    "verification": {
+      "status": "unverified"
+    }
+  },
+  "offerings": [
+    {
+      "id": "egg-12",
+      "kind": "product",
+      "name": "Free-range eggs (dozen)",
+      "price": {
+        "type": "fixed",
+        "amount": {
+          "amount_minor": 320,
+          "currency": "GBP"
+        },
+        "per": "box"
+      },
+      "fulfilment": [
+        "collection"
+      ],
+      "attributes": {
+        "category": "Eggs and dairy",
+        "availability": "In stock"
+      }
+    },
+    {
+      "id": "brd-sd",
+      "kind": "product",
+      "name": "Sourdough loaf",
+      "price": {
+        "type": "fixed",
+        "amount": {
+          "amount_minor": 450,
+          "currency": "GBP"
+        },
+        "per": "loaf"
+      },
+      "fulfilment": [
+        "collection"
+      ],
+      "attributes": {
+        "category": "Bakery",
+        "availability": "Baked Fri and Sat"
+      }
+    },
+    {
+      "id": "veg-box",
+      "kind": "product",
+      "name": "Seasonal veg box",
+      "price": {
+        "type": "fixed",
+        "amount": {
+          "amount_minor": 1800,
+          "currency": "GBP"
+        },
+        "per": "box"
+      },
+      "fulfilment": [
+        "collection"
+      ],
+      "attributes": {
+        "category": "Fruit and veg",
+        "availability": "Order by Thursday"
+      }
+    }
+  ],
+  "availability": [
+    {
+      "type": "stock",
+      "offering_id": "egg-12",
+      "status": "in_stock",
+      "quantity": 40,
+      "quantity_unit": "box",
+      "freshness": {
+        "observed_at": "2026-10-12T20:43:33.098Z",
+        "confidence": "likely",
+        "source": "owner"
+      }
+    },
+    {
+      "type": "stock",
+      "offering_id": "brd-sd",
+      "status": "in_stock",
+      "quantity": 12,
+      "quantity_unit": "loaf",
+      "freshness": {
+        "observed_at": "2026-10-12T20:43:33.098Z",
+        "confidence": "likely",
+        "source": "owner"
+      }
+    },
+    {
+      "type": "stock",
+      "offering_id": "veg-box",
+      "status": "in_stock",
+      "quantity": 15,
+      "quantity_unit": "box",
+      "freshness": {
+        "observed_at": "2026-10-12T20:43:33.098Z",
+        "confidence": "likely",
+        "source": "owner"
+      }
+    }
+  ],
+  "policies": {},
+  "actions": [
+    {
+      "action": "order",
+      "mode": "request_to_confirm",
+      "applies_to": [
+        "egg-12",
+        "brd-sd",
+        "veg-box"
+      ],
+      "confirmation_sla_minutes": 1440,
+      "required_customer_fields": [
+        "name",
+        "contact"
+      ]
+    },
+    {
+      "action": "enquire",
+      "mode": "request_to_confirm",
+      "confirmation_sla_minutes": 1440,
+      "required_customer_fields": [
+        "name",
+        "contact"
+      ]
+    }
+  ],
+  "updated_at": "2026-10-12T20:43:33.098Z",
+  "extensions": {
+    "com.gentifi": {
+      "generator": "gentifi-toolkit",
+      "schema": "https://gentifi.com/standards/profile-0.1.schema.json",
+      "page": "https://mcp.gentifi.com/b/demo-business/",
+      "connector": "https://mcp.gentifi.com/mcp"
+    }
+  }
+}
