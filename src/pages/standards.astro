@@ -9,6 +9,17 @@ import CollectionValidator from '../components/CollectionValidator.astro';
 import { collectionDoc, memberBacklink } from '../data/demoShow';
 
 const specRepo = 'https://github.com/SelfBankt/collections-spec';
+const profileRepo = 'https://github.com/SelfBankt/gentifi-profile';
+const profileSchema = '/standards/profile-0.1.schema.json';
+const profileSlot = JSON.stringify({
+  type: 'slot',
+  slot_id: 'tour_20261017_1000',
+  offering_id: 'farm_tour',
+  start: '2026-10-17T10:00:00+01:00',
+  end: '2026-10-17T11:00:00+01:00',
+  remaining: 4,
+  freshness: { observed_at: '2026-10-15T19:30:00+01:00', confidence: 'confirmed', source: 'integration' },
+}, null, 2);
 const specDoc = `${specRepo}/blob/main/spec/collections-0.2.md`;
 const schemaPath = '/standards/collections-0.2.schema.json';
 const ardSpec = 'https://agenticresourcediscovery.org/spec';
@@ -21,6 +32,11 @@ const stack = [
   {
     layer: 'Groups of businesses',
     items: [{ name: 'Business Collections', who: 'Proposed by Gentifi · draft 0.2, on ARD', href: '#draft' }],
+    proposed: true,
+  },
+  {
+    layer: 'One business, with freshness',
+    items: [{ name: 'Gentifi Business Profile', who: 'Proposed by Gentifi · draft 0.1', href: '#profile' }],
     proposed: true,
   },
   {
@@ -407,6 +423,75 @@ const path = [
         <div class="validator-wrap">
           <CollectionValidator />
         </div>
+      </div>
+    </section>
+
+    <!-- Business Profile -->
+    <section class="section" id="profile">
+      <div class="container spec">
+        <aside class="spec__toc" aria-label="Business Profile contents">
+          <p class="spec__toc-title">Business Profile 0.1</p>
+          <ol>
+            <li><a href="#profile-abstract">Abstract</a></li>
+            <li><a href="#profile-freshness">Freshness</a></li>
+            <li><a href="#profile-confirm">The customer confirms</a></li>
+            <li><a href="#profile-repo">What's in the repository</a></li>
+          </ol>
+          <a class="btn btn--teal btn--block" href={profileSchema} download>Download JSON Schema</a>
+          <a class="spec__toc-gh" href={profileRepo}>Schema, validator and issues on GitHub</a>
+        </aside>
+
+        <article class="spec__body">
+          <span class="eyebrow">Draft specification</span>
+          <h2>Gentifi Business Profile: what one business offers, and how sure an agent can be</h2>
+          <dl class="spec__status">
+            <div><dt>Version</dt><dd>0.1 (draft)</dd></div>
+            <div><dt>Date</dt><dd>15 October 2026</dd></div>
+            <div><dt>Author</dt><dd>Gentifi</dd></div>
+            <div><dt>Status</dt><dd>Proposal for discussion, not a standard.</dd></div>
+            <div><dt>Licence</dt><dd>Apache-2.0</dd></div>
+          </dl>
+
+          <h3 id="profile-abstract">Abstract</h3>
+          <p>
+            An open format that describes what a local business offers, what's available right now, and what an AI agent
+            may do on its behalf: hold, book, order, cancel, check status or enquire. It's designed for businesses without
+            live inventory systems: the farm shop, the plumber, the independent café. The same profile can be served over
+            MCP, published as structured data on a website, or carried by other agent protocols.
+          </p>
+
+          <h3 id="profile-freshness">Every piece of availability says how sure you can be</h3>
+          <p>
+            Each stock level, bookable slot or recurring pattern carries when it was last confirmed, how confident that is,
+            and where it came from: the owner, a synced booking or till system, or a message the owner sent. An agent can
+            then tell whether a booking can be confirmed straight away, whether the business needs to confirm it first, or
+            whether to warn the customer that the information may be out of date.
+          </p>
+          <div class="code-block">
+            <div class="code-block__bar"><span>a bookable slot</span><CopyLine text={profileSlot} label="Copy example" tone="dark" wrap={false} /></div>
+            <pre><code>{profileSlot}</code></pre>
+          </div>
+
+          <h3 id="profile-confirm">The customer always confirms</h3>
+          <p>
+            Every hold, booking or order carries <code>customer_confirmation</code>: how and when the customer agreed to
+            exactly that request, in their AI app or on a confirmation page. An agent never commits a customer on its own.
+            Requests come back with a clear receipt: confirmed, pending (with a time the business will reply by), or
+            declined with a reason and alternatives. Retries are safe: every request carries an idempotency key.
+          </p>
+
+          <h3 id="profile-repo">What's in the repository</h3>
+          <ul>
+            <li>The JSON Schema, with worked examples: a farm shop and a mobile plumber, both fictional.</li>
+            <li>A validator that checks ids, slots and stale data as well as structure.</li>
+            <li>A reference MCP server for trying the format with real agents.</li>
+          </ul>
+          <p class="spec__after-table">
+            The reference server isn't the live Gentifi service: that runs on the <a href="/toolkit">Gentifi toolkit</a>,
+            which will publish businesses in this format. If you've tried describing a real business and something didn't
+            fit, please <a href={`${profileRepo}/issues`}>open an issue</a>.
+          </p>
+        </article>
       </div>
     </section>
 
