@@ -17,7 +17,6 @@ const business = {
 };
 const badgeLink = `gentifi.com/b/${business.slug}`;
 // The demo connector is live on the Gentifi host
-const connectorUrl = `https://mcp.gentifi.com/b/${business.slug}/mcp`;
 // Customers add the one Gentifi connector, which includes every shop on Gentifi
 const gentifiUrl = 'https://mcp.gentifi.com/mcp';
 const files = `/b/${business.slug}`;
@@ -182,7 +181,6 @@ const askLinks = [
             <dt>schema.org</dt><dd><a href={`${files}/business.jsonld`}><code>{badgeLink}/business.jsonld</code></a></dd>
             <dt>Window sticker</dt><dd><a href={`${files}/badge.svg`}><code>{badgeLink}/badge.svg</code></a></dd>
             <dt>Gentifi connector</dt><dd><code>{gentifiUrl}</code> <span class="agents__live">live</span></dd>
-            <dt>This shop’s own connector</dt><dd><code>{connectorUrl}</code> <span class="agents__live">live</span></dd>
           </dl>
         </details>
       </div>
