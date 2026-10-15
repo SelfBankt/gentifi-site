@@ -1,6 +1,6 @@
 # Gentifi
 
-> Gentifi is AI optimisation for independent shops, businesses and events. It puts a business's products, prices, stock and opening times in its customers' AI assistants, so customers can ask what it has and reserve or order. AI optimisation helps a business get found and described correctly in ChatGPT, Gemini, Meta AI, Copilot and Claude; customers can add a business directly in Claude and ChatGPT today. Customers approve the connection and confirm every order in their own app; orders reach the business by email or its own checkout. Starting in Bristol and South Gloucestershire, UK.
+> Gentifi is AI optimisation for independent shops, businesses and events. It puts a business's products, prices, stock and opening times in its customers' AI assistants, so customers can ask what it has and reserve or order. AI optimisation helps a business get found and described correctly in ChatGPT, Gemini, Claude and Meta AI; customers can add a business directly in Claude and ChatGPT today. Customers approve the connection and confirm every order in their own app; orders reach the business by email or its own checkout. Starting in Bristol and South Gloucestershire, UK.
 
 ## For businesses
 
