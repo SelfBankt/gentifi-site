@@ -7,7 +7,7 @@
 <text x="87" y="542" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" font-size="64" fill="#F09A5C" textLength="640" lengthAdjust="spacingAndGlyphs">Agent-ready business</text>
 <line x1="87" y1="608" x2="913" y2="608" stroke="#1C5D69" stroke-width="2"/>
 <text font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" font-size="40" fill="#FFFFFF"><tspan x="87" y="690">Scan to add us to</tspan><tspan x="87" y="740">your AI assistant</tspan></text>
-<text x="87" y="798" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-size="24" fill="#F09A5C">Works in Claude and ChatGPT today</text>
+<text x="87" y="798" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-size="24" fill="#F09A5C" textLength="500" lengthAdjust="spacingAndGlyphs">Works in Claude, ChatGPT and Gemini today</text>
 <text x="87" y="850" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-size="28" fill="#FFFFFF">Hollow Lane Farm Shop</text>
 <text x="87" y="890" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-size="22" fill="#B8C4D3">gentifi.com/b/demo-business</text>
 <rect x="640" y="640" width="273" height="273" rx="30" fill="#FFFFFF"/>
