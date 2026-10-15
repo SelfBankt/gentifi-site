@@ -64,6 +64,34 @@ const commands = [
     options: [['--self-host', 'Directory to write the site to']],
   },
   {
+    name: 'website',
+    usage: 'gentifi website [--check <url> [--report <file>]]',
+    summary: 'A paste-once snippet of structured data for the business’s own site, or a check of what the site tells AI today.',
+    status: 'Works',
+    options: [['--check', 'Check a live site against the business’s Gentifi data'], ['--report', 'Also write a one-page “How AI sees your business” report'], ['--name', 'For a business without a gentifi.json yet']],
+  },
+  {
+    name: 'host',
+    usage: 'gentifi host --dir <folder> --base-url <https://…>',
+    summary: 'Host many businesses from one folder: their pages, signs and discovery files, the one network connector, confirmation pages, events and an NLWeb-style /ask search.',
+    status: 'Works (runs the Gentifi network)',
+    options: [['--sync-minutes', 'How often to re-read each business’s sheet (default 10)']],
+  },
+  {
+    name: 'stats',
+    usage: 'gentifi stats --dir <folder> [--days <n>]',
+    summary: 'Anonymous daily counts for each hosted business: page opens, AI questions, search appearances and confirmed orders.',
+    status: 'Works',
+    options: [['--json', 'Print the totals as JSON']],
+  },
+  {
+    name: 'profile',
+    usage: 'gentifi profile [--out <file>]',
+    summary: 'Write the business as a Gentifi Business Profile (draft 0.1), with honest freshness on its stock.',
+    status: 'Works (draft format)',
+    options: [['--out', 'File to write (default: print it)']],
+  },
+  {
     name: 'collection check',
     usage: 'gentifi collection check <file or URL> [--verify]',
     summary: 'Check a Collection (draft 0.2) and confirm each member links back to it.',
@@ -96,6 +124,7 @@ const standards = [
 const done = [
   { title: 'Connector generator', body: 'A spreadsheet, Google Sheet, or Square, Shopify or WooCommerce export becomes an MCP connector with search, availability and order tools.' },
   { title: 'Checkout hand-off', body: 'Orders end on the business’s own checkout, booking page, email or phone, confirmed by the customer.' },
+  { title: 'Confirmation page and witness', body: 'On a host, the customer checks each order and taps Confirm; a record of what was agreed is kept, without who they are.' },
   { title: 'SKILL.md and discovery', body: 'Generated from the same data, in the formats agents read.' },
   { title: 'Link and QR code', body: 'A scan-to-add page and a printable sticker for each business.' },
   { title: 'Gentifi network hosting', body: 'Each business’s page, discovery files and signs at mcp.gentifi.com/b/<business>, all reached through the one Gentifi connector.' },
@@ -104,7 +133,7 @@ const done = [
 
 const next = [
   { title: 'Live connections', body: 'Square and Shopify accounts synced directly, then other tills and booking systems.' },
-  { title: 'Simple dashboard', body: 'Agent questions, orders and revenue.' },
+  { title: 'Simple dashboard', body: 'The counts and confirmed orders, for each business to see.' },
   { title: 'UCP checkout', body: 'For businesses whose checkout supports it.' },
 ];
 ---

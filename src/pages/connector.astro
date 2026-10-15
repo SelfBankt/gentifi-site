@@ -10,7 +10,7 @@ const tools = [
   { name: 'get_business_info', does: 'A shop’s opening hours, contact details and how ordering works.' },
   { name: 'search_catalogue', does: 'What a shop sells, with prices, stock and when they were last updated.' },
   { name: 'check_availability', does: 'Whether a shop has enough of one item, and when it’s available.' },
-  { name: 'prepare_order', does: 'Works out a reservation or order and its total, with a link you use to confirm it with the shop. Nothing is ordered or sent.' },
+  { name: 'prepare_order', does: 'Works out a reservation or order and its total, with a link to a confirmation page. Nothing is ordered or sent until you check it there and tap Confirm.' },
 ];
 
 const asks = [
@@ -32,7 +32,7 @@ const asks = [
         <h1>Connect local shops to your AI assistant.</h1>
         <p class="lede">
           Add Gentifi to your AI assistant or agent, then ask local shops what they have, prices, stock and opening
-          times. Your AI can prepare a reservation or order, and you confirm it with the shop yourself.
+          times. Your AI can prepare a reservation or order; you check it on a Gentifi confirmation page, tap Confirm, then send it to the shop or finish on its own checkout.
         </p>
         <p class="link">The link: <code>{gentifiUrl}</code></p>
 
@@ -63,7 +63,7 @@ const asks = [
 
         <h2>What it won’t do</h2>
         <ul>
-          <li>It never places an order, sends a message or takes a payment. You confirm every order with the shop, by email or on the shop’s own checkout.</li>
+          <li>It never places an order, sends a message or takes a payment. You confirm every order on a Gentifi confirmation page, which gives you a reference, then send it to the shop by email or finish on the shop’s own checkout.</li>
           <li>It can’t change a shop’s information. Shops keep their own catalogue up to date.</li>
           <li>It doesn’t ask for your name, contact details, location or chat history.</li>
         </ul>
