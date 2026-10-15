@@ -20,11 +20,11 @@ const tryAgent = 'claude mcp add --transport http my-shop http://localhost:8787/
 const commands = [
   {
     name: 'init',
-    usage: 'gentifi init --from csv --file <path or URL> --name <business>',
-    summary: 'Import a catalogue and create a gentifi.json project. A spreadsheet or a published Google Sheet works today.',
-    status: 'Works for csv',
+    usage: 'gentifi init --from csv|square|shopify|woocommerce --file <path or URL> --name <business>',
+    summary: 'Import a catalogue and create a gentifi.json project. A spreadsheet (CSV or Excel), a published Google Sheet, or a Square, Shopify or WooCommerce product export works today.',
+    status: 'Works for csv, square, shopify, woocommerce',
     options: [
-      ['--from', 'csv today; shopify, woocommerce and booking are planned'],
+      ['--from', 'csv, square, shopify or woocommerce (product exports) today; live connections and booking are planned'],
       ['--hours, --area, --email…', 'Business details: never guessed, always asked'],
     ],
   },
@@ -94,16 +94,16 @@ const standards = [
 ];
 
 const done = [
-  { title: 'Connector generator', body: 'A spreadsheet or Google Sheet becomes an MCP connector with search, availability and order tools.' },
+  { title: 'Connector generator', body: 'A spreadsheet, Google Sheet, or Square, Shopify or WooCommerce export becomes an MCP connector with search, availability and order tools.' },
   { title: 'Checkout hand-off', body: 'Orders end on the business’s own checkout, booking page, email or phone, confirmed by the customer.' },
   { title: 'SKILL.md and discovery', body: 'Generated from the same data, in the formats agents read.' },
   { title: 'Link and QR code', body: 'A scan-to-add page and a printable sticker for each business.' },
-  { title: 'Gentifi network hosting', body: 'Each business’s page and connector hosted at mcp.gentifi.com/b/<business>.' },
+  { title: 'Gentifi network hosting', body: 'Each business’s page, discovery files and signs at mcp.gentifi.com/b/<business>, all reached through the one Gentifi connector.' },
   { title: 'The Gentified test', body: 'Checks a business locally, or any published one by its link.' },
 ];
 
 const next = [
-  { title: 'More sources', body: 'Shopify, WooCommerce and booking systems.' },
+  { title: 'Live connections', body: 'Square and Shopify accounts synced directly, then other tills and booking systems.' },
   { title: 'Simple dashboard', body: 'Agent questions, orders and revenue.' },
   { title: 'UCP checkout', body: 'For businesses whose checkout supports it.' },
 ];
@@ -125,7 +125,7 @@ const next = [
             find, price, book and buy, then tests it the way an agent would. Built on open standards, so it works with
             any agent.
           </p>
-          <p class="status"><span class="status__dot" aria-hidden="true"></span>Early preview: spreadsheets work end to end. Shopify, WooCommerce and booking imports are next.</p>
+          <p class="status"><span class="status__dot" aria-hidden="true"></span>Early preview: spreadsheets and Square, Shopify and WooCommerce exports work end to end. Live connections and booking systems are next.</p>
           <div class="hero__ctas">
             <a class="btn btn--primary" href={githubUrl}>View on GitHub</a>
             <a class="btn btn--ghost" href={toolkitZip}>Download .zip</a>
@@ -170,7 +170,7 @@ its prices and prepare orders the customer confirms.</code></pre>
           <article class="start">
             <span class="start__tag">Run it</span>
             <h3>With npx</h3>
-            <p>Nothing to install. Needs Node.js 20 or later and a spreadsheet with a name and a price on each row.</p>
+            <p>Nothing to install. Needs Node.js 20 or later and a spreadsheet with a name and a price on each row, or a product export from Square, Shopify or WooCommerce.</p>
             <CopyLine text={toolkitInit} prompt="$" tone="light" label="Copy command" />
           </article>
           <article class="start start--key">
