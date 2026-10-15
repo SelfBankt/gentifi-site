@@ -81,7 +81,8 @@
   },
   "publish": {
     "baseUrl": "https://mcp.gentifi.com/b/demo-business",
-    "mcpUrl": "",
+    "mcpUrl": "https://mcp.gentifi.com/mcp",
+    "networkUrl": "https://mcp.gentifi.com/mcp",
     "shortUrl": "https://gentifi.com/b/demo-business"
   },
   "memberOf": [],

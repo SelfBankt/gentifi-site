@@ -14,7 +14,7 @@ This information comes from Hollow Lane Farm Shop's own catalogue and was last u
 
 ## Live connection
 
-Hollow Lane Farm Shop has an MCP connector at https://mcp.gentifi.com/b/demo-business/mcp with the tools `search_catalogue`, `check_availability`, `prepare_order` and `get_business_info`. Adding a connector is the user's choice: if they want live stock, tell them it exists and let them approve it in their own app. Without it, use the snapshot below.
+Hollow Lane Farm Shop is on the Gentifi connector at https://mcp.gentifi.com/mcp, with the tools `find_businesses`, `search_catalogue`, `check_availability`, `prepare_order` and `get_business_info`. Pass "Hollow Lane Farm Shop" as `business`. Adding a connector is the user's choice: if they want live stock, tell them it exists and let them approve it in their own app. Without it, use the snapshot below.
 
 ## Catalogue snapshot (2026-10-12)
 
