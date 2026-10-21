@@ -9,19 +9,46 @@ import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
 import Tick from '../components/Tick.astro';
 
+// What a business gets today, grouped as on the Hobbs House one-pager (docs/pilots/hobbs-house-offer.html)
 const today = [
-  { title: 'Your own link and the Gentifi connector', body: 'A unique link for your business, for your signs, website and social pages. It puts customers one step from the Gentifi connector: they add it once, then ask their AI about you by name.' },
-  { title: 'Found by AI assistants', body: 'Customers’ AI can see what you sell, what it costs and when you’re open.' },
-  { title: 'An AI visibility check', body: 'A one-page report on what your website and Google profile tell AI today, in plain English.' },
-  { title: 'Your website, made AI-readable', body: 'Structured data that tells AI you’re a local shop, where you are and when you’re open. Paste it in once, and your site looks the same.' },
-  { title: 'Your Google profile, checked', body: 'Name, hours, holiday hours, category and products, so AI answers about you correctly.' },
-  { title: 'Orders on your phone', body: 'Each order a customer confirms arrives in Telegram for you to accept or decline, and the customer sees your answer. Your staff can get them too. Or keep taking orders by email or through your own checkout.' },
-  { title: 'Stock from your phone', body: 'Tap sold out or back in stock in Telegram, and customers’ AI sees it within seconds, with the time you said so.' },
-  { title: 'Prices from your phone', body: 'Change a price or description in Telegram, and customers’ AI sees it within seconds. For a whole new price board, send a photo: we read it and check every price before anything changes.' },
-  { title: 'A witness for every order', body: 'Customers confirm on a Gentifi page before an order reaches you. We keep a record of what each one agreed, at what price and when, with a reference that comes with the order.' },
-  { title: 'Your signs', body: 'A window sticker and a counter card with your own code, ready to print.' },
-  { title: 'See what AI does for you', body: 'Daily counts of how often your page was opened, how often customers’ AI asked about you, how often you came up in searches, and how many orders were confirmed. Numbers only, never who.' },
-  { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes. When you change a price there, the sheet’s price is the one AI sees.' },
+  {
+    title: 'Get found by AI',
+    items: [
+      { title: 'An AI visibility check', body: 'A one-page report on what your website and Google profile tell AI today, in plain English.' },
+      { title: 'Your website, made AI-readable', body: 'Structured data that tells AI you’re a local shop, where you are and when you’re open. Paste it in once, and your site looks the same.' },
+      { title: 'Your Google profile, checked', body: 'Name, hours, holiday hours, category and products, so AI answers about you correctly.' },
+    ],
+  },
+  {
+    title: 'Your shop in customers’ AI',
+    items: [
+      { title: 'Found by AI assistants', body: 'Customers’ AI can see what you sell, what it costs and when you’re open.' },
+      { title: 'Your own link and the Gentifi connector', body: 'A unique link for your business, for your signs, website and social pages. It puts customers one step from the Gentifi connector: they add it once, then ask their AI about you by name.' },
+      { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes. When you change a price there, the sheet’s price is the one AI sees.' },
+    ],
+  },
+  {
+    title: 'Orders, confirmed by the customer',
+    items: [
+      { title: 'Orders on your phone', body: 'Each order a customer confirms arrives in Telegram for you to accept or decline, and the customer sees your answer. Your staff can get them too. Or keep taking orders by email or through your own checkout.' },
+      { title: 'A witness for every order', body: 'Customers confirm on a Gentifi page before an order reaches you. We keep a record of what each one agreed, at what price and when, with a reference that comes with the order.' },
+    ],
+  },
+  {
+    title: 'Run it from your phone',
+    items: [
+      { title: 'Check it, then go live', body: 'We send you your listing in Telegram. Nothing shows until you tap Go live.' },
+      { title: 'Stock from your phone', body: 'Tap sold out or back in stock in Telegram, and customers’ AI sees it within seconds, with the time you said so.' },
+      { title: 'Prices from your phone', body: 'Change a price or description in Telegram, and customers’ AI sees it within seconds. For a whole new price board, send a photo: we read it and check every price before anything changes.' },
+    ],
+  },
+  {
+    title: 'Signs and results',
+    items: [
+      { title: 'Your signs', body: 'A window sticker and a counter card with your own code, ready to print.' },
+      { title: 'See what AI does for you', body: 'Daily counts of how often your page was opened, how often customers’ AI asked about you, how often you came up in searches, and how many orders were confirmed. Numbers only, never who.' },
+    ],
+  },
 ];
 
 const coming = [
@@ -124,20 +151,27 @@ const faqs = [
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">What you get</span>
-          <h2>Everything AI needs, done for you.</h2>
-          <p>You tell us what you sell. We make sure AI can find it and describe it correctly.</p>
+          <h2>Found by AI. Ordered from AI.<br /> Run from your phone.</h2>
+          <p>You tell us what you sell. We make sure AI can find it and describe it correctly, and send the orders customers confirm to your phone.</p>
         </div>
         <div class="offer">
           <div>
             <h3 class="offer__label">Today</h3>
-            <ul class="benefits">
-              {today.map((b) => (
-                <li>
-                  <Tick size={22} tick="var(--white)" />
-                  <div><h4>{b.title}</h4><p>{b.body}</p></div>
-                </li>
+            <div class="groups">
+              {today.map((g, i) => (
+                <div class="group">
+                  <h3 class="group__title"><span aria-hidden="true">{i + 1}</span>{g.title}</h3>
+                  <ul class="benefits">
+                    {g.items.map((b) => (
+                      <li>
+                        <Tick size={22} tick="var(--white)" />
+                        <div><h4>{b.title}</h4><p>{b.body}</p></div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
           <div class="offer__coming">
             <h3 class="offer__label">Coming next</h3>
@@ -302,8 +336,11 @@ const faqs = [
   .coming { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   .coming h4 { font-size: 1.02rem; margin-bottom: 2px; }
   .coming p { color: var(--ink-muted); font-size: 0.95rem; }
-  .benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px 36px; }
-  @media (min-width: 720px) { .benefits { grid-template-columns: repeat(2, 1fr); } }
+  .groups { display: grid; gap: 36px 40px; }
+  @media (min-width: 720px) { .groups { grid-template-columns: repeat(2, 1fr); } }
+  .group__title { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; margin-bottom: 16px; }
+  .group__title span { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--copper); color: var(--teal); font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+  .benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
   .benefits li { display: flex; gap: 14px; align-items: flex-start; }
   .benefits li :global(svg) { margin-top: 2px; flex-shrink: 0; }
   .benefits h4 { font-size: 1.1rem; margin-bottom: 4px; }
