@@ -32,12 +32,12 @@ const asks = [
 
 const steps = [
   { title: 'Start with what you have', body: 'Your Google Sheet, price list, or an export from your till or online shop today, with a live connection next. We bring it in and check that AI assistants read it correctly.' },
-  { title: 'Mark what’s in, from your phone', body: 'In, running low or sold out, in a few taps. Customers’ AI sees when you last updated each item, so they say “in this morning” rather than promise.' },
-  { title: 'Customers ask, you confirm', body: 'Their AI prepares reservations and orders, and the customer checks each one and taps Confirm on a Gentifi page. They reach you by email or through your own checkout, as orders do now.' },
+  { title: 'Mark what’s sold out, from your phone', body: 'Tap sold out or back in stock in Telegram. Customers’ AI sees it within seconds, with the time you said so, so it says “back in at 9.10” rather than promise.' },
+  { title: 'Customers ask, you confirm', body: 'Their AI prepares reservations and orders, and the customer checks each one and taps Confirm on a Gentifi page. They reach you in Telegram to accept or decline, or by email or through your own checkout, as orders do now.' },
 ];
 
 const features = [
-  { title: 'What’s in today', body: 'In, low or sold out, with the time you last checked.' },
+  { title: 'What’s in today', body: 'In or sold out, with the time you last said so.' },
   { title: 'Pre-orders and collection', body: 'Order-by days, collection slots and Christmas orders.' },
   { title: 'By weight, by item or by the box', body: 'Prices per kilo, per item or per box. Nothing needs a barcode.' },
   { title: 'Where it’s from', body: 'Grown or reared here, or from a named neighbour, so AI can answer “is it local?”' },
@@ -93,7 +93,7 @@ const faqs = [
             <a class="btn btn--primary" href="/join?kind=Farm%20shop">Sign up your farm shop</a>
             <a class="btn btn--ghost" href="/b/demo-business">See a demo farm shop</a>
           </div>
-          <p class="hero__wait">Waiting for live stock from your phone? <a href="#waitlist">Stay in touch</a></p>
+          <p class="hero__wait">Want live stock counts too? <a href="#waitlist">Stay in touch</a></p>
           <ul class="hero__points">
             <li><Tick size={18} tick="var(--teal)" />Start from a spreadsheet</li>
             <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
@@ -250,8 +250,8 @@ const faqs = [
       <div class="container waitlist__grid">
         <div class="section-head">
           <span class="eyebrow">Stay in touch</span>
-          <h2>Waiting for live stock? Stay in touch.</h2>
-          <p>Updating stock from your phone is coming next, and pre-orders for collection work already. Ready now? <a href="/join?kind=Farm%20shop">Sign up your farm shop</a> and join the Genesis cohort.</p>
+          <h2>Want live stock counts? Stay in touch.</h2>
+          <p>Marking things sold out from your phone works now, and so do pre-orders for collection. Live stock counts are coming next. Ready now? <a href="/join?kind=Farm%20shop">Sign up your farm shop</a> and join the Genesis cohort.</p>
         </div>
         <WaitlistForm role="farm" />
       </div>
