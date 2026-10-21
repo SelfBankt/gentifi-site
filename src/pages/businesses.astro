@@ -57,6 +57,16 @@ const coming = [
   { title: 'Live till and online-shop connections', body: 'Stock that updates as you sell, and orders that land on your till.' },
 ];
 
+// Who fits best today (concept brief, "Who fits best")
+const fits = [
+  { title: 'Bakeries', body: 'Bread that sells out, and cakes and celebration bakes ordered ahead.' },
+  { title: 'Farm shops, butchers and fishmongers', body: 'Seasonal stock, meat boxes and Christmas pre-orders.', link: { href: '/farm-shops', label: 'For farm shops' } },
+  { title: 'Delis, cheesemongers and greengrocers', body: '“Is the Stilton in?” “Got any asparagus?” Refill shops too.' },
+  { title: 'Florists and makers', body: 'Bouquets, wreaths and gift boxes made to order for collection.' },
+  { title: 'Specialist shops', body: 'Bookshops, plant nurseries, bike shops, wine merchants: anywhere customers check stock before the trip.' },
+  { title: 'Markets and events', body: 'Every trader in one place, through one connection.', link: { href: '/events', label: 'For organisers' } },
+];
+
 const steps = [
   { title: 'Sign up your shop', body: 'Tell us about your business, your hours and what you sell. We’re starting with a small group.' },
   { title: 'We set you up', body: 'We bring in your products and prices from a spreadsheet, a price list, or an export from Square, Shopify or WooCommerce, and check that AI assistants read them correctly.' },
@@ -142,6 +152,26 @@ const faqs = [
           <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
           <li><Tick size={18} tick="var(--teal)" />Keep your own till and checkout</li>
           <li><Tick size={18} tick="var(--teal)" />Live in Claude, ChatGPT and Gemini today</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Who it's for -->
+    <section class="section section--grey" id="who">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Who it’s for</span>
+          <h2>Shops whose customers ask “Have you got it today?”</h2>
+          <p>And “Can you put one aside for me?” It suits stock that sells out or changes with the seasons, customers who collect, and regulars who come back.</p>
+        </div>
+        <ul class="fits">
+          {fits.map((f) => (
+            <li class="fit">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+              {f.link && <a href={f.link.href}>{f.link.label}</a>}
+            </li>
+          ))}
         </ul>
       </div>
     </section>
@@ -377,6 +407,13 @@ const faqs = [
   .diy a { color: var(--teal); font-weight: 600; }
 
   /* Examples */
+  .fits { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .fits { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .fits { grid-template-columns: repeat(3, 1fr); } }
+  .fit { background: var(--white); border-radius: var(--radius); padding: 22px; display: grid; gap: 6px; align-content: start; }
+  .fit h3 { font-size: 1.1rem; }
+  .fit p { color: var(--ink-muted); }
+  .fit a { color: var(--teal); font-weight: 600; }
   .examples { display: grid; gap: 16px; }
   @media (min-width: 720px) { .examples { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1040px) { .examples { grid-template-columns: repeat(4, 1fr); } }
