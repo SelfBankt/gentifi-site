@@ -11,7 +11,14 @@ import Tick from '../components/Tick.astro';
 const shopSteps = [
   { title: 'Send us your price list', body: 'A spreadsheet is fine. You get your own unique link and a place on the Gentifi connector, and AI sees every change you make to the sheet.' },
   { title: 'Put up your sign', body: 'A counter card by the till and a sticker in the window, each with your own code. Got a website? Paste in the snippet we write for it, once.' },
-  { title: 'Orders come to you', body: 'Customers confirm every order, and it reaches you by email or through your own checkout, as now.' },
+  { title: 'Orders come to your phone', body: 'Customers confirm every order. It arrives in Telegram for you to accept or decline, and they see your answer. Or keep taking orders by email or through your own checkout, as now.' },
+];
+
+const phone = [
+  { title: 'Check your listing, then go live', body: 'We send you your listing in Telegram. Nothing goes live until you tap Go live.' },
+  { title: 'Accept or decline in one tap', body: 'Each order shows what the customer wants and when. Decline as sold out, and AI stops offering it.' },
+  { title: 'Sold out? Tap it', body: 'Mark things sold out or back in stock, and customers’ AI sees it within seconds, with the time you said so.' },
+  { title: 'New prices? Send a photo', body: 'Snap your price board and send it. We read it and check every price before anything changes.' },
 ];
 
 
@@ -100,6 +107,12 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
             <h3>For your customers</h3>
             <ol>{customerSteps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
           </article>
+        </div>
+
+        <div class="phone">
+          <h3>Run it from your phone</h3>
+          <p>Your listing, your orders and your stock, in the Telegram app. Your staff can get the orders too.</p>
+          <ul>{phone.map((p) => <li><Tick size={20} tick="var(--teal)" /><div><strong>{p.title}</strong><span>{p.body}</span></div></li>)}</ul>
         </div>
 
       </div>
@@ -222,6 +235,15 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   .side li::before { content: counter(step); grid-row: span 2; width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; }
   .side--customer li::before { background: var(--copper); color: var(--teal); }
   .side li span { color: var(--ink-muted); }
+  .phone { margin-top: 20px; border: 2px solid var(--grey); border-radius: var(--radius); padding: 28px; display: grid; gap: 12px; }
+  .phone h3 { font-size: 1.3rem; }
+  .phone > p { color: var(--ink-muted); }
+  .phone ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 18px; }
+  @media (min-width: 860px) { .phone ul { grid-template-columns: 1fr 1fr; gap: 18px 32px; } }
+  .phone li { display: flex; gap: 12px; align-items: flex-start; }
+  .phone li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+  .phone li div { display: grid; gap: 2px; }
+  .phone li span { color: var(--ink-muted); }
   .side--customer li span { color: var(--on-teal-muted); }
 
   /* AI optimisation */
