@@ -42,7 +42,7 @@ const askLinks = [
 ---
 <Base
   title={`Add ${business.name} to your AI assistant · Gentifi demo`}
-  description={`Demo page: add ${business.name} to your AI assistant and try it in Claude, ChatGPT or Gemini. Fictional business.`}
+  description={`Demo page: add ${business.name} to your AI assistant and try it in Claude, ChatGPT, Gemini or Grok. Fictional business.`}
 >
   <meta slot="head" name="robots" content="noindex" />
   <link slot="head" rel="ard" href={`${files}/ard.json`} />
@@ -85,6 +85,7 @@ const askLinks = [
               <span><b>Claude:</b> Settings → Connectors → Add custom connector. Paste the link.</span>
               <span><b>ChatGPT:</b> In a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server. Paste the link, no authentication. Then type @ in a chat to pick the shop.</span>
               <span><b>Gemini:</b> On a computer: <a href="https://gemini.google.com/app">gemini.google.com/app</a> → Settings → Connected Apps → Custom apps → add. Paste the link, click Next and follow the steps. Then type @ in a chat to pick it. It works in the Gemini phone app once added.</span>
+              <span><b>Grok:</b> <a href="https://grok.com/connectors">grok.com/connectors</a> → New Connector → Custom. Paste the link, no authentication. Then ask about the shop in any chat.</span>
             </li>
             <li>
               <strong>Ask about {business.name} by name</strong>
