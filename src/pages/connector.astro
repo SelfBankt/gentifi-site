@@ -42,6 +42,7 @@ const asks = [
           <li><strong>ChatGPT:</strong> in a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server. Name it Gentifi, paste the link and choose no authentication. Then type @ in a chat to pick it.</li>
           <li><strong>Gemini:</strong> on a computer: <a href="https://gemini.google.com/app">gemini.google.com/app</a> → Settings → Connected Apps → Custom apps → add. Paste the link, click Next and follow the steps. Then type @ in a chat to pick it. It works in the Gemini phone app once added.</li>
           <li><strong>Grok:</strong> <a href="https://grok.com/connectors">grok.com/connectors</a> → New Connector → Custom. Name it Gentifi, paste the link and choose no authentication. Then ask about any shop in a chat.</li>
+          <li><strong>Hermes Agent:</strong> in <code>~/.hermes/config.yaml</code>, under <code>mcp_servers</code>, add <code>gentifi</code> with <code>url:</code> and the link. Then run <code>/reload-mcp</code>.</li>
           <li><strong>Other AI apps:</strong> paste the link wherever the app lets you add connectors (sometimes called MCP servers).</li>
         </ul>
         <p>No account or sign-in is needed, and your app asks you to approve the connection before anything is added.</p>
