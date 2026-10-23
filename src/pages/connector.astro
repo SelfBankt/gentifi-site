@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SafeToAdd from '../components/SafeToAdd.astro';
 
 const gentifiUrl = 'https://mcp.gentifi.com/mcp';
 
@@ -34,6 +35,7 @@ const asks = [
           Add Gentifi to your AI assistant or agent, then ask local shops what they have, prices, stock and opening
           times. Your AI can prepare a reservation or order; you check it on a Gentifi confirmation page, tap Confirm, then send it to the shop or finish on its own checkout.
         </p>
+        <SafeToAdd />
         <p class="link">The link: <code>{gentifiUrl}</code></p>
 
         <h2>Add it</h2>
@@ -45,7 +47,6 @@ const asks = [
           <li><strong>Hermes Agent:</strong> run <code>hermes mcp add gentifi --url {gentifiUrl}</code>, then <code>/reload-mcp</code> in a chat.</li>
           <li><strong>Other AI apps:</strong> paste the link wherever the app lets you add connectors (sometimes called MCP servers).</li>
         </ul>
-        <p>No account or sign-in is needed, and your app asks you to approve the connection before anything is added.</p>
 
         <h2>Try asking</h2>
         <ul>{asks.map((a) => <li>“{a}”</li>)}</ul>

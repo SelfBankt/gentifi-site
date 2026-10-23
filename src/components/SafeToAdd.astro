@@ -1,0 +1,42 @@
+---
+// Early reassurance on pages that ask people to add the Gentifi connector.
+// Every claim matches the connector section of the privacy page.
+import Tick from './Tick.astro';
+
+interface Props {
+  tone?: 'dark' | 'light'; // background it sits on
+}
+const { tone = 'light' } = Astro.props;
+
+const points = [
+  { title: 'It only reads.', body: 'It looks up shops for you, and can’t order, pay or change anything. You confirm every order yourself.' },
+  { title: 'No sign-in.', body: 'We never see your chats, name or location.' },
+  { title: 'You’re in control.', body: 'Your app asks you to approve it, and you can remove it any time.' },
+];
+---
+<section class:list={['safe', `safe--${tone}`]} aria-label="Is it safe to add?">
+  <ul>
+    {points.map((p) => (
+      <li>
+        <Tick size={18} tick="var(--teal)" />
+        <span><strong>{p.title}</strong> {p.body}</span>
+      </li>
+    ))}
+  </ul>
+  <a href="/privacy#connector">How we handle your requests</a>
+</section>
+
+<style>
+  .safe { border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 10px; font-size: 0.93rem; line-height: 1.5; }
+  .safe ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .safe li { display: flex; gap: 10px; align-items: flex-start; }
+  .safe li :global(svg) { margin-top: 2px; flex-shrink: 0; }
+  .safe a { font-weight: 600; font-size: 0.88rem; text-underline-offset: 3px; }
+  .safe a::after { content: ' \2192'; color: var(--copper); }
+
+  .safe--light { background: var(--grey); color: var(--ink-muted); }
+  .safe--light strong, .safe--light a { color: var(--teal); }
+
+  .safe--dark { background: var(--teal-raised); border: 1px solid var(--teal-line); color: var(--on-teal-muted); }
+  .safe--dark strong, .safe--dark a { color: var(--white); }
+</style>
