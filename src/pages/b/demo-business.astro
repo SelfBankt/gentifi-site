@@ -86,7 +86,7 @@ const askLinks = [
               <span><b>ChatGPT:</b> In a browser, not the app: <a href="https://chatgpt.com/plugins">chatgpt.com/plugins</a> → Add (top right) → Add custom MCP server. Paste the link, no authentication. Then type @ in a chat to pick the shop.</span>
               <span><b>Gemini:</b> On a computer: <a href="https://gemini.google.com/app">gemini.google.com/app</a> → Settings → Connected Apps → Custom apps → add. Paste the link, click Next and follow the steps. Then type @ in a chat to pick it. It works in the Gemini phone app once added.</span>
               <span><b>Grok:</b> <a href="https://grok.com/connectors">grok.com/connectors</a> → New Connector → Custom. Paste the link, no authentication. Then ask about the shop in any chat.</span>
-              <span><b>Hermes Agent:</b> In <code>~/.hermes/config.yaml</code>, under <code>mcp_servers</code>, add <code>gentifi</code> with <code>url:</code> and the link. Then run <code>/reload-mcp</code>.</span>
+              <span><b>Hermes Agent:</b> Run <code>hermes mcp add gentifi --url {gentifiUrl}</code>, then <code>/reload-mcp</code> in a chat.</span>
             </li>
             <li>
               <strong>Ask about {business.name} by name</strong>
