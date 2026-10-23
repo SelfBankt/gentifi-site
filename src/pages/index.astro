@@ -10,7 +10,7 @@ import Tick from '../components/Tick.astro';
 import Mark from '../components/Mark.astro';
 
 // The assistants Gentifi is tested in (keep in step with gentifi-toolkit/src/lib/apps.js)
-const apps = ['Claude', 'ChatGPT', 'Gemini'];
+const apps = ['Claude', 'ChatGPT', 'Gemini', 'Grok'];
 
 const shopSteps = [
   { title: 'Send us your price list', body: 'A spreadsheet is fine. You get your own unique link and a place on the Gentifi connector, and AI sees every change you make to the sheet.' },
@@ -29,7 +29,7 @@ const phone = [
 
 const customerSteps = [
   { title: 'Scan your sign', body: 'Or tap your link on your website or social pages.' },
-  { title: 'Add your shop to their AI', body: 'It takes a minute in Claude, ChatGPT or Gemini, and they approve it in their own app.' },
+  { title: 'Add your shop to their AI', body: 'It takes a minute in Claude, ChatGPT, Gemini or Grok, and they approve it in their own app.' },
   { title: 'Just ask', body: '“Have you got sourdough on Saturday? Save me a loaf.” Nothing is ordered until they check it and tap Confirm.' },
 ];
 
@@ -46,7 +46,7 @@ const organisation = {
   url: 'https://gentifi.com/',
   logo: 'https://gentifi.com/brand/gentifi-app-icon.png',
   email: 'gentifiai@gmail.com',
-  description: 'AI optimisation for independent shops, businesses and events: Gentifi puts a business’s products, prices and opening times in its customers’ AI assistants, such as Claude, ChatGPT and Gemini.',
+  description: 'AI optimisation for independent shops, businesses and events: Gentifi puts a business’s products, prices and opening times in its customers’ AI assistants, such as Claude, ChatGPT, Gemini and Grok.',
   areaServed: [
     { '@type': 'Place', name: 'Bristol' },
     { '@type': 'Place', name: 'South Gloucestershire' },
@@ -150,7 +150,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
         <h3 class="optimise__ask">Ask for your AI visibility check</h3>
         <p class="optimise__what">A one-page report, in plain English, on what your website and Google profile tell AI today.</p>
         <CheckForm />
-        <p class="optimise__or">Then we fix what’s missing, and put your shop in Claude, ChatGPT and Gemini. <a href="/businesses">See everything you get</a>, or <a href="/join">sign up your shop</a>.</p>
+        <p class="optimise__or">Then we fix what’s missing, and put your shop in Claude, ChatGPT, Gemini and Grok. <a href="/businesses">See everything you get</a>, or <a href="/join">sign up your shop</a>.</p>
       </div>
     </section>
 
