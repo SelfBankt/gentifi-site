@@ -32,12 +32,7 @@ const imageUrl = new URL(image, Astro.site);
     <meta name="theme-color" content="#05414D" />
     <link rel="icon" type="image/svg+xml" href="/brand/gentifi-mark.svg" />
     <link rel="apple-touch-icon" href="/brand/gentifi-app-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap"
-    />
+    <link rel="preload" href="/fonts/Sora-variable-latin.woff2" as="font" type="font/woff2" crossorigin />
     <slot name="head" />
   </head>
   <body>
