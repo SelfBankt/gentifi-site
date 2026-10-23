@@ -3,7 +3,9 @@
  * The waitlist goes to the "Waitlist" tab; the business sign-up form (gentifi.com/join) goes to
  * "Sign-ups", and emails you each time someone signs up. Requests for an AI visibility check
  * (the short form on gentifi.com) go to "AI checks", and organisers' enquiries (gentifi.com/events)
- * go to "Organisers", each with an email too.
+ * go to "Organisers", each with an email too. "Message us" from the site's guide goes to "Messages", with
+ * an email. The guide's daily summary (from mcp.gentifi.com, with the shared secret) is emailed to
+ * SUMMARY_TO and not kept here.
  *
  * Set up (once):
  *   1. Create a Google Sheet, then Extensions > Apps Script. Paste this file in, replacing everything.
@@ -13,6 +15,10 @@
  *      Execute as: Me. Who has access: Anyone. Deploy, and allow access when asked.
  *   3. Copy the web app URL (it ends in /exec) into the site's WaitlistForm.astro.
  * After editing this script, use Deploy > Manage deployments > Edit > New version, so the URL stays the same.
+ *
+ * The guide's daily summary needs a shared secret: Project Settings (the cog) > Script Properties >
+ * Add script property, named CHAT_SUMMARY_SECRET, with the value in /etc/gentifi-host/summary-secret
+ * on the VPS. Without it, summaries are refused.
  */
 
 // Only needed for a standalone script: the long ID in the sheet's address, between /d/ and /edit
@@ -39,8 +45,13 @@ const ORGANISERS_NAME = 'Organisers';
 const ORGANISER_HEADERS = ['Received', 'Name', 'Email', 'Phone', 'Event or organisation', 'Kind', 'Traders', 'When', 'Town', 'Website', 'Notes', 'Page'];
 const EVENT_KINDS = ['Market', 'Show or festival', 'High street or town centre', 'Trade body or association', 'Something else'];
 
+const MESSAGES_NAME = 'Messages';
+const MESSAGE_HEADERS = ['Received', 'Name', 'Email', 'Business', 'Message', 'Conversation with the guide', 'Page'];
+
 // Who gets an email for each sign-up: blank means the account that deployed this script
 const NOTIFY = '';
+// Where the site guide's daily summary goes
+const SUMMARY_TO = 'gentifiai@gmail.com';
 
 function doPost(e) {
   const p = (e && e.parameter) || {};
@@ -49,6 +60,8 @@ function doPost(e) {
   if (p.form === 'signup') return signUp(p);
   if (p.form === 'check') return askForCheck(p);
   if (p.form === 'organiser') return organiserEnquiry(p);
+  if (p.form === 'message') return message(p);
+  if (p.form === 'chat-summary') return chatSummary(p);
 
   const name = clean(p.name, 100);
   const email = String(p.email || '').trim().toLowerCase().slice(0, 200);
@@ -163,6 +176,41 @@ function organiserEnquiry(p) {
   } catch (err) {
     // The row is saved even if the email can't be sent
   }
+  return json({ ok: true });
+}
+
+/** "Message us" from the guide on gentifi.com, with the conversation if the visitor chose to include it. */
+function message(p) {
+  const name = clean(p.name, 100);
+  const email = String(p.email || '').trim().toLowerCase().slice(0, 200);
+  const text = cleanBlock(p.message, 2000);
+  if (!name || !text || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return json({ ok: false, error: 'Please give your name, a valid email address and a message.' });
+  }
+  const row = [new Date(), name, email, clean(p.business, 120), text, cleanBlock(p.conversation, 8000), clean(p.page, 200)];
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    getSheet(MESSAGES_NAME, MESSAGE_HEADERS).appendRow(row);
+  } finally {
+    lock.releaseLock();
+  }
+  try {
+    MailApp.sendEmail({ to: NOTIFY || Session.getEffectiveUser().getEmail(), replyTo: email,
+      subject: 'Message from gentifi.com: ' + name + (row[3] ? ' (' + row[3] + ')' : ''),
+      body: MESSAGE_HEADERS.map((h, i) => h + ':' + (i === 5 && row[5] ? '\n' : ' ') + row[i]).join('\n') });
+  } catch (err) {
+    // The row is saved even if the email can't be sent
+  }
+  return json({ ok: true });
+}
+
+/** The site guide's daily summary, sent by the Gentifi host with the shared secret. Emailed, not kept. */
+function chatSummary(p) {
+  const secret = PropertiesService.getScriptProperties().getProperty('CHAT_SUMMARY_SECRET');
+  if (!secret || String(p.secret || '') !== secret) return json({ ok: false, error: 'not authorised' });
+  const subject = clean(p.subject, 120) || 'Gentifi site guide summary';
+  MailApp.sendEmail(SUMMARY_TO, subject, String(p.body || '').slice(0, 20000));
   return json({ ok: true });
 }
 

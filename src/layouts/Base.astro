@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ChatGuide from '../components/ChatGuide.astro';
 
 interface Props {
   title: string;
@@ -38,5 +39,6 @@ const imageUrl = new URL(image, Astro.site);
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
+    <ChatGuide />
   </body>
 </html>

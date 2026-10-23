@@ -1,0 +1,264 @@
+---
+// The Gentifi guide: an AI that answers questions about Gentifi, from the private host at
+// mcp.gentifi.com/chat (gentifi-platform, host/src/lib/chat.js, which holds its instructions,
+// knowledge and limits). "Message us" goes to the same Apps Script as the site's other forms.
+const GUIDE_ENDPOINT = 'https://mcp.gentifi.com/chat';
+const FORMS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
+const starters = ['How would this help my shop?', 'What do I need to do each day?', 'How do customers order?'];
+---
+<div class="guide" data-guide data-endpoint={GUIDE_ENDPOINT} data-forms={FORMS_ENDPOINT}>
+  <button type="button" class="guide__open" aria-expanded="false" aria-controls="guide-panel" data-guide-open>
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
+    <span>Ask about Gentifi</span>
+  </button>
+
+  <section class="guide__panel" id="guide-panel" role="dialog" aria-label="Gentifi guide" hidden data-guide-panel>
+    <header class="guide__head">
+      <div>
+        <p class="guide__title">Gentifi guide</p>
+        <p class="guide__sub">An AI that knows Gentifi</p>
+      </div>
+      <button type="button" class="guide__close" aria-label="Close the guide" data-guide-close>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+
+    <div class="guide__log" aria-live="polite" data-guide-log>
+      <div class="guide__msg guide__msg--guide"><p>Hi, I’m the Gentifi guide, an AI. Ask me how Gentifi could help your shop, market or event, or how customers use it.</p></div>
+      <div class="guide__starters" data-guide-starters>
+        {starters.map((q) => <button type="button" class="guide__starter">{q}</button>)}
+      </div>
+    </div>
+
+    <form class="guide__ask" data-guide-form>
+      <label class="visually-hidden" for="guide-input">Your question</label>
+      <textarea id="guide-input" rows="1" maxlength="500" placeholder="Ask a question" required data-guide-input></textarea>
+      <button type="submit" class="guide__send" aria-label="Send">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M3 20.5 21 12 3 3.5 3 10l12 2-12 2z"/></svg>
+      </button>
+    </form>
+
+    <nav class="guide__next" aria-label="Next steps">
+      <a href="/#ai-optimisation">AI visibility check</a>
+      <a href="/join">Sign up</a>
+      <button type="button" data-guide-message>Message us</button>
+    </nav>
+
+    <form class="guide__contact" hidden data-guide-contact>
+      <p class="guide__contact-intro">Send us a message and the team will reply by email.</p>
+      <label for="guide-name">Your name</label>
+      <input id="guide-name" name="name" autocomplete="name" required maxlength="100" />
+      <label for="guide-email">Email</label>
+      <input id="guide-email" name="email" type="email" autocomplete="email" required maxlength="200" />
+      <label for="guide-business">Business <span class="opt">(optional)</span></label>
+      <input id="guide-business" name="business" autocomplete="organization" maxlength="120" />
+      <label for="guide-message">Message</label>
+      <textarea id="guide-message" name="message" rows="3" required maxlength="2000"></textarea>
+      <label class="guide__check"><input type="checkbox" name="include" checked /> Include this conversation</label>
+      <div class="guide__trap" aria-hidden="true"><label for="guide-trap">Leave this empty</label><input id="guide-trap" name="trap" tabindex="-1" autocomplete="off" /></div>
+      <div class="guide__contact-actions">
+        <button type="submit" class="btn btn--primary">Send</button>
+        <button type="button" class="btn btn--outline" data-guide-back>Back</button>
+      </div>
+      <p class="guide__status" role="status" data-guide-status></p>
+    </form>
+
+    <p class="guide__note">AI answers can be wrong, so check anything important with us. We keep questions for a day to improve the site, never who asked. <a href="/privacy#guide">Privacy</a></p>
+  </section>
+</div>
+
+<style>
+  .guide { position: fixed; right: 16px; bottom: 16px; z-index: 50; font-size: 0.95rem; }
+  .guide__open {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 10px 18px;
+    border: 0; border-radius: 999px; background: var(--copper); color: var(--teal); font: inherit; font-weight: 600;
+    box-shadow: 0 6px 20px rgba(5, 65, 77, 0.25); cursor: pointer;
+  }
+  .guide__open:hover { background: var(--copper-hover); }
+  .guide__open:focus-visible, .guide button:focus-visible, .guide a:focus-visible, .guide textarea:focus-visible, .guide input:focus-visible {
+    outline: 3px solid var(--teal); outline-offset: 2px;
+  }
+  .guide__panel {
+    position: fixed; right: 16px; bottom: 16px; width: min(400px, calc(100vw - 32px)); height: min(620px, calc(100dvh - 32px));
+    display: flex; flex-direction: column; background: var(--white); color: var(--ink); border-radius: var(--radius);
+    box-shadow: 0 12px 40px rgba(5, 65, 77, 0.3); overflow: hidden;
+  }
+  .guide__panel[hidden], .guide__log[hidden], .guide__ask[hidden], .guide__next[hidden], .guide__open[hidden] { display: none; }
+  @media (max-width: 520px) {
+    .guide__panel { right: 0; bottom: 0; width: 100vw; height: 100dvh; border-radius: 0; }
+    .guide__open span { font-size: 0.9rem; }
+  }
+  .guide__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; background: var(--teal); color: var(--white); }
+  .guide__title { font-weight: 700; margin: 0; }
+  .guide__sub { margin: 0; font-size: 0.8rem; color: var(--on-teal-muted); }
+  .guide__close { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; color: var(--white); cursor: pointer; }
+  .guide__close:hover { background: var(--teal-raised); }
+  .guide__log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain; }
+  /* Messages are added by the script, so these styles are global (still only inside .guide) */
+  .guide :global(.guide__msg) { max-width: 88%; padding: 10px 14px; border-radius: 16px; line-height: 1.45; overflow-wrap: anywhere; }
+  .guide :global(.guide__msg p) { margin: 0; }
+  .guide :global(.guide__msg p + p), .guide :global(.guide__msg ul), .guide :global(.guide__msg ul + p) { margin-top: 8px; }
+  .guide :global(.guide__msg ul) { padding-left: 18px; margin-bottom: 0; }
+  .guide :global(.guide__msg a) { color: var(--teal); font-weight: 600; }
+  .guide :global(.guide__inline) { border: 0; padding: 0; background: none; color: var(--teal); font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
+  .guide :global(.guide__msg--guide) { align-self: flex-start; background: var(--grey); border-bottom-left-radius: 4px; }
+  .guide :global(.guide__msg--you) { align-self: flex-end; background: var(--teal); color: var(--white); border-bottom-right-radius: 4px; }
+  .guide :global(.guide__msg--wait) { color: var(--ink-muted); font-style: italic; }
+  .guide__starters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .guide__starter { min-height: 40px; padding: 8px 12px; border: 2px solid var(--border); border-radius: 999px; background: var(--white); color: var(--teal); font: inherit; font-size: 0.85rem; cursor: pointer; }
+  .guide__starter:hover { border-color: var(--teal); }
+  .guide__ask { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--border); }
+  .guide__ask textarea { flex: 1; resize: none; min-height: 44px; max-height: 120px; padding: 10px 12px; border: 2px solid var(--border); border-radius: 12px; font: inherit; color: var(--ink); }
+  .guide__send { display: grid; place-items: center; width: 44px; height: 44px; align-self: flex-end; border: 0; border-radius: 999px; background: var(--copper); color: var(--teal); cursor: pointer; }
+  .guide__send:disabled { opacity: 0.5; cursor: default; }
+  .guide__next { display: flex; gap: 6px; padding: 0 12px 8px; flex-wrap: wrap; }
+  .guide__next a, .guide__next button {
+    display: inline-flex; align-items: center; min-height: 36px; padding: 6px 12px; border: 2px solid var(--border); border-radius: 999px;
+    background: var(--white); color: var(--teal); font: inherit; font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer;
+  }
+  .guide__next a:hover, .guide__next button:hover { border-color: var(--teal); }
+  .guide__contact { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding: 16px; }
+  .guide__contact[hidden] { display: none; }
+  .guide__contact-intro { margin: 0 0 6px; }
+  .guide__contact label { font-weight: 600; font-size: 0.9rem; }
+  .guide__contact input:not([type='checkbox']), .guide__contact textarea { min-height: 44px; padding: 10px 12px; border: 2px solid var(--border); border-radius: 12px; font: inherit; color: var(--ink); }
+  .guide__contact .opt { font-weight: 400; color: var(--ink-muted); }
+  .guide__check { display: flex; align-items: center; gap: 8px; font-weight: 400 !important; margin-top: 4px; }
+  .guide__check input { width: 20px; height: 20px; accent-color: var(--teal); }
+  .guide__contact-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .guide__status { margin: 4px 0 0; min-height: 1.4em; }
+  .guide__trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .guide__note { margin: 0; padding: 0 12px 12px; font-size: 0.75rem; color: var(--ink-muted); }
+  .guide__note a { color: var(--teal); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  @media print { .guide { display: none; } }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-guide]');
+  if (root) {
+    const $ = <T extends Element>(sel: string) => root.querySelector<T>(sel)!;
+    const openButton = $<HTMLButtonElement>('[data-guide-open]');
+    const panel = $<HTMLElement>('[data-guide-panel]');
+    const log = $<HTMLElement>('[data-guide-log]');
+    const form = $<HTMLFormElement>('[data-guide-form]');
+    const input = $<HTMLTextAreaElement>('[data-guide-input]');
+    const contact = $<HTMLFormElement>('[data-guide-contact]');
+    const status = $<HTMLElement>('[data-guide-status]');
+    const STORE = 'gentifi-guide';
+    type Turn = { who: 'you' | 'guide'; text: string };
+    let state: { conversation?: string; turns: Turn[]; ended?: boolean } = { turns: [] };
+    try { state = JSON.parse(sessionStorage.getItem(STORE) || '') || state; } catch { /* a fresh chat */ }
+    const save = () => { try { sessionStorage.setItem(STORE, JSON.stringify(state)); } catch { /* not kept */ } };
+
+    // Replies as safe HTML: paragraphs, "- " lists, links only to gentifi.com, "Message us" as a button
+    const escape = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+    const inline = (s: string) => escape(s)
+      .replace(/\b(?:https?:\/\/)?(?:www\.)?gentifi\.com(\/[\w\-/#.?=&;]*[\w/#])?/g, (_m, path = '/') =>
+        `<a href="${path.replace(/&amp;/g, '&')}">gentifi.com${path === '/' ? '' : path}</a>`)
+      .replace(/(?:&quot;|“)?Message us(?:&quot;|”)?/g, '<button type="button" class="guide__inline" data-guide-message>Message us</button>');
+    const render = (text: string) => text.trim().split(/\n{2,}/).map((block) => {
+      const lines = block.split('\n');
+      if (lines.every((l) => /^\s*[-•]\s+/.test(l))) return `<ul>${lines.map((l) => `<li>${inline(l.replace(/^\s*[-•]\s+/, ''))}</li>`).join('')}</ul>`;
+      return `<p>${lines.map(inline).join('<br>')}</p>`;
+    }).join('');
+
+    const show = (turn: Turn, extra = '') => {
+      const div = document.createElement('div');
+      div.className = `guide__msg guide__msg--${turn.who}${extra}`;
+      if (turn.who === 'you') div.textContent = turn.text;
+      else div.innerHTML = render(turn.text);
+      log.append(div);
+      log.scrollTop = log.scrollHeight;
+      return div;
+    };
+    const starters = root.querySelector('[data-guide-starters]');
+    if (state.turns.length) { starters?.remove(); state.turns.forEach((t) => show(t)); }
+
+    const setOpen = (open: boolean) => {
+      panel.hidden = !open;
+      openButton.hidden = open;
+      openButton.setAttribute('aria-expanded', String(open));
+      if (open) { contact.hidden = true; form.hidden = false; input.focus(); } else openButton.focus();
+    };
+    openButton.addEventListener('click', () => setOpen(true));
+    $('[data-guide-close]').addEventListener('click', () => setOpen(false));
+    panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
+    const ask = async (question: string) => {
+      starters?.remove();
+      if (state.ended) return;
+      const turn: Turn = { who: 'you', text: question };
+      state.turns.push(turn);
+      show(turn);
+      const waiting = show({ who: 'guide', text: 'Thinking…' }, ' guide__msg--wait');
+      const send = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      send.disabled = true;
+      let reply = 'Sorry, the guide couldn’t answer just now. Please try again, or use Message us.';
+      try {
+        const res = await fetch(root.dataset.endpoint!, { method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ conversation: state.conversation, message: question }) });
+        const body = await res.json();
+        reply = body.reply || body.error || reply;
+        if (body.conversation) state.conversation = body.conversation;
+        if (body.ended) state.ended = true;
+      } catch { /* the default reply */ }
+      waiting.remove();
+      const answer: Turn = { who: 'guide', text: reply };
+      state.turns.push(answer);
+      show(answer);
+      save();
+      send.disabled = false;
+    };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const question = input.value.trim();
+      if (!question) return;
+      input.value = '';
+      input.style.height = '';
+      ask(question);
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
+    });
+    input.addEventListener('input', () => { input.style.height = ''; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; });
+    starters?.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => ask(b.textContent || '')));
+
+    // Message us: the site's forms service, with the conversation if they choose
+    const next = $<HTMLElement>('.guide__next');
+    const showContact = (show: boolean) => {
+      contact.hidden = !show;
+      log.hidden = show;
+      form.hidden = show;
+      next.hidden = show;
+      if (show) contact.querySelector<HTMLInputElement>('input')?.focus(); else input.focus();
+    };
+    root.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('[data-guide-message]')) showContact(true);
+    });
+    $('[data-guide-back]').addEventListener('click', () => showContact(false));
+    contact.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new URLSearchParams(new FormData(contact) as unknown as Record<string, string>);
+      data.set('form', 'message');
+      data.set('page', location.pathname);
+      if (data.get('include') && state.turns.length) {
+        data.set('conversation', state.turns.map((t) => `${t.who === 'you' ? 'Visitor' : 'Guide'}: ${t.text}`).join('\n\n').slice(0, 8000));
+      }
+      data.delete('include');
+      const button = contact.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const body = await (await fetch(root.dataset.forms!, { method: 'POST', body: data })).json();
+        if (body.ok) {
+          contact.reset();
+          status.textContent = 'Thanks. We’ll reply by email.';
+        } else status.textContent = body.error || 'That didn’t go through. Please check your details and try again.';
+      } catch {
+        status.textContent = 'That didn’t go through. Please try again, or email gentifiai@gmail.com.';
+      }
+      button.disabled = false;
+    });
+  }
+</script>
