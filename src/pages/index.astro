@@ -233,8 +233,8 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   /* Sticker behind, the conversation it unlocks in front */
   .hero__visual { margin: 0; width: min(100%, 480px); justify-self: center; display: grid; gap: 16px; }
   .hero__scene { display: grid; }
-  .hero__sticker { display: block; position: relative; width: 74%; text-decoration: none; border-radius: 9%; transform: rotate(-4deg); transition: transform 0.2s; }
-  .hero__sticker:hover { transform: rotate(-2deg) translateY(-3px); }
+  .hero__sticker { display: block; position: relative; width: 74%; text-decoration: none; border-radius: 9%; transition: transform 0.2s; }
+  .hero__sticker:hover { transform: translateY(-3px); }
   .hero__sticker :global(.sticker) { box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.5); }
   .hero__step {
     position: absolute; z-index: 1;
@@ -260,7 +260,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   .hero__visual figcaption a { color: var(--white); text-decoration-color: var(--copper); }
   @media (max-width: 959px) { .hero__visual { width: min(100%, 420px); } }
   @media (max-width: 420px) { .hero__ask { width: 86%; font-size: 0.85rem; } }
-  @media (prefers-reduced-motion: reduce) { .hero__sticker, .hero__sticker:hover { transition: none; transform: rotate(-4deg); } }
+  @media (prefers-reduced-motion: reduce) { .hero__sticker, .hero__sticker:hover { transition: none; transform: none; } }
 
   /* Mission: independents first */
   .mission-band { background: var(--white); }
