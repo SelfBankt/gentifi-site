@@ -7,6 +7,7 @@ import ScanFlow from '../components/ScanFlow.astro';
 import WindowSticker from '../components/WindowSticker.astro';
 import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
+import BakeryFilm from '../components/BakeryFilm.astro';
 ---
 <Base
   title="How it works: AI assistants, signs and your website · Gentifi"
@@ -24,12 +25,28 @@ import WebBadges from '../components/WebBadges.astro';
           open-source toolkit fits.
         </p>
         <nav class="jump" aria-label="On this page">
+          <a href="#film">See it in a bakery</a>
           <a href="#system">The big picture</a>
           <a href="#scan">What a scan does</a>
           <a href="#stickers">The signs</a>
           <a href="#website">Your website</a>
           <a href="#developers">For developers</a>
         </nav>
+      </div>
+    </section>
+
+    <!-- Film -->
+    <section class="section section--grey" id="film">
+      <div class="container film">
+        <div class="section-head film__text">
+          <span class="eyebrow">See it in a bakery</span>
+          <h2>From a photo of the price board to the first order.</h2>
+          <p>
+            Follow Elder Beck, an example bakery, through the real steps. The owner photographs the chalkboard and
+            checks the draft. A customer scans the window sign, asks their AI and confirms. The bakery taps Accept.
+          </p>
+        </div>
+        <BakeryFilm />
       </div>
     </section>
 
@@ -170,6 +187,10 @@ import WebBadges from '../components/WebBadges.astro';
     color: var(--white);
   }
   .jump a:hover { border-color: var(--copper); }
+
+  .film { display: grid; gap: 32px; align-items: center; justify-items: center; }
+  @media (min-width: 900px) { .film { grid-template-columns: 1fr auto; gap: 64px; justify-items: start; } }
+  .film__text { margin-bottom: 0; }
 
   .two-up { display: grid; gap: 20px; }
   @media (min-width: 720px) { .two-up { grid-template-columns: 1fr 1fr; gap: 24px; } }
