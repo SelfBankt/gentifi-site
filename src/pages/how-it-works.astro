@@ -7,6 +7,7 @@ import ScanFlow from '../components/ScanFlow.astro';
 import WindowSticker from '../components/WindowSticker.astro';
 import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
+import BakeryFilm from '../components/BakeryFilm.astro';
 ---
 <Base
   title="How it works: AI assistants, signs and your website · Gentifi"
@@ -45,19 +46,7 @@ import WebBadges from '../components/WebBadges.astro';
             checks the draft. A customer scans the window sign, asks their AI and confirms. The bakery taps Accept.
           </p>
         </div>
-        <video
-          class="film__video"
-          controls
-          playsinline
-          preload="metadata"
-          width="720"
-          height="1280"
-          poster="/video/elder-beck-bakery-poster.jpg"
-          aria-label="Elder Beck, an example bakery, using Gentifi from photographing its price board to accepting a customer's order"
-        >
-          <source src="/video/elder-beck-bakery.mp4" type="video/mp4" />
-          <a href="/video/elder-beck-bakery.mp4">Watch the bakery video</a>
-        </video>
+        <BakeryFilm />
       </div>
     </section>
 
@@ -202,14 +191,6 @@ import WebBadges from '../components/WebBadges.astro';
   .film { display: grid; gap: 32px; align-items: center; justify-items: center; }
   @media (min-width: 900px) { .film { grid-template-columns: 1fr auto; gap: 64px; justify-items: start; } }
   .film__text { margin-bottom: 0; }
-  .film__video {
-    width: 100%;
-    max-width: 360px;
-    height: auto;
-    aspect-ratio: 9 / 16;
-    border-radius: var(--radius);
-    background: var(--teal);
-  }
 
   .two-up { display: grid; gap: 20px; }
   @media (min-width: 720px) { .two-up { grid-template-columns: 1fr 1fr; gap: 24px; } }

@@ -1,0 +1,28 @@
+---
+// The Elder Beck promo: an example bakery from price-board photo to accepted order.
+// Vertical (9:16) and only fetched once played; used on / and /how-it-works.
+---
+<video
+  class="bakery-film"
+  controls
+  playsinline
+  preload="metadata"
+  width="720"
+  height="1280"
+  poster="/video/elder-beck-bakery-poster.jpg"
+  aria-label="Elder Beck, an example bakery, using Gentifi from photographing its price board to accepting a customer's order"
+>
+  <source src="/video/elder-beck-bakery.mp4" type="video/mp4" />
+  <a href="/video/elder-beck-bakery.mp4">Watch the bakery video</a>
+</video>
+
+<style>
+  .bakery-film {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius);
+    background: var(--teal);
+  }
+</style>

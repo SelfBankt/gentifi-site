@@ -8,6 +8,7 @@ import CheckForm from '../components/CheckForm.astro';
 import ChatMock from '../components/ChatMock.astro';
 import Tick from '../components/Tick.astro';
 import Mark from '../components/Mark.astro';
+import BakeryFilm from '../components/BakeryFilm.astro';
 
 // The assistants Gentifi is tested in (keep in step with gentifi-toolkit/src/lib/apps.js)
 const apps = ['Claude', 'ChatGPT', 'Gemini', 'Grok'];
@@ -128,6 +129,15 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
             <h3>For your customers</h3>
             <ol>{customerSteps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
           </article>
+        </div>
+
+        <div class="film">
+          <div class="film__copy">
+            <h3>See it in a bakery</h3>
+            <p>Follow Elder Beck, an example bakery, from a photo of its chalkboard to its first order, in under a minute.</p>
+            <p><a href="/how-it-works">More on how it works</a></p>
+          </div>
+          <BakeryFilm />
         </div>
 
         <div class="phone">
@@ -286,6 +296,11 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   .side li::before { content: counter(step); grid-row: span 2; width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; }
   .side--customer li::before { background: var(--copper); color: var(--teal); }
   .side li span { color: var(--ink-muted); }
+  .film { margin-top: 20px; background: var(--grey); border-radius: var(--radius); padding: 28px; display: grid; gap: 24px; justify-items: center; }
+  @media (min-width: 860px) { .film { grid-template-columns: 1fr auto; gap: 48px; align-items: center; justify-items: start; padding: 40px; } }
+  .film__copy { display: grid; gap: 12px; max-width: 32rem; }
+  .film__copy h3 { font-size: 1.3rem; }
+  .film__copy p { color: var(--ink-muted); }
   .phone { margin-top: 20px; border: 2px solid var(--grey); border-radius: var(--radius); padding: 28px; display: grid; gap: 12px; }
   .phone h3 { font-size: 1.3rem; }
   .phone > p { color: var(--ink-muted); }
