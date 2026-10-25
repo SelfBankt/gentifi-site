@@ -1,0 +1,30 @@
+---
+// The Gentifi overview film: what Gentifi does, told with Elder Beck, an example bakery. 16:9, narrated,
+// with captions; only fetched once played. Used in the home page hero. Made in gentifi/drafts/overview-video.
+---
+<video
+  class="overview-film"
+  controls
+  playsinline
+  preload="metadata"
+  width="1280"
+  height="720"
+  poster="/video/gentifi-overview-poster.jpg"
+  aria-label="What Gentifi does, in under a minute, shown with Elder Beck, an example bakery"
+>
+  <source src="/video/gentifi-overview.mp4" type="video/mp4" />
+  <track kind="captions" src="/video/gentifi-overview.vtt" srclang="en-GB" label="English" />
+  <a href="/video/gentifi-overview.mp4">Watch the Gentifi video</a>
+</video>
+
+<style>
+  .overview-film {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    background: var(--teal);
+    box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.5);
+  }
+</style>
