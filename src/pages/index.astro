@@ -71,21 +71,24 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
           <figcaption>Elder Beck Bakery in the film is a fictional example. <a href="/b/demo-business">Try our demo shop.</a></figcaption>
         </figure>
 
-        <div class="hero__copy">
+        <div class="hero__intro">
           <span class="eyebrow">AI optimisation for independent shops</span>
           <h1 class="hero__title">Gentifi your business.</h1>
           <p class="hero__tagline">Discoverable and responsive to your customers’ AI.</p>
+        </div>
+
+        <div class="hero__pitch">
           <p class="hero__lede">
             Customers scan your sign once to add your shop to their AI assistant. Then they can ask what you have,
             check when you’re open, and reserve or order. Sold out? Tap it on your phone, and their AI knows within seconds.
           </p>
-        </div>
-
-        <div class="hero__act">
           <div class="hero__ctas">
             <a class="btn btn--primary" href="/join">Sign up your shop</a>
             <a class="btn btn--ghost" href="#ai-optimisation">Get your AI visibility check</a>
           </div>
+        </div>
+
+        <div class="hero__strip">
           <div class="hero__live">
             <p class="hero__live-label"><Tick size={16} tick="var(--teal)" />Works today in</p>
             <ul class="hero__apps" aria-label="AI assistants">{apps.map((a) => <li>{a}</li>)}</ul>
@@ -197,31 +200,38 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
 </Base>
 
 <style>
-  /* Hero: the overview film across the top, then the promise on the left and the actions on the right */
-  .hero { padding-block: clamp(24px, 4vw, 48px) clamp(56px, 8vw, 96px); overflow: hidden; }
-  .hero__grid { display: grid; gap: clamp(28px, 4vw, 40px) clamp(40px, 6vw, 72px); }
+  /* Hero: the overview film across the top; below it the promise (left) and the pitch with its buttons (right);
+     then one quiet strip for where it works and the other ways in */
+  .hero { padding-block: clamp(24px, 4vw, 48px) clamp(48px, 7vw, 80px); overflow: hidden; }
+  .hero__grid { display: grid; gap: clamp(28px, 4vw, 44px) clamp(40px, 6vw, 80px); }
   @media (min-width: 960px) {
-    .hero__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: start; }
-    .hero__visual { grid-column: 1 / -1; }
-    .hero__act { padding-top: 12px; }
+    .hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
+    .hero__visual, .hero__strip { grid-column: 1 / -1; }
   }
-  .hero__act { min-width: 0; }
-  .hero__copy { min-width: 0; }
-  .hero__title { font-size: clamp(2.6rem, 7vw, 4.6rem); letter-spacing: -0.04em; line-height: 1; max-width: 10em; }
-  .hero__tagline { margin-top: 16px; font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; color: var(--copper); max-width: 20em; }
-  .hero__lede { margin-top: 20px; font-size: clamp(1.02rem, 2vw, 1.15rem); color: var(--on-teal-muted); max-width: 34rem; }
-  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero__intro, .hero__pitch { min-width: 0; }
+  .hero__title { font-size: clamp(2.6rem, 6vw, 4.2rem); letter-spacing: -0.04em; line-height: 1; }
+  .hero__tagline { margin-top: 14px; font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; color: var(--copper); max-width: 20em; }
+  .hero__lede { font-size: clamp(1.02rem, 1.8vw, 1.12rem); line-height: 1.6; color: var(--on-teal-muted); max-width: 36rem; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 
-  .hero__live { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 0.9rem; }
+  .hero__strip {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 40px;
+    padding-top: 22px; border-top: 1px solid var(--teal-line); font-size: 0.9rem;
+  }
+  .hero__live { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
   .hero__live-label { display: flex; align-items: center; gap: 8px; font-weight: 600; }
   .hero__apps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .hero__apps li { padding: 4px 12px; border: 1px solid var(--teal-line); border-radius: 999px; background: var(--teal-raised); font-weight: 600; }
   .hero__where { flex-basis: 100%; color: var(--on-teal-muted); }
 
-  .hero__alt { list-style: none; margin: 24px 0 0; padding: 18px 0 0; border-top: 1px solid var(--teal-line); display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 0.92rem; }
+  .hero__alt { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
   .hero__alt a { color: var(--white); text-decoration-color: var(--teal-line); }
   .hero__alt a:hover { text-decoration-color: var(--copper); }
   .hero__alt a::after { content: ' \2192'; color: var(--copper); }
+  @media (min-width: 960px) {
+    .hero__strip { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+    .hero__alt { flex-direction: column; align-items: flex-end; gap: 6px; }
+  }
 
   /* The overview film, full width */
   .hero__visual { margin: 0; width: 100%; display: grid; gap: 12px; min-width: 0; }
