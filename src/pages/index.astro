@@ -2,13 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import WindowSticker from '../components/WindowSticker.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
 import CheckForm from '../components/CheckForm.astro';
 import ChatMock from '../components/ChatMock.astro';
 import Tick from '../components/Tick.astro';
-import Mark from '../components/Mark.astro';
-import BakeryFilm from '../components/BakeryFilm.astro';
+import OverviewFilm from '../components/OverviewFilm.astro';
 
 // The assistants Gentifi is tested in (keep in step with gentifi-toolkit/src/lib/apps.js)
 const apps = ['Claude', 'ChatGPT', 'Gemini', 'Grok'];
@@ -90,24 +88,10 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
           </ul>
         </div>
 
-        <!-- The whole idea in one picture: scan the sign once, then just ask -->
+        <!-- The whole idea in under a minute -->
         <figure class="hero__visual">
-          <div class="hero__scene">
-            <a href="/b/demo-business" class="hero__sticker" aria-label="Open the demo shop">
-              <span class="hero__step" aria-hidden="true">1 · Scan once</span>
-              <WindowSticker business="Hollow Lane Farm Shop" />
-            </a>
-            <div class="hero__ask" aria-label="Illustration: a customer asks their AI assistant">
-              <span class="hero__step hero__step--ask" aria-hidden="true">2 · Then just ask</span>
-              <p class="ask__you">Have you got sourdough on Saturday? Save me a loaf.</p>
-              <div class="ask__reply">
-                <p class="ask__from"><Mark size={12} color="var(--teal)" stroke={13} />Hollow Lane Farm Shop, via Gentifi</p>
-                <p>Yes, sourdough is £4.50 a loaf. They’re open Saturday, 9am to 5pm. Shall I reserve one?</p>
-                <span class="ask__confirm" aria-hidden="true">Confirm</span>
-              </div>
-            </div>
-          </div>
-          <figcaption>Illustration with our fictional demo shop. <a href="/b/demo-business">Scan or tap the sign to try it.</a></figcaption>
+          <OverviewFilm />
+          <figcaption>Elder Beck Bakery in the film is a fictional example. <a href="/b/demo-business">Try our demo shop.</a></figcaption>
         </figure>
       </div>
     </section>
@@ -129,15 +113,6 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
             <h3>For your customers</h3>
             <ol>{customerSteps.map((s) => <li><strong>{s.title}</strong><span>{s.body}</span></li>)}</ol>
           </article>
-        </div>
-
-        <div class="film">
-          <div class="film__copy">
-            <h3>See it in a bakery</h3>
-            <p>Follow Elder Beck, an example bakery, from a photo of its chalkboard to its first order, in under a minute.</p>
-            <p><a href="/how-it-works">More on how it works</a></p>
-          </div>
-          <BakeryFilm />
         </div>
 
         <div class="phone">
@@ -219,10 +194,10 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
 </Base>
 
 <style>
-  /* Hero: the promise on the left, the idea in one picture on the right */
+  /* Hero: the promise on the left, the overview film on the right */
   .hero { padding-block: clamp(40px, 7vw, 88px) clamp(56px, 9vw, 104px); overflow: hidden; }
   .hero__grid { display: grid; gap: clamp(40px, 6vw, 64px); align-items: center; }
-  @media (min-width: 960px) { .hero__grid { grid-template-columns: 1.1fr minmax(0, 0.9fr); } }
+  @media (min-width: 960px) { .hero__grid { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); } }
   .hero__copy { min-width: 0; }
   .hero__title { font-size: clamp(2.6rem, 7vw, 4.6rem); letter-spacing: -0.04em; line-height: 1; max-width: 10em; }
   .hero__tagline { margin-top: 16px; font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; color: var(--copper); max-width: 20em; }
@@ -240,37 +215,10 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   .hero__alt a:hover { text-decoration-color: var(--copper); }
   .hero__alt a::after { content: ' \2192'; color: var(--copper); }
 
-  /* Sticker behind, the conversation it unlocks in front */
-  .hero__visual { margin: 0; width: min(100%, 480px); justify-self: center; display: grid; gap: 16px; }
-  .hero__scene { display: grid; }
-  .hero__sticker { display: block; position: relative; width: 74%; text-decoration: none; border-radius: 9%; transition: transform 0.2s; }
-  .hero__sticker:hover { transform: translateY(-3px); }
-  .hero__sticker :global(.sticker) { box-shadow: 0 28px 60px -20px rgb(0 0 0 / 0.5); }
-  .hero__step {
-    position: absolute; z-index: 1;
-    font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
-    background: var(--copper); color: var(--teal); padding: 4px 10px; border-radius: 999px; white-space: nowrap;
-  }
-  .hero__sticker .hero__step { top: -12px; left: 8%; }
-  .hero__step--ask { top: -12px; left: 20px; }
-
-  .hero__ask {
-    position: relative; justify-self: end; width: 74%; margin-top: -3%;
-    background: var(--white); color: var(--ink);
-    border-radius: var(--radius-lg); padding: 26px 18px 18px;
-    display: grid; gap: 12px; font-size: 0.9rem; line-height: 1.45;
-    box-shadow: 0 30px 60px -18px rgb(0 0 0 / 0.55);
-  }
-  .ask__you { justify-self: end; max-width: 90%; background: var(--teal); color: var(--white); padding: 9px 13px; border-radius: 16px 16px 4px 16px; }
-  .ask__reply { display: grid; gap: 8px; justify-items: start; }
-  .ask__from { display: flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-muted); }
-  .ask__confirm { padding: 6px 16px; border-radius: 999px; background: var(--copper); color: var(--teal); font-weight: 600; font-size: 0.85rem; }
-
+  /* The overview film; 16:9, so it gets the wider column */
+  .hero__visual { margin: 0; width: 100%; display: grid; gap: 14px; min-width: 0; }
   .hero__visual figcaption { font-size: 0.85rem; color: var(--on-teal-muted); text-align: center; }
   .hero__visual figcaption a { color: var(--white); text-decoration-color: var(--copper); }
-  @media (max-width: 959px) { .hero__visual { width: min(100%, 420px); } }
-  @media (max-width: 420px) { .hero__ask { width: 86%; font-size: 0.85rem; } }
-  @media (prefers-reduced-motion: reduce) { .hero__sticker, .hero__sticker:hover { transition: none; transform: none; } }
 
   /* Mission: independents first */
   .mission-band { background: var(--white); }
@@ -296,11 +244,6 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   .side li::before { content: counter(step); grid-row: span 2; width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: var(--copper); display: grid; place-items: center; font-weight: 700; }
   .side--customer li::before { background: var(--copper); color: var(--teal); }
   .side li span { color: var(--ink-muted); }
-  .film { margin-top: 20px; background: var(--grey); border-radius: var(--radius); padding: 28px; display: grid; gap: 24px; justify-items: center; }
-  @media (min-width: 860px) { .film { grid-template-columns: 1fr auto; gap: 48px; align-items: center; justify-items: start; padding: 40px; } }
-  .film__copy { display: grid; gap: 12px; max-width: 32rem; }
-  .film__copy h3 { font-size: 1.3rem; }
-  .film__copy p { color: var(--ink-muted); }
   .phone { margin-top: 20px; border: 2px solid var(--grey); border-radius: var(--radius); padding: 28px; display: grid; gap: 12px; }
   .phone h3 { font-size: 1.3rem; }
   .phone > p { color: var(--ink-muted); }
