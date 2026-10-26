@@ -165,7 +165,7 @@ const faqs = [
         <ul class="fits">
           {fits.map((f) => (
             <li class="fit">
-              <h3>{f.title}</h3>
+              <h3 class="serif">{f.title}</h3>
               <p>{f.body}</p>
               {f.link && <a href={f.link.href}>{f.link.label}</a>}
             </li>
@@ -282,7 +282,7 @@ const faqs = [
           {examples.map((e) => (
             <article class="example">
               <span class="example__setting">{e.setting}</span>
-              <q>{e.ask}</q>
+              <q class="serif">{e.ask}</q>
               <p>{e.gets}</p>
             </article>
           ))}
@@ -390,7 +390,7 @@ const faqs = [
   @media (min-width: 720px) { .fits { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1040px) { .fits { grid-template-columns: repeat(3, 1fr); } }
   .fit { background: var(--white); border-radius: var(--radius); padding: 22px; display: grid; gap: 6px; align-content: start; }
-  .fit h3 { font-size: 1.1rem; }
+  .fit h3 { font-size: 1.25rem; font-weight: 600; }
   .fit p { color: var(--ink-muted); }
   .fit a { color: var(--teal); font-weight: 600; }
 
@@ -406,7 +406,7 @@ const faqs = [
   @media (min-width: 1040px) { .examples { grid-template-columns: repeat(3, 1fr); } }
   .example { background: var(--white); border-radius: var(--radius); padding: 22px; display: grid; gap: 10px; align-content: start; }
   .example__setting { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
-  .example q { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+  .example q { font-size: 1.15rem; font-weight: 500; line-height: 1.35; }
   .example p { color: var(--ink-muted); font-size: 0.95rem; }
   .b2b { margin-top: 24px; color: var(--ink-muted); }
   .b2b + .b2b { margin-top: 8px; }

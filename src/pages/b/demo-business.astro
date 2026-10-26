@@ -63,7 +63,7 @@ const askLinks = [
           <div class="biz__avatar" aria-hidden="true">{business.initials}</div>
           <div>
             <p class="biz__kind">{business.kind} · {business.area}</p>
-            <p class="biz__name">{business.name}</p>
+            <p class="biz__name serif">{business.name}</p>
             <p class="biz__ready"><Tick size={16} tick="var(--teal)" /> Agent-ready on Gentifi</p>
           </div>
         </div>
@@ -247,7 +247,7 @@ const askLinks = [
   }
   .biz__avatar--sm { width: 48px; height: 48px; border-radius: 14px; font-size: 1rem; }
   .biz__kind { font-family: var(--font-mono); font-size: 0.78rem; color: var(--on-teal-muted); }
-  .biz__name { font-size: 1.2rem; font-weight: 700; line-height: 1.25; }
+  .biz__name { font-size: 1.35rem; font-weight: 600; line-height: 1.2; }
   .biz__ready { display: flex; gap: 6px; align-items: center; font-size: 0.85rem; color: var(--copper); margin-top: 2px; }
 
   h1 { font-size: clamp(1.7rem, 7vw, 2.2rem); }
