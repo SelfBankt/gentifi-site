@@ -8,6 +8,7 @@ import CollectionDiagram from '../components/CollectionDiagram.astro';
 import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
 import Tick from '../components/Tick.astro';
+import BakeryFilm from '../components/BakeryFilm.astro';
 
 // What a business gets today, grouped as on the Hobbs House one-pager (docs/pilots/hobbs-house-offer.html)
 const today = [
@@ -137,22 +138,25 @@ const faqs = [
   <main id="main">
     <!-- Hero -->
     <section class="hero section--teal">
-      <div class="container">
-        <span class="eyebrow">AI optimisation for small businesses</span>
-        <h1>Let customers ask their AI about you.</h1>
-        <p class="hero__lede">
-          When customers add your shop to their AI assistant, they can ask what you sell, check prices and opening
-          times, and reserve or order. They confirm every order, and it comes to you the way orders do now.
-        </p>
-        <div class="hero__ctas">
-          <a class="btn btn--primary" href="/join">Sign up your shop</a>
-          <a class="btn btn--ghost" href="/b/demo-business">Try the live demo</a>
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <span class="eyebrow">AI optimisation for small businesses</span>
+          <h1>Let customers ask their AI about you.</h1>
+          <p class="hero__lede">
+            When customers add your shop to their AI assistant, they can ask what you sell, check prices and opening
+            times, and reserve or order. They confirm every order, and it comes to you the way orders do now.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="/join">Sign up your shop</a>
+            <a class="btn btn--ghost" href="/b/demo-business">Try the live demo</a>
+          </div>
+          <ul class="hero__points">
+            <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
+            <li><Tick size={18} tick="var(--teal)" />Keep your own till and checkout</li>
+            <li><Tick size={18} tick="var(--teal)" />Live in Claude, ChatGPT, Gemini and Grok today</li>
+          </ul>
         </div>
-        <ul class="hero__points">
-          <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
-          <li><Tick size={18} tick="var(--teal)" />Keep your own till and checkout</li>
-          <li><Tick size={18} tick="var(--teal)" />Live in Claude, ChatGPT, Gemini and Grok today</li>
-        </ul>
+        <BakeryFilm />
       </div>
     </section>
 
@@ -352,6 +356,9 @@ const faqs = [
 <style>
   /* Hero */
   .hero { padding-block: clamp(48px, 8vw, 96px); }
+  .hero__grid { display: grid; gap: 40px; align-items: center; justify-items: center; }
+  .hero__text { justify-self: stretch; }
+  @media (min-width: 900px) { .hero__grid { grid-template-columns: 1fr auto; gap: 64px; } }
   .hero h1 { max-width: 15em; }
   .hero__lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--on-teal-muted); max-width: 38rem; }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
