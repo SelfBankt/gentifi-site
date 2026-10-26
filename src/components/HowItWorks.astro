@@ -3,13 +3,13 @@
 // a vertical stack with up/down arrows on phones.
 import Mark from './Mark.astro';
 
-const businesses = ['Shops and brands', 'Bookings and services', 'Local trades', 'B2B suppliers', 'Events and associations'];
-const gentifi = ['MCP connector', 'SKILL.md for agents', 'Checkout and approval', 'Network directory', 'Anonymous counts'];
-const agents = ['Claude', 'ChatGPT', 'Self-built or headless', 'Branded chat assistant'];
+const businesses = ['Shops and brands', 'Bookings and services', 'Local trades', 'Markets and events'];
+const gentifi = ['MCP connector', 'SKILL.md for agents', 'Order confirmation', 'Network directory', 'Anonymous counts'];
+const agents = ['Claude', 'ChatGPT', 'Gemini', 'Grok'];
 ---
 <figure class="hiw">
   <figcaption class="sr-only">
-    How Gentifi works: businesses publish once to Gentifi and receive orders and sales data. Customer agents ask Gentifi to find, price, book and buy, and get live answers.
+    How Gentifi works: businesses publish once to Gentifi and receive orders and counts. Customers’ AI assistants ask Gentifi to find, price, book and buy, and get live answers.
   </figcaption>
 
   <div class="hiw__box">
@@ -19,7 +19,7 @@ const agents = ['Claude', 'ChatGPT', 'Self-built or headless', 'Branded chat ass
 
   <div class="hiw__links" aria-hidden="true">
     <div class="flow flow--fwd"><span class="flow__label">publish once</span><span class="flow__line"></span></div>
-    <div class="flow flow--back"><span class="flow__line"></span><span class="flow__label">orders and sales data</span></div>
+    <div class="flow flow--back"><span class="flow__line"></span><span class="flow__label">orders and counts</span></div>
   </div>
 
   <div class="hiw__box hiw__box--core">
@@ -34,10 +34,10 @@ const agents = ['Claude', 'ChatGPT', 'Self-built or headless', 'Branded chat ass
   </div>
 
   <div class="hiw__box">
-    <h3>Customer agents</h3>
+    <h3>Customers’ AI</h3>
     <ul>
       {agents.map((a) => <li>{a}</li>)}
-      <li class="muted">Consumers and firms</li>
+      <li class="muted">Customers confirm every order</li>
     </ul>
   </div>
 </figure>

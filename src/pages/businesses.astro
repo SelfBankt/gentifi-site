@@ -4,7 +4,6 @@ import { faqSchema } from '../data/faqSchema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
-import CollectionDiagram from '../components/CollectionDiagram.astro';
 import CounterCard from '../components/CounterCard.astro';
 import WebBadges from '../components/WebBadges.astro';
 import Tick from '../components/Tick.astro';
@@ -24,8 +23,9 @@ const today = [
     title: 'Your shop in customers’ AI',
     items: [
       { title: 'Found by AI assistants', body: 'Customers’ AI can see what you sell, what it costs and when you’re open.' },
-      { title: 'Your own link and the Gentifi connector', body: 'A unique link for your business, for your signs, website and social pages. It puts customers one step from the Gentifi connector: they add it once, then ask their AI about you by name.' },
-      { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes. When you change a price there, the sheet’s price is the one AI sees.' },
+      { title: 'Your own link and the Gentifi connector', body: 'A link for your signs, website and social pages. Customers add the Gentifi connector once, then ask their AI about you by name.' },
+      { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes.' },
+      { title: 'Check it, then go live', body: 'We send you your listing in Telegram. Nothing shows until you tap Go live.' },
     ],
   },
   {
@@ -33,14 +33,6 @@ const today = [
     items: [
       { title: 'Orders on your phone', body: 'Each order a customer confirms arrives in Telegram for you to accept or decline, and the customer sees your answer. Your staff can get them too. Or keep taking orders by email or through your own checkout.' },
       { title: 'A witness for every order', body: 'Customers confirm on a Gentifi page before an order reaches you. We keep a record of what each one agreed, at what price and when, with a reference that comes with the order.' },
-    ],
-  },
-  {
-    title: 'Run it from your phone',
-    items: [
-      { title: 'Check it, then go live', body: 'We send you your listing in Telegram. Nothing shows until you tap Go live.' },
-      { title: 'Stock from your phone', body: 'Tap sold out or back in stock in Telegram, one item or everything at once, and customers’ AI sees it within seconds, with the time you said so.' },
-      { title: 'Prices from your phone', body: 'Change a price or description in Telegram, and customers’ AI sees it within seconds. For a whole new price board, send a photo: we read it and check every price before anything changes.' },
     ],
   },
   {
@@ -84,9 +76,8 @@ const steps = [
 
 const examples = [
   { setting: 'Bakery', ask: 'Order a birthday cake for Saturday collection.', gets: 'Pre-orders without the phone ringing.' },
-  { setting: 'Makers’ market', ask: 'Which stalls on Saturday sell handmade ceramics?', gets: 'One connection covers every trader at the market.' },
+  { setting: 'Deli', ask: 'Is the Stilton in? Put a wedge aside for me.', gets: 'Customers check before the trip.' },
   { setting: 'Farm shop', ask: 'Which farm near me has eggs this week? Reserve a dozen.', gets: 'Reservations without answering the phone.' },
-  { setting: 'Trade show', ask: 'Which stands sell triple glazing under £600/m²?', gets: 'One connection covers every exhibitor at the show.' },
 ];
 
 
@@ -107,20 +98,12 @@ const faqs = [
     a: 'Nothing, to stay listed. Orders reach you by email, your own checkout or Telegram, where you tap Accept or Decline. If something sells out, you can tap sold out in Telegram, and one tap puts everything back in stock in the morning. To change a price, edit your Google Sheet or send it in Telegram.',
   },
   {
+    q: 'I have no website or online shop. Is this for me?',
+    a: 'Yes. That’s who we’re starting with, in Bristol and South Gloucestershire. A spreadsheet of what you sell is enough: we host a page for your shop, and orders still come to you. If you have a developer, they can use our open-source toolkit instead.',
+  },
+  {
     q: 'What is AI optimisation?',
     a: 'Making sure AI assistants such as ChatGPT, Gemini, Claude and Meta AI can find your business and describe it correctly: what you sell, prices, where you are and when you’re open. We check what they can read about you today, fix your website’s structured data and your Google profile, and put your products into Claude, ChatGPT, Gemini and Grok directly.',
-  },
-  {
-    q: 'I’m an independent with no online shop. Is this for me?',
-    a: 'Yes. That’s who we’re starting with, in Bristol and South Gloucestershire. A spreadsheet of what you sell is enough, and orders and bookings still come to you.',
-  },
-  {
-    q: 'What do you need from me?',
-    a: 'A list of what you sell with prices (a spreadsheet is fine), stock if you keep it, your opening hours, and how you take orders today. You can keep the list in a Google Sheet and update it there.',
-  },
-  {
-    q: 'Do I need a website or a developer?',
-    a: 'No. We host everything for you, including a page for your shop. If you do have a developer, they can use our open-source toolkit instead.',
   },
   {
     q: 'Which AI assistants does it work with?',
@@ -128,16 +111,11 @@ const faqs = [
   },
   {
     q: 'Can AI order something my customer didn’t want?',
-    a: 'No. Every order waits for the customer to touch and agree in their own app, and nothing can connect to your shop or buy without their approval.',
+    a: 'No. Every order waits for the customer to confirm it, and nothing can connect to your shop or buy without their approval.',
   },
   {
     q: 'I already sell on Shopify. Is this for me?',
     a: 'Shopify can show your online products in some AI assistants. Gentifi adds what that leaves out: your opening hours and local stock, reservations and bookings, and the events and markets you take part in, alongside the other shops near you.',
-  },
-  {
-    q: 'I run a farm shop. Can customers’ AI see what’s in today?',
-    a: 'Yes. Tap sold out or back in stock in Telegram, and customers’ AI sees it within seconds, with the time you said so. Pre-orders for collection work too. Live stock counts are coming next.',
-    link: { href: '/farm-shops', label: 'Gentifi for farm shops' },
   },
   {
     q: 'Am I locked in?',
@@ -293,32 +271,6 @@ const faqs = [
       </div>
     </section>
 
-    <!-- Events, markets and high streets -->
-    <section class="section section--teal" id="events">
-      <div class="container events">
-        <div class="events__copy">
-          <span class="eyebrow">Markets, shows and gatherings</span>
-          <h2>One connection for a whole market, show or high street.</h2>
-          <p>
-            Visitors add your market, event or street to their AI once, then ask across every trader or exhibitor:
-            <q>Which stalls on Saturday have sourdough? Save me a loaf.</q>
-            <q>Which stands sell triple glazing under £600/m²? Get me three quotes.</q>
-          </p>
-          <ul class="events__points">
-            <li><Tick size={20} tick="var(--teal)" /><span>Every member keeps its own data, prices and checkout.</span></li>
-            <li><Tick size={20} tick="var(--teal)" /><span>Nobody is listed without agreeing to it.</span></li>
-            <li><Tick size={20} tick="var(--teal)" /><span>Exhibitors stay in visitors’ AI after the event.</span></li>
-          </ul>
-          <p class="events__pilot">We’re piloting this with the first markets and shows.</p>
-          <div class="events__ctas">
-            <a class="btn btn--primary" href="/events">The package for organisers</a>
-            <a class="btn btn--ghost" href="/standards">How Business Collections work</a>
-          </div>
-        </div>
-        <div class="events__visual"><CollectionDiagram /></div>
-      </div>
-    </section>
-
     <!-- Examples -->
     <section class="section section--grey" id="examples">
       <div class="container">
@@ -340,23 +292,8 @@ const faqs = [
       </div>
     </section>
 
-    <!-- Open -->
-    <section class="section section--teal open-band">
-      <div class="container open-band__inner">
-        <div>
-          <span class="eyebrow">Open source and open standards</span>
-          <h2>Open source, so you're never locked in.</h2>
-          <p>The toolkit behind Gentifi is open source, and everything follows open standards, so your setup is never tied to us.</p>
-        </div>
-        <div class="open-band__buttons">
-          <a class="btn btn--primary" href="/toolkit">See the toolkit</a>
-          <a class="btn btn--ghost" href="/standards">Open standards</a>
-        </div>
-      </div>
-    </section>
-
     <!-- FAQ -->
-    <section class="section section--grey" id="faq">
+    <section class="section" id="faq">
       <div class="container faq__wrap">
         <div class="section-head">
           <span class="eyebrow">Questions</span>
@@ -466,7 +403,7 @@ const faqs = [
   .day p { color: var(--on-teal-muted); }
   .examples { display: grid; gap: 16px; }
   @media (min-width: 720px) { .examples { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1040px) { .examples { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1040px) { .examples { grid-template-columns: repeat(3, 1fr); } }
   .example { background: var(--white); border-radius: var(--radius); padding: 22px; display: grid; gap: 10px; align-content: start; }
   .example__setting { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
   .example q { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
@@ -474,13 +411,6 @@ const faqs = [
   .b2b { margin-top: 24px; color: var(--ink-muted); }
   .b2b + .b2b { margin-top: 8px; }
   .b2b a { color: var(--teal); font-weight: 600; }
-
-  /* Open band */
-  .open-band__inner { display: grid; gap: 28px; align-items: center; }
-  @media (min-width: 900px) { .open-band__inner { grid-template-columns: 1fr auto; gap: 48px; } }
-  .open-band h2 { margin-bottom: 14px; }
-  .open-band p { color: var(--on-teal-muted); max-width: 40rem; }
-  .open-band__buttons { display: flex; flex-wrap: wrap; gap: 12px; }
 
   /* FAQ */
   .faq__wrap { max-width: calc(820px + var(--gutter) * 2); }
@@ -512,18 +442,5 @@ const faqs = [
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
-  /* Events, markets and high streets */
-  .events { display: grid; gap: 48px; align-items: center; }
-  @media (min-width: 1000px) { .events { grid-template-columns: 1.05fr 1fr; gap: 64px; } }
-  .events__copy { display: grid; gap: 18px; justify-items: start; min-width: 0; }
-  .events__copy .eyebrow { margin-bottom: 0; }
-  .events__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
-  .events__copy q { display: block; margin-top: 10px; color: var(--white); font-weight: 600; }
-  .events__points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  .events__points li { display: flex; gap: 10px; align-items: flex-start; }
-  .events__points li :global(svg) { margin-top: 3px; }
-  .events__pilot { color: var(--on-teal-muted); font-size: 0.95rem; }
-  .events__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
-  .events__visual { width: 100%; max-width: 480px; justify-self: center; }
 
 </style>

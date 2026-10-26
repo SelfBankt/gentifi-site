@@ -19,7 +19,6 @@ const shopSteps = [
 
 const phone = [
   { title: 'Check your listing, then go live', body: 'We send you your listing in Telegram. Nothing goes live until you tap Go live.' },
-  { title: 'Accept or decline in one tap', body: 'Each order shows what the customer wants and when. Decline as sold out, and AI stops offering it.' },
   { title: 'Sold out? Tap it', body: 'Mark things sold out or back in stock, one at a time or all at once, and customers’ AI sees it within seconds, with the time you said so.' },
   { title: 'New price? Change it there', body: 'Change a price or description in a few taps, and customers’ AI sees it within seconds. For a whole new price board, send a photo and we check every price.' },
 ];
@@ -107,7 +106,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
         <div class="section-head">
           <span class="eyebrow">How it works</span>
           <h2>Three steps for you. Three for your customers.</h2>
-          <p>Simple for you, and simple for your customers. No website or developer needed, and nothing changes about your till, your checkout or how you take payment.</p>
+          <p>No website or developer needed, and nothing changes about your till, your checkout or how you take payment.</p>
         </div>
         <div class="sides">
           <article class="side">
@@ -188,7 +187,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
         <div class="section-head">
           <span class="eyebrow">Stay in touch</span>
           <h2>Not ready yet? Stay in touch.</h2>
-          <p>Leave your name and email, and we’ll keep you posted as Gentifi grows in Bristol and South Gloucestershire, for shops, markets, shows and high streets. Ready now? <a href="/join">Sign up your shop</a> and join the Genesis cohort, our first group of businesses.</p>
+          <p>We’ll keep you posted as Gentifi grows in Bristol and South Gloucestershire. Ready now? <a href="/join">Sign up your shop</a> and join the Genesis cohort, our first group of businesses.</p>
         </div>
         <WaitlistForm tone="light" />
       </div>
@@ -264,7 +263,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   .phone h3 { font-size: 1.3rem; }
   .phone > p { color: var(--ink-muted); }
   .phone ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 18px; }
-  @media (min-width: 860px) { .phone ul { grid-template-columns: 1fr 1fr; gap: 18px 32px; } }
+  @media (min-width: 860px) { .phone ul { grid-template-columns: repeat(3, 1fr); gap: 18px 32px; } }
   .phone li { display: flex; gap: 12px; align-items: flex-start; }
   .phone li :global(svg) { margin-top: 2px; flex-shrink: 0; }
   .phone li div { display: grid; gap: 2px; }
