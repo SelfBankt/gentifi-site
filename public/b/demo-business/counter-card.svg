@@ -2,11 +2,11 @@
 <title id="t">Gentifi counter card for Hollow Lane Farm Shop: scan to add us to your AI assistant (gentifi.com/b/demo-business)</title>
 <rect x="2" y="2" width="1046" height="1476" rx="60" fill="#FFFFFF" stroke="#05414D" stroke-width="4"/>
 <g transform="translate(330 70) scale(0.95)"><path d="M73 37.48 A26 26 0 1 0 73 82.52" fill="none" stroke="#05414D" stroke-width="10" stroke-linecap="round"/><path d="M92.53 27.47 A46 46 0 1 0 106 60 L64 60" fill="none" stroke="#05414D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="60" r="10" fill="#05414D"/></g>
-<text x="460" y="155" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="700" font-size="76" fill="#05414D">Gentifi</text>
+<text x="460" y="155" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="700" font-size="76" fill="#05414D" textLength="236" lengthAdjust="spacingAndGlyphs">Gentifi</text>
 <g transform="translate(722 98) scale(2.6)"><circle cx="12" cy="12" r="11" fill="#F09A5C"/><path d="M6.5 12.5 L10.5 16.5 L17.5 8" fill="none" stroke="#05414D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
 <text x="525" y="320" text-anchor="middle" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="84" font-weight="700" fill="#05414D" textLength="900" lengthAdjust="spacingAndGlyphs">Ask your AI about us</text>
 <text x="525" y="410" text-anchor="middle" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="42" font-weight="400" fill="#05414D">Scan to add</text>
-<text x="525" y="468" text-anchor="middle" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="48" font-weight="700" fill="#05414D">Hollow Lane Farm Shop</text>
+<text x="525" y="470" text-anchor="middle" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="54" font-weight="600" fill="#05414D" style="font-variation-settings: 'SOFT' 50, 'WONK' 0">Hollow Lane Farm Shop</text>
 <text x="525" y="526" text-anchor="middle" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="42" font-weight="400" fill="#05414D">to your AI assistant.</text>
 <text x="525" y="584" text-anchor="middle" font-family="Sora, 'Sora Local', system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="34" font-weight="400" fill="#3D4A5C" textLength="900" lengthAdjust="spacingAndGlyphs">Then ask: “What has Hollow Lane Farm Shop got today?”</text>
 <rect x="225" y="640" width="600" height="600" rx="44" fill="#05414D"/>
