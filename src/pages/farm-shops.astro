@@ -100,12 +100,12 @@ const faqs = [
         </div>
         <figure class="board">
           <div class="board__head">
-            <span>What’s in today</span>
+            <span class="serif">What’s in today</span>
             <span class="board__time">Updated 9.10am</span>
           </div>
           <ul class="board__list">
             {board.map((b) => (
-              <li><span>{b.item}</span><span class:list={['status', `status--${b.tone}`]}>{b.status}</span></li>
+              <li><span class="serif">{b.item}</span><span class:list={['status', `status--${b.tone}`]}>{b.status}</span></li>
             ))}
           </ul>
           <figcaption>A demo farm shop’s board. AI reads it, with the time it was last updated.</figcaption>
@@ -254,7 +254,7 @@ const faqs = [
   .hero__points li { display: flex; align-items: center; gap: 8px; }
 
   .board { margin: 0; width: min(100%, 420px); justify-self: center; background: var(--white); color: var(--ink); border-radius: var(--radius-lg); padding: 22px; box-shadow: 0 28px 60px -24px rgb(0 0 0 / 0.5); display: grid; gap: 14px; }
-  .board__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--teal); font-weight: 700; font-size: 1.15rem; }
+  .board__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--teal); font-weight: 700; font-size: 1.3rem; }
   .board__time { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--ink-muted); white-space: nowrap; }
   .board__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
   .board__list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--grey); font-weight: 600; }

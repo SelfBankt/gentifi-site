@@ -20,7 +20,7 @@ const { tone = 'dark' } = Astro.props;
           <div class="result__head">
             <span class="result__avatar" aria-hidden="true">HL</span>
             <div>
-              <p class="result__name">Hollow Lane Farm Shop</p>
+              <p class="result__name serif">Hollow Lane Farm Shop</p>
               <p class="result__via"><Mark size={12} color="var(--teal)" stroke={13} />via Gentifi</p>
             </div>
           </div>
@@ -83,7 +83,7 @@ const { tone = 'dark' } = Astro.props;
     display: grid; place-items: center;
     font-size: 0.8rem; font-weight: 700;
   }
-  .result__name { font-weight: 700; line-height: 1.25; }
+  .result__name { font-weight: 600; font-size: 1.05rem; line-height: 1.25; }
   .result__via { display: flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-muted); }
   .result__rows { margin: 0; display: grid; gap: 4px; font-size: 0.88rem; }
   .result__rows div { display: flex; justify-content: space-between; gap: 12px; }
