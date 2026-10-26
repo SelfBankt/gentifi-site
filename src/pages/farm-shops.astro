@@ -6,14 +6,13 @@ import { faqSchema } from '../data/faqSchema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
-import CollectionDiagram from '../components/CollectionDiagram.astro';
 import Tick from '../components/Tick.astro';
 
 const board = [
   { item: 'Free-range eggs', status: 'In', tone: 'in' },
-  { item: 'Duck eggs', status: 'Running low', tone: 'low' },
-  { item: 'Sourdough loaf', status: 'In from noon', tone: 'in' },
-  { item: 'Pork sausages', status: 'Sold out', tone: 'out' },
+  { item: 'Duck eggs', status: 'In', tone: 'in' },
+  { item: 'Sourdough loaf', status: 'Sold out', tone: 'out' },
+  { item: 'Pork sausages', status: 'In', tone: 'in' },
   { item: 'Seasonal veg box', status: 'Order by Thursday', tone: 'note' },
 ];
 
@@ -93,7 +92,6 @@ const faqs = [
             <a class="btn btn--primary" href="/join?kind=Farm%20shop">Sign up your farm shop</a>
             <a class="btn btn--ghost" href="/b/demo-business">See a demo farm shop</a>
           </div>
-          <p class="hero__wait">Want live stock counts too? <a href="#waitlist">Stay in touch</a></p>
           <ul class="hero__points">
             <li><Tick size={18} tick="var(--teal)" />Start from a spreadsheet</li>
             <li><Tick size={18} tick="var(--teal)" />Keep your own checkout</li>
@@ -121,7 +119,7 @@ const faqs = [
         <div class="section-head">
           <span class="eyebrow">Why we start with farms</span>
           <h2>Your stock changes every day. The web doesn’t.</h2>
-          <p>AI assistants can only recommend what they can read. Big retailers publish product feeds; the farm shop down the road has a chalkboard. We want the farm to be as easy for an agent to find as the supermarket.</p>
+          <p>AI assistants can only recommend what they can read. Big retailers publish product feeds; the farm shop down the road has a chalkboard. We want the farm to be as easy for AI to find as the supermarket.</p>
         </div>
         <ul class="problems">
           {problems.map((p) => <li><h3>{p.title}</h3><p>{p.body}</p></li>)}
@@ -134,7 +132,7 @@ const faqs = [
       <div class="container ask">
         <div class="chat" aria-label="Example conversation with an AI assistant">
           <p class="chat__you">Which farm shop near me has duck eggs today?</p>
-          <p class="chat__agent">Hollow Lane Farm Shop, 2 miles away, marked duck eggs as running low at 9.10am. £3.60 for six. Shall I reserve some?</p>
+          <p class="chat__agent">Hollow Lane Farm Shop, 2 miles away, had duck eggs in at 9.10am. £3.60 for six. Shall I reserve some?</p>
           <p class="chat__you">Yes, six, and I’ll collect after 2.</p>
           <div class="chat__confirm">
             <p>Reserve 6 duck eggs, £3.60, to collect today after 2pm?</p>
@@ -143,8 +141,8 @@ const faqs = [
         </div>
         <div class="ask__copy">
           <span class="eyebrow">What customers ask</span>
-          <h2>Their AI checks. They touch and agree.</h2>
-          <p>Customers ask in plain English. The agent checks what you marked as in, tells them when you checked, and asks before it reserves anything.</p>
+          <h2>Their AI checks. They confirm.</h2>
+          <p>Customers ask in plain English. Their AI checks what you marked as in, tells them when you checked, and asks before it reserves anything.</p>
           <ul class="asks">{asks.map((a) => <li><q>{a}</q></li>)}</ul>
         </div>
       </div>
@@ -195,34 +193,17 @@ const faqs = [
           <span class="eyebrow">Farmers’ markets and local food networks</span>
           <h2>Bring the whole gathering.</h2>
           <p>
-            Shoppers add your market or network to their agent once, then ask across every trader:
+            Shoppers add your market or network to their AI once, then ask across every trader:
             <q>Which stalls on Saturday have sourdough? Save me a loaf.</q>
           </p>
           <ul class="markets__points">
             <li><Tick size={20} tick="var(--teal)" /><span>Each trader keeps their own stock, prices and payments.</span></li>
             <li><Tick size={20} tick="var(--teal)" /><span>Nobody is listed without agreeing to it.</span></li>
-            <li><Tick size={20} tick="var(--teal)" /><span>Councils and food partnerships can turn their local produce lists into one that agents can search.</span></li>
           </ul>
           <div class="markets__ctas">
             <a class="btn btn--primary" href="/events#enquire">Put your market on Gentifi</a>
             <a class="btn btn--ghost" href="/standards">How Business Collections work</a>
           </div>
-        </div>
-        <div class="markets__visual">
-          <CollectionDiagram
-            name="Demo Farmers’ Market"
-            kind="market"
-            asker="Shopper’s AI"
-            question="Which stalls on Saturday have sourdough?"
-            members={[
-              { stand: 'S1', category: 'bakery' },
-              { stand: 'S4', category: 'eggs' },
-              { stand: 'S7', category: 'veg' },
-              { stand: 'S9', category: 'cheese' },
-              { stand: 'S12', category: 'meat' },
-              { stand: 'S15', category: 'preserves' },
-            ]}
-          />
         </div>
       </div>
     </section>
@@ -280,7 +261,6 @@ const faqs = [
   .board__list li:last-child { border-bottom: 0; }
   .status { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
   .status--in { background: var(--teal); color: var(--white); }
-  .status--low { background: var(--copper); color: var(--teal); }
   .status--out { background: var(--grey); color: var(--ink-muted); text-decoration: line-through; }
   .status--note { background: var(--white); color: var(--teal); box-shadow: inset 0 0 0 1px var(--border); }
   .board figcaption { font-size: 0.82rem; color: var(--ink-muted); }
@@ -328,7 +308,6 @@ const faqs = [
 
   /* Markets */
   .markets { display: grid; gap: 48px; align-items: center; }
-  @media (min-width: 1000px) { .markets { grid-template-columns: 1.05fr 1fr; gap: 64px; } }
   .markets__copy { display: grid; gap: 18px; justify-items: start; min-width: 0; }
   .markets__copy .eyebrow { margin-bottom: 0; }
   .markets__copy > p { color: var(--on-teal-muted); font-size: 1.08rem; }
@@ -337,7 +316,6 @@ const faqs = [
   .markets__points li { display: flex; gap: 10px; align-items: flex-start; }
   .markets__points li :global(svg) { margin-top: 3px; flex-shrink: 0; }
   .markets__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
-  .markets__visual { width: 100%; max-width: 480px; justify-self: center; }
 
   /* FAQ */
   .faq__wrap { max-width: calc(820px + var(--gutter) * 2); }
@@ -352,6 +330,5 @@ const faqs = [
   /* Waitlist */
   .waitlist__grid { display: grid; gap: 40px; }
   @media (min-width: 900px) { .waitlist__grid { grid-template-columns: 1fr 1.2fr; gap: 72px; align-items: start; } }
-  .hero__wait { margin-top: 14px; color: var(--on-teal-muted); font-size: 0.95rem; }
-  .hero__wait a, #waitlist .section-head a { color: var(--white); font-weight: 600; }
+  #waitlist .section-head a { color: var(--white); font-weight: 600; }
 </style>
