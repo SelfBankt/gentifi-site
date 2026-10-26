@@ -68,6 +68,14 @@ const fits = [
   { title: 'Markets and events', body: 'Every trader in one place, through one connection.', link: { href: '/events', label: 'For organisers' } },
 ];
 
+// A shop owner's day: the guide's "What do I need to do each day?" question
+const day = [
+  { title: 'Orders come to you', body: 'By email or your own checkout, as now. Or in Telegram on your phone: tap Accept or Decline.' },
+  { title: 'Sold out? One tap.', body: 'Tap sold out or back in stock in Telegram, and customers’ AI sees it within seconds. Only if you want to.' },
+  { title: 'New prices? Send them.', body: 'Change your Google Sheet, send the change in Telegram, or send a photo of your price board.' },
+  { title: 'Nothing else', body: 'No website to update, no new till, and nothing to log in to each day.' },
+];
+
 const steps = [
   { title: 'Sign up your shop', body: 'Tell us about your business, your hours and what you sell. We’re starting with a small group.' },
   { title: 'We set you up', body: 'We bring in your products and prices from a spreadsheet, a price list, or an export from Square, Shopify or WooCommerce, and check that AI assistants read them correctly.' },
@@ -90,6 +98,14 @@ const needs = [
 ];
 
 const faqs = [
+  {
+    q: 'How would Gentifi help my shop?',
+    a: 'Customers’ AI can answer “Have you got it today?”, “How much is it?” and “Are you open?” from your own list, and take reservations and pre-orders that the customer confirms, so orders come in without the phone ringing. And when locals ask their AI where to buy, your shop is in the answer, not just the chains.',
+  },
+  {
+    q: 'What do I need to do each day?',
+    a: 'Nothing, to stay listed. Orders reach you by email, your own checkout or Telegram, where you tap Accept or Decline. If something sells out, you can tap sold out in Telegram, and to change a price, edit your Google Sheet or send it in Telegram.',
+  },
   {
     q: 'What is AI optimisation?',
     a: 'Making sure AI assistants such as ChatGPT, Gemini, Claude and Meta AI can find your business and describe it correctly: what you sell, prices, where you are and when you’re open. We check what they can read about you today, fix your website’s structured data and your Google profile, and put your products into Claude, ChatGPT, Gemini and Grok directly.',
@@ -174,6 +190,25 @@ const faqs = [
               <h3>{f.title}</h3>
               <p>{f.body}</p>
               {f.link && <a href={f.link.href}>{f.link.label}</a>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Your day -->
+    <section class="section section--teal" id="your-day">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Your day with Gentifi</span>
+          <h2>No new daily jobs. Just a tap when something changes.</h2>
+          <p>We do the setup. After that, your listing stays up and in step with your list, and you carry on as you do now.</p>
+        </div>
+        <ul class="day">
+          {day.map((d) => (
+            <li>
+              <h3>{d.title}</h3>
+              <p>{d.body}</p>
             </li>
           ))}
         </ul>
@@ -421,6 +456,14 @@ const faqs = [
   .fit h3 { font-size: 1.1rem; }
   .fit p { color: var(--ink-muted); }
   .fit a { color: var(--teal); font-weight: 600; }
+
+  /* Your day */
+  .day { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .day { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .day { grid-template-columns: repeat(4, 1fr); } }
+  .day li { border: 1px solid var(--teal-line); border-radius: var(--radius); padding: 22px; display: grid; gap: 6px; align-content: start; }
+  .day h3 { font-size: 1.1rem; color: var(--copper); }
+  .day p { color: var(--on-teal-muted); }
   .examples { display: grid; gap: 16px; }
   @media (min-width: 720px) { .examples { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1040px) { .examples { grid-template-columns: repeat(4, 1fr); } }
