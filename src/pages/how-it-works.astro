@@ -11,7 +11,7 @@ import BakeryFilm from '../components/BakeryFilm.astro';
 ---
 <Base
   title="How it works: AI assistants, signs and your website · Gentifi"
-  description="How your shop reaches customers’ AI assistants: what a scan does, the signs, the website snippet, and the open-source toolkit behind it."
+  description="How your shop gets found by AI and reaches customers’ AI assistants: your website and Google profile, what a scan does, the signs, and the open-source toolkit behind it."
 >
   <Header />
   <main id="main">
@@ -21,22 +21,60 @@ import BakeryFilm from '../components/BakeryFilm.astro';
         <span class="eyebrow">For businesses and developers</span>
         <h1>How it works, in detail.</h1>
         <p class="hero__lede">
-          What happens behind the sign: how your business reaches your customers’ AI, what a scan does, and where the
-          open-source toolkit fits.
+          Two parts. First, we make sure AI can read your shop correctly, from your website and Google profile.
+          Then customers can add your shop to their own AI: what a scan does, the signs, and where the open-source
+          toolkit fits.
         </p>
         <nav class="jump" aria-label="On this page">
+          <a href="#website">Get found by AI</a>
           <a href="#film">See it in a bakery</a>
           <a href="#system">The big picture</a>
           <a href="#scan">What a scan does</a>
           <a href="#stickers">The signs</a>
-          <a href="#website">Your website</a>
           <a href="#developers">For developers</a>
         </nav>
       </div>
     </section>
 
+    <!-- Website snippet -->
+    <section class="section section--grey" id="website">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">First: get found by AI</span>
+          <h2>Make sure AI reads your shop right.</h2>
+          <p>
+            When locals ask ChatGPT, Gemini, Claude or Meta AI where to buy, the answer comes from what AI can read
+            about you. Your customers don’t have to do anything for this part. We check your website and Google
+            profile, and tell you what’s missing. If you have a website, we write
+            a short snippet of structured data for it, and you, or whoever looks after your site, paste it in once. Your
+            site looks exactly the same.
+          </p>
+        </div>
+        <div class="two-up connectors">
+          <div>
+            <h3>What it tells AI</h3>
+            <p>
+              That you’re a local business, with your name, address, opening hours and contact details, in the schema.org
+              format that search engines and AI read. For products and prices it links to your Gentifi page, so it never
+              goes out of date when a price changes.
+            </p>
+          </div>
+          <div>
+            <h3>Adding it</h3>
+            <p>
+              It goes in your website’s header, once. Most website builders have a place for header code, or you can send
+              it to whoever looks after your site. No website? You don’t need one: your Gentifi page does the job.
+            </p>
+          </div>
+        </div>
+        <p class="website__check">
+          Not sure what your website tells AI today? <a href="/#ai-optimisation">Get your AI visibility check</a>.
+        </p>
+      </div>
+    </section>
+
     <!-- Film -->
-    <section class="section section--grey" id="film">
+    <section class="section" id="film">
       <div class="container film">
         <div class="section-head film__text">
           <span class="eyebrow">See it in a bakery</span>
@@ -65,7 +103,7 @@ import BakeryFilm from '../components/BakeryFilm.astro';
         <div class="two-up connectors">
           <div>
             <h3>Your sign connects your shop</h3>
-            <p>Your business gets its own unique link, on your signs and wherever you share it, and a place on the Gentifi connector. Customers scan or tap your link, add the Gentifi connector to their AI assistant and approve it in their own app, then ask about you by name.</p>
+            <p>Your business gets its own unique link, on your signs and wherever you share it, and a place on the Gentifi connector. Customers scan or tap your link, add the Gentifi connector to their AI assistant and approve it in their own app, then ask about you by name. Adding takes a few minutes of set-up today; one-tap adding is coming next.</p>
           </div>
           <div>
             <h3>Markets, shows and high streets</h3>
@@ -114,41 +152,6 @@ import BakeryFilm from '../components/BakeryFilm.astro';
             <figcaption><strong>Web button and badge</strong> for your website, booking page and emails</figcaption>
           </figure>
         </div>
-      </div>
-    </section>
-
-    <!-- Website snippet -->
-    <section class="section section--grey" id="website">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Your website</span>
-          <h2>One snippet, pasted in once.</h2>
-          <p>
-            Search engines and AI assistants trust what your own website says about you. If you have a website, we write
-            a short snippet of structured data for it, and you, or whoever looks after your site, paste it in once. Your
-            site looks exactly the same.
-          </p>
-        </div>
-        <div class="two-up connectors">
-          <div>
-            <h3>What it tells AI</h3>
-            <p>
-              That you’re a local business, with your name, address, opening hours and contact details, in the schema.org
-              format that search engines and AI read. For products and prices it links to your Gentifi page, so it never
-              goes out of date when a price changes.
-            </p>
-          </div>
-          <div>
-            <h3>Adding it</h3>
-            <p>
-              It goes in your website’s header, once. Most website builders have a place for header code, or you can send
-              it to whoever looks after your site. No website? You don’t need one: your Gentifi page does the job.
-            </p>
-          </div>
-        </div>
-        <p class="website__check">
-          Not sure what your website tells AI today? <a href="/#ai-optimisation">Get your AI visibility check</a>.
-        </p>
       </div>
     </section>
 

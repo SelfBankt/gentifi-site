@@ -23,7 +23,7 @@ const today = [
     title: 'Your shop in customers’ AI',
     items: [
       { title: 'Found by AI assistants', body: 'Customers’ AI can see what you sell, what it costs and when you’re open.' },
-      { title: 'Your own link and the Gentifi connector', body: 'A link for your signs, website and social pages. Customers add the Gentifi connector once, then ask their AI about you by name.' },
+      { title: 'Your own link and the Gentifi connector', body: 'A link for your signs, website and social pages. Customers add the Gentifi connector once, then ask their AI about you by name. Adding takes a few minutes of set-up today.' },
       { title: 'A sheet you keep', body: 'Change prices and products in your Google Sheet, and AI sees the update within ten minutes.' },
       { title: 'Check it, then go live', body: 'We send you your listing in Telegram. Nothing shows until you tap Go live.' },
     ],
@@ -69,9 +69,9 @@ const day = [
 ];
 
 const steps = [
-  { title: 'Sign up your shop', body: 'Tell us about your business, your hours and what you sell. We’re starting with a small group.' },
-  { title: 'We set you up', body: 'We bring in your products and prices from a spreadsheet, a price list, or an export from Square, Shopify or WooCommerce, and check that AI assistants read them correctly.' },
-  { title: 'Put up your sign', body: 'Customers scan it, approve it in their own app, and start asking.' },
+  { title: 'Get your AI visibility check', body: 'A one-page report on what AI can read about your shop today. Or sign up straight away: who you are and what you sell, in about two minutes.' },
+  { title: 'We set you up', body: 'We fix what your website and Google profile tell AI, bring in your products and prices from a spreadsheet, a price list, or an export from Square, Shopify or WooCommerce, and check that AI assistants read them correctly.' },
+  { title: 'Put up your sign', body: 'Customers scan it, add Gentifi to their AI in a few minutes, approve it in their own app, and start asking.' },
 ];
 
 const examples = [
@@ -91,7 +91,7 @@ const needs = [
 const faqs = [
   {
     q: 'How would Gentifi help my shop?',
-    a: 'Customers’ AI can answer “Have you got it today?”, “How much is it?” and “Are you open?” from your own list, and take reservations and pre-orders that the customer confirms, so orders come in without the phone ringing. And when locals ask their AI where to buy, your shop is in the answer, not just the chains.',
+    a: 'When locals ask AI where to buy, the answer comes from what AI can read about you. We make sure it reads the right things: what you sell, where you are and when you’re open, so your shop is in the answer, not just the chains. Customers who add your shop to their AI can also ask “Have you got it today?” and “How much is it?” from your own list, and make reservations and pre-orders that they confirm, so orders come in without the phone ringing.',
   },
   {
     q: 'What do I need to do each day?',
@@ -107,7 +107,7 @@ const faqs = [
   },
   {
     q: 'Which AI assistants does it work with?',
-    a: 'Customers can add your shop to Claude, ChatGPT, Gemini and Grok today, in a minute, and approve it in their AI app. Meta AI can still find you from what they read about you online, which our AI optimisation fixes. We’re testing other AI assistants, and working on one-tap adding.',
+    a: 'Customers can add your shop to Claude, ChatGPT, Gemini and Grok today. It takes a few minutes of set-up, and they approve it in their AI app. Meta AI can still find you from what they read about you online, which our AI optimisation fixes. We’re testing other AI assistants, and working on one-tap adding.',
   },
   {
     q: 'Can AI order something my customer didn’t want?',
@@ -135,19 +135,20 @@ const faqs = [
       <div class="container hero__grid">
         <div class="hero__text">
           <span class="eyebrow">AI optimisation for small businesses</span>
-          <h1>Let customers ask their AI about you.</h1>
+          <h1>Be the shop AI names when locals ask.</h1>
           <p class="hero__lede">
-            When customers add your shop to their AI assistant, they can ask what you sell, check prices and opening
-            times, and reserve or order. They confirm every order, and it comes to you the way orders do now.
+            We check what ChatGPT, Gemini, Claude and Meta AI can read about your shop, and fix what’s missing.
+            Then customers can add your shop to their own AI assistant to ask what you sell, check prices and
+            opening times, and reserve or order. They confirm every order, and it comes to you the way orders do now.
           </p>
           <div class="hero__ctas">
-            <a class="btn btn--primary" href="/join">Sign up your shop</a>
-            <a class="btn btn--ghost" href="/b/demo-business">Try the live demo</a>
+            <a class="btn btn--primary" href="/#ai-optimisation">Get your AI visibility check</a>
+            <a class="btn btn--ghost" href="/join">Sign up your shop</a>
           </div>
           <ul class="hero__points">
             <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
             <li><Tick size={18} tick="var(--teal)" />Keep your own till and checkout</li>
-            <li><Tick size={18} tick="var(--teal)" />Live in Claude, ChatGPT, Gemini and Grok today</li>
+            <li><Tick size={18} tick="var(--teal)" />Customers can add you in Claude, ChatGPT, Gemini and Grok</li>
           </ul>
         </div>
         <BakeryFilm />
@@ -238,7 +239,7 @@ const faqs = [
           <h2>Put up your sign. Customers do the rest.</h2>
           <p>
             A window sticker, a counter card for the till, and a badge for your website and emails. Customers scan one
-            to add you to their AI assistant, and approve it in their own app.
+            to add you to their AI assistant, in a few minutes today, and approve it in their own app.
           </p>
           <WebBadges />
           <p><a class="sticker-row__link" href="/b/demo-business">See what a scan opens</a></p>
