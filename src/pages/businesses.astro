@@ -1,4 +1,5 @@
 ---
+import { appsAnd } from '../data/site';
 import Base from '../layouts/Base.astro';
 import { faqSchema } from '../data/faqSchema';
 import Header from '../components/Header.astro';
@@ -103,11 +104,11 @@ const faqs = [
   },
   {
     q: 'What is AI optimisation?',
-    a: 'Making sure AI assistants such as ChatGPT, Gemini, Claude and Meta AI can find your business and describe it correctly: what you sell, prices, where you are and when you’re open. We check what they can read about you today, fix your website’s structured data and your Google profile, and put your products into Claude, ChatGPT, Gemini and Grok directly.',
+    a: `Making sure AI assistants such as ChatGPT, Gemini, Claude and Meta AI can find your business and describe it correctly: what you sell, prices, where you are and when you’re open. We check what they can read about you today, fix your website’s structured data and your Google profile, and put your products into ${appsAnd} directly.`,
   },
   {
     q: 'Which AI assistants does it work with?',
-    a: 'Customers can add your shop to Claude, ChatGPT, Gemini and Grok today. It takes a few minutes of set-up, and they approve it in their AI app. Meta AI can still find you from what they read about you online, which our AI optimisation fixes. We’re testing other AI assistants, and working on one-tap adding.',
+    a: `Customers can add your shop to ${appsAnd} today. It takes a few minutes of set-up, and they approve it in their AI app. Meta AI can still find you from what they read about you online, which our AI optimisation fixes. We’re testing other AI assistants, and working on one-tap adding.`,
   },
   {
     q: 'Can AI order something my customer didn’t want?',
@@ -125,7 +126,7 @@ const faqs = [
 ---
 <Base
   title="AI optimisation for small businesses · Gentifi"
-  description="Get found and described correctly by AI assistants. We check what AI sees, fix your website and Google profile, and put your products in Claude, ChatGPT, Gemini and Grok."
+  description={`Get found and described correctly by AI assistants. We check what AI sees, fix your website and Google profile, and put your products in ${appsAnd}.`}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(faqs))} />
   <Header />
@@ -148,7 +149,7 @@ const faqs = [
           <ul class="hero__points">
             <li><Tick size={18} tick="var(--teal)" />No website or developer needed</li>
             <li><Tick size={18} tick="var(--teal)" />Keep your own till and checkout</li>
-            <li><Tick size={18} tick="var(--teal)" />Customers can add you in Claude, ChatGPT, Gemini and Grok</li>
+            <li><Tick size={18} tick="var(--teal)" />Customers can add you in {appsAnd}</li>
           </ul>
         </div>
         <BakeryFilm />

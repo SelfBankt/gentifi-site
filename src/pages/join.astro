@@ -1,10 +1,11 @@
 ---
+import { FORMS_ENDPOINT } from '../data/site';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 // The same Apps Script web app as the waitlist (see waitlist/apps-script.gs): sign-ups go to its "Sign-ups" tab
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
+const ENDPOINT = FORMS_ENDPOINT;
 
 const kinds = ['Bakery', 'Café', 'Farm shop', 'Deli or food shop', 'Restaurant or pub', 'Other shop', 'Maker or producer', 'Services or trades', 'Something else'];
 const days = [

@@ -1,4 +1,5 @@
 ---
+import { appsAnd, appsOr } from '../data/site';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -22,8 +23,8 @@ const asks = [
 ];
 ---
 <Base
-  title="Add local shops to Claude, ChatGPT, Gemini and Grok · Gentifi"
-  description="Add Gentifi to Claude, ChatGPT, Gemini or Grok, then ask local shops what they have, prices and opening times, and prepare reservations you confirm yourself."
+  title={`Add local shops to ${appsAnd} · Gentifi`}
+  description={`Add Gentifi to ${appsOr}, then ask local shops what they have, prices and opening times, and prepare reservations you confirm yourself.`}
 >
   <Header />
   <main id="main">
