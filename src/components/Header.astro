@@ -5,7 +5,8 @@ interface Props {
   ctaLabel?: string;
   ctaHref?: string;
 }
-const { ctaHref = '/join', ctaLabel = 'Sign up your shop' } = Astro.props;
+// The first step we ask of a shop: the AI visibility check, whose form is on the home page
+const { ctaHref = '/#ai-optimisation', ctaLabel = 'AI visibility check' } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const links = [
@@ -14,6 +15,8 @@ const links = [
   { href: '/events', label: 'Markets & Events' },
   // For shoppers: adding Gentifi to their AI assistant
   { href: '/connector', label: 'Ask your AI' },
+  // For a shop that's ready now
+  { href: '/join', label: 'Sign up' },
 ];
 ---
 <header class="site-header">
