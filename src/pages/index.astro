@@ -27,7 +27,7 @@ const phone = [
 
 const customerSteps = [
   { title: 'Scan your sign', body: 'Or tap your link on your website or social pages.' },
-  { title: 'Add your shop to their AI', body: 'It takes a minute in Claude, ChatGPT, Gemini or Grok, and they approve it in their own app.' },
+  { title: 'Add your shop to their AI', body: 'A few minutes of set-up today in Claude, ChatGPT, Gemini or Grok, approved in their own app. One-tap adding is coming next.' },
   { title: 'Just ask', body: '“Have you got sourdough on Saturday? Save me a loaf.” Nothing is ordered until they check it and tap Confirm.' },
 ];
 
@@ -71,32 +71,47 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
 
         <div class="hero__intro">
           <span class="eyebrow">AI optimisation for independent shops</span>
-          <h1 class="hero__title">Gentifi your business.</h1>
-          <p class="hero__tagline">Discoverable and responsive to your customers’ AI.</p>
+          <h1 class="hero__title">When locals ask AI where to buy, be the shop it names.</h1>
+          <p class="hero__tagline">Gentifi your business.</p>
         </div>
 
         <div class="hero__pitch">
           <p class="hero__lede">
-            Customers scan your sign once to add your shop to their AI assistant. Then they can ask what you have,
-            check when you’re open, and reserve or order. Sold out? Tap it on your phone, and their AI knows within seconds.
+            We check what ChatGPT, Gemini, Claude and Meta AI can read about your shop, fix what’s missing,
+            and keep today’s stock and prices in front of them.
           </p>
           <div class="hero__ctas">
-            <a class="btn btn--primary" href="/join">Sign up your shop</a>
-            <a class="btn btn--ghost" href="#ai-optimisation">Get your AI visibility check</a>
+            <a class="btn btn--primary" href="#ai-optimisation">Get your AI visibility check</a>
+            <a class="btn btn--ghost" href="/join">Sign up your shop</a>
           </div>
         </div>
 
         <div class="hero__strip">
           <div class="hero__live">
-            <p class="hero__live-label"><Tick size={16} tick="var(--teal)" />Works today in</p>
+            <p class="hero__live-label"><Tick size={16} tick="var(--teal)" />Customers can add your shop in</p>
             <ul class="hero__apps" aria-label="AI assistants">{apps.map((a) => <li>{a}</li>)}</ul>
-            <p class="hero__where">Starting in Bristol and South Gloucestershire</p>
+            <p class="hero__where">Adding takes a few minutes of set-up today; one-tap adding is coming next. Starting in Bristol and South Gloucestershire.</p>
           </div>
           <ul class="hero__alt" aria-label="Find your way">
             <li><a href="#shoppers">Shopping? See how to ask your AI</a></li>
             <li><a href="/events">Running a market, show or high street?</a></li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <!-- AI optimisation -->
+    <section class="section section--grey" id="ai-optimisation">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">AI optimisation, done for you</span>
+          <h2>Get found by AI, not just by Google.</h2>
+          <p>When customers ask ChatGPT, Gemini, Claude or Meta AI about local shops, the answer comes from what AI can read about you. We make sure it reads the right things.</p>
+        </div>
+        <h3 class="optimise__ask">Ask for your AI visibility check</h3>
+        <p class="optimise__what">A one-page report, in plain English, on what your website and Google profile tell AI today.</p>
+        <CheckForm />
+        <p class="optimise__or">Then we fix what’s missing, and put your shop in Claude, ChatGPT, Gemini and Grok. <a href="/businesses">See everything you get</a>, or <a href="/join">sign up your shop</a>.</p>
       </div>
     </section>
 
@@ -126,21 +141,6 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
           <ul>{phone.map((p) => <li><Tick size={20} tick="var(--teal)" /><div><strong>{p.title}</strong><span>{p.body}</span></div></li>)}</ul>
         </div>
 
-      </div>
-    </section>
-
-    <!-- AI optimisation -->
-    <section class="section section--grey" id="ai-optimisation">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">AI optimisation, done for you</span>
-          <h2>Get found by AI, not just by Google.</h2>
-          <p>When customers ask ChatGPT, Gemini, Claude or Meta AI about local shops, the answer comes from what AI can read about you. We make sure it reads the right things.</p>
-        </div>
-        <h3 class="optimise__ask">Ask for your AI visibility check</h3>
-        <p class="optimise__what">A one-page report, in plain English, on what your website and Google profile tell AI today.</p>
-        <CheckForm />
-        <p class="optimise__or">Then we fix what’s missing, and put your shop in Claude, ChatGPT, Gemini and Grok. <a href="/businesses">See everything you get</a>, or <a href="/join">sign up your shop</a>.</p>
       </div>
     </section>
 
@@ -187,7 +187,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
         <div class="section-head">
           <span class="eyebrow">Stay in touch</span>
           <h2>Not ready yet? Stay in touch.</h2>
-          <p>We’ll keep you posted as Gentifi grows in Bristol and South Gloucestershire. Ready now? <a href="/join">Sign up your shop</a> and join the Genesis cohort, our first group of businesses.</p>
+          <p>We’ll keep you posted as Gentifi grows in Bristol and South Gloucestershire. Ready now? <a href="/join">Sign up your shop</a> and join our founding shops, the first group of businesses.</p>
         </div>
         <WaitlistForm tone="light" />
       </div>
@@ -209,7 +209,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'G
   }
   .hero__intro, .hero__pitch { min-width: 0; }
   .hero__intro .eyebrow { font-size: 0.95rem; }
-  .hero__title { font-size: clamp(2.6rem, 6vw, 4.2rem); letter-spacing: -0.04em; line-height: 1; }
+  .hero__title { font-size: clamp(2.1rem, 4.6vw, 3.2rem); letter-spacing: -0.035em; line-height: 1.05; }
   .hero__tagline { margin-top: 14px; font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; color: var(--copper); max-width: 20em; }
   .hero__lede { font-size: clamp(1.02rem, 1.8vw, 1.12rem); line-height: 1.6; color: var(--on-teal-muted); max-width: 36rem; }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
