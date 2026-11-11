@@ -1,14 +1,15 @@
 ---
+import { FORMS_ENDPOINT } from '../data/site';
 // "Ask for your AI visibility check": goes to the "AI checks" tab through the waitlist's Apps Script
 // (see waitlist/apps-script.gs), which emails the Gentifi team.
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
+const ENDPOINT = FORMS_ENDPOINT;
 ---
 <form class="check" action={ENDPOINT} method="post" data-check-form data-endpoint={ENDPOINT}>
   <input type="hidden" name="form" value="check" />
   <div class="field"><label for="c-business">Business name</label><input id="c-business" name="business" autocomplete="organization" required /></div>
-  <div class="field"><label for="c-site">Website</label><input id="c-site" name="site_url" inputmode="url" placeholder="yourshop.co.uk" required /></div>
+  <div class="field"><label for="c-site">Website or social page <span class="opt">(if you have one)</span></label><input id="c-site" name="site_url" inputmode="url" placeholder="yourshop.co.uk" /></div>
   <div class="field"><label for="c-email">Your email</label><input id="c-email" name="email" type="email" autocomplete="email" required /></div>
-  <div class="field"><label for="c-town">Town <span class="opt">(optional)</span></label><input id="c-town" name="town" autocomplete="address-level2" /></div>
+  <div class="field"><label for="c-town">Town</label><input id="c-town" name="town" autocomplete="address-level2" required /></div>
   <div class="trap" aria-hidden="true"><label for="c-trap">Leave this empty</label><input id="c-trap" name="trap" tabindex="-1" autocomplete="off" /></div>
   <div class="actions">
     <button class="btn btn--teal" type="submit">Get my AI visibility check</button>
@@ -24,6 +25,12 @@ const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJ
       const status = form.querySelector('.status')!;
       const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
       const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>);
+      // No website? Send a search for the shop instead, so we can find its Google profile.
+      // (The Apps Script expects a link in this field.)
+      if (!(body.get('site_url') ?? '').trim()) {
+        const search = `${body.get('business') ?? ''} ${body.get('town') ?? ''}`.trim();
+        body.set('site_url', `https://www.google.com/search?q=${encodeURIComponent(search)}`);
+      }
       body.set('page', location.pathname);
       button.disabled = true;
       status.textContent = 'Sending…';
@@ -32,7 +39,7 @@ const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJ
         const reply = await (await fetch(form.dataset.endpoint!, { method: 'POST', body })).json();
         if (reply.ok) {
           form.reset();
-          status.textContent = 'Thank you. We’ll check your website and email you the report.';
+          status.textContent = 'Thank you. We’ll check what AI can read about your shop and email you the report.';
         } else {
           status.textContent = reply.error || 'That didn’t go through. Please check your details and try again.';
         }

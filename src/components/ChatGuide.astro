@@ -1,9 +1,9 @@
 ---
+import { FORMS_ENDPOINT } from '../data/site';
 // The Gentifi guide: an AI that answers questions about Gentifi, from the private host at
 // mcp.gentifi.com/chat (gentifi-platform, host/src/lib/chat.js, which holds its instructions,
 // knowledge and limits). "Message us" goes to the same Apps Script as the site's other forms.
 const GUIDE_ENDPOINT = 'https://mcp.gentifi.com/chat';
-const FORMS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
 const starters = ['How would this help my shop?', 'What do I need to do each day?', 'How do customers order?'];
 ---
 <div class="guide" data-guide data-endpoint={GUIDE_ENDPOINT} data-forms={FORMS_ENDPOINT}>

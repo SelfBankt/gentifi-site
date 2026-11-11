@@ -1,4 +1,5 @@
 ---
+import { FORMS_ENDPOINT, appsAnd, appsOr } from '../data/site';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -6,16 +7,16 @@ import CollectionDiagram from '../components/CollectionDiagram.astro';
 import Tick from '../components/Tick.astro';
 
 // Organisers' enquiries go to the "Organisers" tab through the waitlist's Apps Script (see waitlist/apps-script.gs)
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-9hOzXLragpCbln-n2aJJEUMvNya6DIM3TiQs54R7eeWS-KLVWMUkOL7tVIFCGWSX/exec';
+const ENDPOINT = FORMS_ENDPOINT;
 
 const visitorSteps = [
   { title: 'Scan the sign at the entrance', body: 'Or tap the link on your website, programme or social pages.' },
-  { title: 'Add your event to their AI', body: 'One link in Claude, ChatGPT, Gemini or Grok covers every trader, and they approve it in their own app.' },
+  { title: 'Add your event to their AI', body: `One link in ${appsOr} covers every trader, and they approve it in their own app.` },
   { title: 'Ask across every stall', body: '“Which stalls have sourdough on Saturday? Save me a loaf.” Nothing is ordered until they confirm.' },
 ];
 
 const included = [
-  { title: 'Every trader set up for you', body: 'Each trader who agrees gets their own page, products and prices in Claude, ChatGPT, Gemini and Grok, and their own signs.' },
+  { title: 'Every trader set up for you', body: `Each trader who agrees gets their own page, products and prices in ${appsAnd}, and their own signs.` },
   { title: 'One connection for the whole collection', body: 'Visitors add your market, show or street once, and reach only your members.' },
   { title: 'Signs for the entrance and stalls', body: 'A window sticker and counter cards with your event’s own code, ready to print.' },
   { title: 'An AI visibility check for your website', body: 'What your event’s website tells AI today, and the structured data to fix it.' },

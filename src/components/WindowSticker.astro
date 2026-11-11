@@ -1,4 +1,5 @@
 ---
+import { appsAnd } from '../data/site';
 // Window sticker badge, rebuilt from design/badge-canvas/Main.dc.html.
 // Sizes use container units so it scales to whatever column it sits in.
 import Mark from './Mark.astro';
@@ -25,7 +26,7 @@ const { business = 'Your business' } = Astro.props;
     <div class="sticker__bottom">
       <div class="sticker__text">
         <div class="sticker__cta">Scan to add us to your AI assistant</div>
-        <div class="sticker__agents">Works in Claude, ChatGPT, Gemini and Grok today</div>
+        <div class="sticker__agents">Works in {appsAnd} today</div>
         <div class="sticker__biz serif">{business}</div>
       </div>
       <div class="sticker__qr"><QrCode /></div>

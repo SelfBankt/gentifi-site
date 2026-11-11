@@ -1,4 +1,5 @@
 ---
+import { appsOr } from '../../data/site';
 // The page a phone camera opens after scanning a badge.
 // All business data here is fictional demo data.
 import Base from '../../layouts/Base.astro';
@@ -43,7 +44,7 @@ const askLinks = [
 ---
 <Base
   title={`Add ${business.name} to your AI assistant · Gentifi demo`}
-  description={`Demo page: add ${business.name} to your AI assistant and try it in Claude, ChatGPT, Gemini or Grok. Fictional business.`}
+  description={`Demo page: add ${business.name} to your AI assistant and try it in ${appsOr}. Fictional business.`}
 >
   <meta slot="head" name="robots" content="noindex" />
   <link slot="head" rel="ard" href={`${files}/ard.json`} />
